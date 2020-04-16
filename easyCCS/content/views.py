@@ -2,7 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from django.urls import reverse
 
+import numpy as np
+
 from .models import Skill, Content
+from .forms import SkillForm
 
 def index(request):
     skills = Skill.objects
@@ -62,8 +65,68 @@ def getGraph(request):
     return render(request, 'content/d3graph.html', {"jsonUrl":reverse("getGraphJson")})
 
 
+def getSkillGraph(request):
+    requiredSkills = None
+    endContent = None
+    if request.method == 'POST':
+        form = SkillForm(request.POST)
+        if form.is_valid():
+            checked_ids = []
+            for field in form.getSkillFields():
+                if form.cleaned_data[field.name]: # field checked
+                    checked_ids.append(int(field.name.split("__")[1]))
+
+            requiredSkills = Skill.objects.filter(pk__in=checked_ids)
+
+            endContent = Content.objects.filter(pk=int(form.cleaned_data["endContent"]))[0]
+            print(endContent)
+    else:
+        form = SkillForm()
+
+    names, nodes, matrix = getAdjacencyMatrix()
+
+    print(nodes)
+    print(sum(sum(matrix)))
+    print(matrix)
+
+    for name in names:
+        print(name, names[name])
+
+    return render(request, "content/skillGraph.html", {
+        "form":form,
+        "requiredSkills" : requiredSkills,
+        "endContent" : endContent,
+        })
+
 # Redirect to the app
 def redirectToApp(request):
     return redirect("/content")
 
 
+
+def getAdjacencyMatrix():
+    cObjects = Content.objects.all()
+
+    # Nodes also give the mapping between id and the position in the matrix
+    nodes = sorted(cObjects.values_list("id", flat=True))
+
+    adjMatrix = np.zeros((len(nodes), len(nodes)), dtype=int)
+
+    for node in nodes:
+        requiredSkills = Content.objects.filter(pk=node).values("requiredSkills")
+        for skill in requiredSkills:
+            teachesSkills = sorted(
+                    Content.objects.filter(
+                        newSkills=skill["requiredSkills"]
+                        ).values_list("id", flat=True)
+                    )
+            for teachesSkill in teachesSkills:
+                adjMatrix[nodes.index(node)][nodes.index(teachesSkill)] = 1
+
+    # Get the names
+    names = dict()
+    for node in nodes:
+        names[node] = Content.objects.filter(pk=node).get().contentName
+
+
+    return (names, nodes, adjMatrix)
