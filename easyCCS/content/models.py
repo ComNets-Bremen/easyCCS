@@ -18,23 +18,12 @@ def deleteBinaryFile(instance):
         if instance != "" and os.path.isfile(instance.path):
             os.remove(instance.path)
 
-class Category(models.Model):
-    categoryName = models.CharField(max_length=200)
-
-    def __str__(self):
-        return str(self.categoryName)
-
-
 class Skill(models.Model):
     skillName = models.CharField(max_length=200)
     isAliasFor = models.ForeignKey(
             "self",
             on_delete=models.SET_NULL,
             null=True,
-            blank=True
-            )
-    category = models.ManyToManyField(
-            "Category",
             blank=True
             )
 
@@ -77,8 +66,6 @@ class Content(models.Model):
             returnString += " (No content added)"
 
         return returnString
-
-# add categories for skills?
 
 
 # Signals etc. for file handling
