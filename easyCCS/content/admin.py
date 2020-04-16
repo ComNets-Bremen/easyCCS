@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.db.models import Q
 
-from .models import Skill, Content, Category
+from .models import Skill, Content
 
 class SkillAdmin(admin.ModelAdmin):
     def change_view(self, request, object_id, form_url='', extra_context=None):
@@ -22,7 +22,7 @@ class SkillAdmin(admin.ModelAdmin):
 
 class ContentAdmin(admin.ModelAdmin):
     readonly_fields = ["created", "updated"]
+    save_as = True
 
 admin.site.register(Skill, SkillAdmin)
 admin.site.register(Content, ContentAdmin)
-admin.site.register(Category)
