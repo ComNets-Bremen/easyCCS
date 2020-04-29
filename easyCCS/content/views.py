@@ -15,11 +15,16 @@ def index(request):
 def getTree(request, skillId):
     requiredSkill = Skill.objects.get(pk=skillId)
 
-    containingSkill = Content.objects.filter(newSkills = requiredSkill)
-    print(containingSkill)
-    trees= containingSkill
+    # Also remove dups
+    co = list(dict.fromkeys(getContentsForSkill(skillId)))
 
-    return render(request, 'content/printTree.html', {"trees" : trees, "skill": requiredSkill.skillName})
+    names = Content.objects.filter(id__in=co)
+
+    print("Tree for", requiredSkill)
+    for name in names:
+        print(name)
+
+    return render(request, 'content/printTree.html', {"contents" : names, "skill": requiredSkill.skillName})
 
 
 def getGraphJson(request):
@@ -102,7 +107,20 @@ def getSkillGraph(request):
 def redirectToApp(request):
     return redirect("/content")
 
+def getContentsForSkill(skillId, knownContents = []):
+    requiredContents = []
 
+    content = Content.objects.filter(newSkills=skillId)
+    for c in content:
+        requiredContents.append(c.id)
+
+    contentRequiredSkills = content.values_list("requiredSkills", flat=True).all()
+
+    for o in contentRequiredSkills:
+        if o and o not in knownContents:
+            requiredContents += getContentsForSkill(o, requiredContents)
+
+    return requiredContents
 
 def getAdjacencyMatrix():
     cObjects = Content.objects.all()

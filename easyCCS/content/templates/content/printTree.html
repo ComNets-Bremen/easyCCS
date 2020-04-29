@@ -1,18 +1,38 @@
-<h1>Trees for Skill <i> {{ skill }} </i> </h1>
+<style>
+table, th, td {
+  border: 1px solid black;
+}
+</style>
+<h1>Content modules to get skill <i> {{ skill }} </i> </h1>
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-<ul>
-{% for tree in trees %}
-<li>
-    {{ tree.contentName }} <br />
-        Anforderungen:
-        <ul>
-        {% for req in tree.requiredSkills.all %}
-        <li>
-            <a href={% url 'getTree' req.id %}> {{ req.skillName }} </a>
-        </li>
-        {% endfor %}
-        </ul>
-</li>
-{% endfor %}
+ <table style="width:100%">
+  <tr>
+    <th>Content</th>
+    <th>Required Skills</th>
+    <th>New Skills</th>
+  </tr>
+  {% for content in contents %}
+  <tr>
+      <td>{{ content.contentName}}</td>
+      <td>
+          {% if content.requiredSkills.all %}
+          <ul>
+              {% for req in content.requiredSkills.all %}
+              <li> {{ req.skillName }}</li>
+              {% endfor %}
+          </ul>
+          {% else %}
+             No skill required
+          {% endif %}
+      </td>
+      <td><ul>
+              {% for req in content.newSkills.all %}
+              <li> {{ req.skillName }}</li>
+              {% endfor %}
+      </ul></td>
+  </tr>
+  {% endfor %}
+</table>
+
 </ul>
