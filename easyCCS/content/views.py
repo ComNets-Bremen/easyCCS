@@ -5,7 +5,7 @@ from django.urls import reverse
 import numpy as np
 
 from .models import Skill, Content
-from .forms import SkillForm
+from .forms import SkillForm, ExtendedSkillForm
 
 def index(request):
     skills = Skill.objects
@@ -102,6 +102,40 @@ def getSkillGraph(request):
         "requiredSkills" : requiredSkills,
         "endContent" : endContent,
         })
+
+def getExtendedSkillGraph(request):
+    form = None
+    targetSkill = None
+    knownSkillsObjects = None
+    requiredContents = None
+
+    if request.method == "POST":
+        form = ExtendedSkillForm(request.POST)
+        if form.is_valid():
+            targetSkill = Skill.objects.filter(pk=int(form.cleaned_data["requiredSkill"]))[0] # get or 404
+            knownSkills = []
+            for field in form.getSkillFields():
+                if form.cleaned_data[field.name]:
+                    knownSkills.append(int(field.name.split("__")[1]))
+
+            knownSkillsObjects = Skill.objects.filter(pk__in=knownSkills)
+
+            co = list(dict.fromkeys(getContentsForSkill(targetSkill.id, knownSkills)))
+
+            # Rm known skills
+            co = [c for c in co if c not in knownSkills]
+
+            requiredContents = Content.objects.filter(id__in=co)
+    else:
+        form = ExtendedSkillForm()
+
+    return render(request, "content/extendedSkillGraph.html",
+            {
+                "form" : form,
+                "targetSkill" : targetSkill,
+                "knownSkillsObjects" : knownSkillsObjects,
+                "requiredContents" : requiredContents,
+            })
 
 # Redirect to the app
 def redirectToApp(request):

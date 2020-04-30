@@ -30,3 +30,25 @@ class SkillForm(forms.Form):
             if fname.startswith('skill__'):
                 yield self[fname]
 
+
+class ExtendedSkillForm(forms.Form):
+    skills = Skill.objects.all()
+
+    requiredSkill = forms.CharField(
+            label="Required Skill",
+            widget=forms.Select(choices=[(s.id, s.skillName) for s in skills])
+            )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for skill in self.skills:
+            field_name = "skill__" + str(skill.id)
+            self.fields[field_name] = forms.BooleanField(
+                    required=False,
+                    label=skill.skillName,
+                    )
+
+    def getSkillFields(self):
+        for fname in self.fields:
+            if fname.startswith("skill__"):
+                yield self[fname]

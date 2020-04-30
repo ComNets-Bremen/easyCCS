@@ -8,4 +8,5 @@ urlpatterns = [
         path('graphJson', views.getGraphJson, name="getGraphJson"),
         path('getGraph', views.getGraph, name="getGraph"),
         path('getSkillGraph', views.getSkillGraph, name="getSkillGraph"),
+        path('getExtendedSkillGraph', views.getExtendedSkillGraph, name="getExtendedSkillGraph"),
     ]
