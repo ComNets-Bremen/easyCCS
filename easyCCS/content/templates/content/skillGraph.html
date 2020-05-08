@@ -1,19 +1,18 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-
 <h1>SkillGraph</h1>
 
-{% if requiredSkills %}
+{% if requiredContents %}
 <h2>Resulting graph</h2>
 <ul>
-{% for skill in requiredSkills %}
-<li>{{skill}}</li>
+{% for content in requiredContents %}
+<li>{{content}}</li>
 
 {% endfor %}
 </ul>
 {% endif %}
-End: {{endContent}}
+Target Skill: {{targetSkill}}
 <hr>
 <h2>Select skills</h2>
 <form action="" method="post">

@@ -8,6 +8,10 @@ from .models import Skill, Content
 from .forms import SkillForm, ExtendedSkillForm
 
 def index(request):
+    return render(request, "content/index.html", {"title" : "Overview"})
+
+
+def getSkills(request):
     skills = Skill.objects
     return render(request, 'content/skillOverview.html', {'skills':skills})
 
@@ -71,39 +75,6 @@ def getGraph(request):
 
 
 def getSkillGraph(request):
-    requiredSkills = None
-    endContent = None
-    if request.method == 'POST':
-        form = SkillForm(request.POST)
-        if form.is_valid():
-            checked_ids = []
-            for field in form.getSkillFields():
-                if form.cleaned_data[field.name]: # field checked
-                    checked_ids.append(int(field.name.split("__")[1]))
-
-            requiredSkills = Skill.objects.filter(pk__in=checked_ids)
-
-            endContent = Content.objects.filter(pk=int(form.cleaned_data["endContent"]))[0]
-            print(endContent)
-    else:
-        form = SkillForm()
-
-    names, nodes, matrix = getAdjacencyMatrix()
-
-    print(nodes)
-    print(sum(sum(matrix)))
-    print(matrix)
-
-    for name in names:
-        print(name, names[name])
-
-    return render(request, "content/skillGraph.html", {
-        "form":form,
-        "requiredSkills" : requiredSkills,
-        "endContent" : endContent,
-        })
-
-def getExtendedSkillGraph(request):
     form = None
     targetSkill = None
     knownSkillsObjects = None
@@ -129,7 +100,7 @@ def getExtendedSkillGraph(request):
     else:
         form = ExtendedSkillForm()
 
-    return render(request, "content/extendedSkillGraph.html",
+    return render(request, "content/skillGraph.html",
             {
                 "form" : form,
                 "targetSkill" : targetSkill,
@@ -156,6 +127,10 @@ def getContentsForSkill(skillId, knownContents = []):
 
     return requiredContents
 
+
+## Helpers
+
+# Get an adjacency matrix based on all skills / content objects
 def getAdjacencyMatrix():
     cObjects = Content.objects.all()
 
