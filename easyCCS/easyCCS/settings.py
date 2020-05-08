@@ -65,6 +65,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'content.processors.get_general',
             ],
         },
     },
@@ -126,3 +127,5 @@ MEDIA_ROOT = str(os.path.abspath(os.path.join(os.getcwd(), "uploads")))
 MEDIA_URL = '/media/'
 
 LOGIN_REDIRECT_URL = "/"
+
+MAIN_TITLE = "easyCCS"
