@@ -1,0 +1,12 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>Index</h1>
+<ul>
+    <li><a href="{% url "getSkills" %}">getSkills</a>: Lists all Skills and shows the required skills and content modules.</li>
+    <li><a href="{% url "getGraph" %}">getGraph</a>: shows a graph with the connections between the skills.</li>
+    <li><a href="{% url "getSkillGraph" %}">getSkillGraph</a>: An adaptable version of the get graph site.</li>
+</ul>
+
+{% endblock %}
