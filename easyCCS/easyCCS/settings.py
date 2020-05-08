@@ -55,7 +55,9 @@ ROOT_URLCONF = 'easyCCS.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+            ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -122,3 +124,5 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = str(os.path.abspath(os.path.join(os.getcwd(), "uploads")))
 MEDIA_URL = '/media/'
+
+LOGIN_REDIRECT_URL = "/"

@@ -1,3 +1,7 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
 <h1>SkillGraph</h1>
 
 {% if requiredSkills %}
@@ -20,3 +24,5 @@ End: {{endContent}}
     <input type="submit" value="Submit">
 
 </form>
+
+{% endblock %}
