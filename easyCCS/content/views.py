@@ -22,13 +22,7 @@ def getTree(request, skillId):
     # Get list of content objects
     co = getContentsForSkill(skillId)
 
-    names = Content.objects.filter(id__in=co)
-
-    print("Tree for", requiredSkill)
-    for name in names:
-        print(name)
-
-    return render(request, 'content/printTree.html', {"contents" : names, "skill": requiredSkill.skillName})
+    return render(request, 'content/printTree.html', {"contents" : co, "skill": requiredSkill.skillName})
 
 
 def getGraphJson(request):
@@ -77,8 +71,9 @@ def getGraph(request):
 def getSkillGraph(request):
     form = None
     targetSkill = None
-    knownSkillsObjects = None
     requiredContents = None
+
+    #TODO: rm known contents
 
     if request.method == "POST":
         form = ExtendedSkillForm(request.POST)
@@ -89,14 +84,10 @@ def getSkillGraph(request):
                 if form.cleaned_data[field.name]:
                     knownSkills.append(int(field.name.split("__")[1]))
 
-            knownSkillsObjects = Skill.objects.filter(pk__in=knownSkills)
 
-            co = list(dict.fromkeys(getContentsForSkill(targetSkill.id, knownSkills)))
+            co = getContentsForSkill(targetSkill.id, ignoreSkills=knownSkills)
 
-            # Rm known skills
-            co = [c for c in co if c not in knownSkills]
-
-            requiredContents = Content.objects.filter(id__in=co)
+            requiredContents = Content.objects.filter(id__in=[c.id for c in co])
     else:
         form = ExtendedSkillForm()
 
@@ -104,7 +95,6 @@ def getSkillGraph(request):
             {
                 "form" : form,
                 "targetSkill" : targetSkill,
-                "knownSkillsObjects" : knownSkillsObjects,
                 "requiredContents" : requiredContents,
             })
 
@@ -112,14 +102,14 @@ def getSkillGraph(request):
 def redirectToApp(request):
     return redirect("/content")
 
-def getContentsForSkill(skillId, knownContents = [], level=1):
+def getContentsForSkill(skillId, knownContents = [], level=1, ignoreSkills=[]):
     print(skillId, level)
     requiredContents = []
 
     content = Content.objects.filter(newSkills=skillId)
     for c in content:
         if c.id not in requiredContents:
-            requiredContents.append(c.id)
+            requiredContents.append(ContentObjectWithPrio(c.id, level, c))
 
     contentRequiredSkills = content.values_list("requiredSkills", flat=True).all()
 
@@ -128,7 +118,7 @@ def getContentsForSkill(skillId, knownContents = [], level=1):
             for nc in getContentsForSkill(o, requiredContents, level+1):
                 if nc not in requiredContents:
                     # add new content id
-                    requiredContents.append(nc)
+                    requiredContents.append(ContentObjectWithPrio(nc.id, nc.level, nc.content))
 
     return requiredContents
 
@@ -162,3 +152,58 @@ def getAdjacencyMatrix():
 
 
     return (names, nodes, adjMatrix)
+
+## Class for data and level representation
+class ContentObjectWithPrio(object):
+    def __init__(self, object_id, level=0, content=None):
+        self.id = object_id
+        self.level = level
+        self.content = content
+
+
+    def __repr__(self):
+        return "Content id: " + str(self.id) + " with level " + str(self.level) + " and content " + str(self.content)
+
+    def __lt__(self, other):
+        if not isinstance(other, ContentObjectWithPrio):
+            return NotImplemented
+
+        # Only the id of the object is important
+        return self.id < other.id
+
+    def __le__(self, other):
+        if not isinstance(other, ContentObjectWithPrio):
+            return NotImplemented
+
+        # Only the id of the object is important
+        return self.id <= other.id
+
+    def __eq__(self, other):
+        if not isinstance(other, ContentObjectWithPrio):
+            return NotImplemented
+
+        # Only the id of the object is important
+        return self.id == other.id
+
+    def __ne__(self, other):
+        if not isinstance(other, ContentObjectWithPrio):
+            return NotImplemented
+
+        # Only the id of the object is important
+        return self.id != other.id
+
+    def __gt__(self, other):
+        if not isinstance(other, ContentObjectWithPrio):
+            return NotImplemented
+
+        # Only the id of the object is important
+        return self.id > other.id
+
+    def __ge__(self, other):
+        if not isinstance(other, ContentObjectWithPrio):
+            return NotImplemented
+
+        # Only the id of the object is important
+        return self.id >= other.id
+
+

@@ -7,16 +7,18 @@
  <table style="width:100%">
   <tr>
     <th>Content</th>
+    <th>Content level</th>
     <th>Required Skills</th>
     <th>New Skills</th>
   </tr>
   {% for content in contents %}
   <tr>
-      <td>{{ content.contentName}}</td>
+      <td>{{ content.content.contentName}}</td>
+      <td>{{ content.level }}</td>
       <td>
-          {% if content.requiredSkills.all %}
+          {% if content.content.requiredSkills.all %}
           <ul>
-              {% for req in content.requiredSkills.all %}
+              {% for req in content.content.requiredSkills.all %}
               <li> {{ req.skillName }}</li>
               {% endfor %}
           </ul>
@@ -25,7 +27,7 @@
           {% endif %}
       </td>
       <td><ul>
-              {% for req in content.newSkills.all %}
+              {% for req in content.content.newSkills.all %}
               <li> {{ req.skillName }}</li>
               {% endfor %}
       </ul></td>
