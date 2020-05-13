@@ -19,8 +19,8 @@ def getSkills(request):
 def getTree(request, skillId):
     requiredSkill = Skill.objects.get(pk=skillId)
 
-    # Also remove dups
-    co = list(dict.fromkeys(getContentsForSkill(skillId)))
+    # Get list of content objects
+    co = getContentsForSkill(skillId)
 
     names = Content.objects.filter(id__in=co)
 
@@ -112,18 +112,23 @@ def getSkillGraph(request):
 def redirectToApp(request):
     return redirect("/content")
 
-def getContentsForSkill(skillId, knownContents = []):
+def getContentsForSkill(skillId, knownContents = [], level=1):
+    print(skillId, level)
     requiredContents = []
 
     content = Content.objects.filter(newSkills=skillId)
     for c in content:
-        requiredContents.append(c.id)
+        if c.id not in requiredContents:
+            requiredContents.append(c.id)
 
     contentRequiredSkills = content.values_list("requiredSkills", flat=True).all()
 
     for o in contentRequiredSkills:
         if o and o not in knownContents:
-            requiredContents += getContentsForSkill(o, requiredContents)
+            for nc in getContentsForSkill(o, requiredContents, level+1):
+                if nc not in requiredContents:
+                    # add new content id
+                    requiredContents.append(nc)
 
     return requiredContents
 
