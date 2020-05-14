@@ -85,9 +85,7 @@ def getSkillGraph(request):
                     knownSkills.append(int(field.name.split("__")[1]))
 
 
-            co = getContentsForSkill(targetSkill.id, ignoreSkills=knownSkills)
-
-            requiredContents = Content.objects.filter(id__in=[c.id for c in co])
+            requiredContents = getContentsForSkill(targetSkill.id, ignoreSkills=knownSkills)
     else:
         form = ExtendedSkillForm()
 
@@ -102,28 +100,34 @@ def getSkillGraph(request):
 def redirectToApp(request):
     return redirect("/content")
 
+
+## Helpers
+
+## Get Content objects for required skill
 def getContentsForSkill(skillId, knownContents = [], level=1, ignoreSkills=[]):
-    print(skillId, level)
-    requiredContents = []
+    newContents = []
+
+    if skillId in ignoreSkills:
+        return None
 
     content = Content.objects.filter(newSkills=skillId)
+
     for c in content:
-        if c.id not in requiredContents:
-            requiredContents.append(ContentObjectWithPrio(c.id, level, c))
+        if c.id not in knownContents and c.id not in newContents:
+            newContents.append(ContentObjectWithPrio(c.id, level, c))
 
     contentRequiredSkills = content.values_list("requiredSkills", flat=True).all()
 
     for o in contentRequiredSkills:
-        if o and o not in knownContents:
-            for nc in getContentsForSkill(o, requiredContents, level+1):
-                if nc not in requiredContents:
-                    # add new content id
-                    requiredContents.append(ContentObjectWithPrio(nc.id, nc.level, nc.content))
+        if o and o in ignoreSkills:
+            continue
+        for nc in getContentsForSkill(o, knownContents + newContents, level+1, ignoreSkills=ignoreSkills):
+            if nc and nc not in newContents and nc not in knownContents:
+                # add new content id
+                newContents.append(ContentObjectWithPrio(nc.id, nc.level, nc.content))
 
-    return requiredContents
+    return newContents
 
-
-## Helpers
 
 # Get an adjacency matrix based on all skills / content objects
 def getAdjacencyMatrix():
@@ -150,8 +154,8 @@ def getAdjacencyMatrix():
     for node in nodes:
         names[node] = Content.objects.filter(pk=node).get().contentName
 
-
     return (names, nodes, adjMatrix)
+
 
 ## Class for data and level representation
 class ContentObjectWithPrio(object):
@@ -159,7 +163,6 @@ class ContentObjectWithPrio(object):
         self.id = object_id
         self.level = level
         self.content = content
-
 
     def __repr__(self):
         return "Content id: " + str(self.id) + " with level " + str(self.level) + " and content " + str(self.content)
