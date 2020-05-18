@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from django.urls import reverse
+from django.db.models.query import QuerySet
 
 import numpy as np
 
 from .models import Skill, Content
-from .forms import SkillForm, ExtendedSkillForm
+from .forms import ExtendedSkillForm
 
 def index(request):
     return render(request, "content/index.html", {"title" : "Overview"})
@@ -70,29 +71,26 @@ def getGraph(request):
 
 def getSkillGraph(request):
     form = None
-    targetSkill = None
+    targetSkills = None
     requiredContents = None
 
-    #TODO: rm known contents
 
     if request.method == "POST":
         form = ExtendedSkillForm(request.POST)
         if form.is_valid():
-            targetSkill = Skill.objects.filter(pk=int(form.cleaned_data["requiredSkill"]))[0] # get or 404
-            knownSkills = []
-            for field in form.getSkillFields():
-                if form.cleaned_data[field.name]:
-                    knownSkills.append(int(field.name.split("__")[1]))
+            targetSkills = Skill.objects.filter(pk__in = form.cleaned_data["required_skills"])
+
+            knownSkills = Skill.objects.filter(pk__in = form.cleaned_data["known_skills"]).values_list("id", flat=True)
 
 
-            requiredContents = getContentsForSkill(targetSkill.id, ignoreSkills=knownSkills)
+            requiredContents = getContentsForSkill(targetSkills, ignoreSkills=knownSkills)
     else:
         form = ExtendedSkillForm()
 
     return render(request, "content/skillGraph.html",
             {
                 "form" : form,
-                "targetSkill" : targetSkill,
+                "targetSkills" : targetSkills,
                 "requiredContents" : requiredContents,
             })
 
@@ -106,6 +104,17 @@ def redirectToApp(request):
 ## Get Content objects for required skill
 def getContentsForSkill(skillId, knownContents = [], level=1, ignoreSkills=[]):
     newContents = []
+
+    if isinstance(skillId, QuerySet):
+        for skill in skillId:
+            if skill.id in ignoreSkills:
+                return None
+            for nc in getContentsForSkill(skill.id, knownContents, level, ignoreSkills):
+                if nc and nc not in newContents and nc not in knownContents:
+                    newContents.append(nc)
+        return newContents
+
+
 
     if skillId in ignoreSkills:
         return None

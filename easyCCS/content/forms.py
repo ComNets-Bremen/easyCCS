@@ -2,53 +2,21 @@ from django import forms
 
 from .models import Skill, Content
 
-class SkillForm(forms.Form):
-
-    contents = [(c.id, c.contentName) for c in Content.objects.all()]
-    contents.sort()
-
-    endContent = forms.CharField(
-            label="End content",
-            widget=forms.Select(choices=contents)
-            )
-
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        skills = Skill.objects.all()
-
-        for skill in skills:
-            field_name = "skill__" + str(skill.id)
-            self.fields[field_name] = forms.BooleanField(
-                    required=False,
-                    label=skill.skillName
-                    )
-
-    def getSkillFields(self):
-        for fname in self.fields:
-            if fname.startswith('skill__'):
-                yield self[fname]
-
-
+# Form to select required and already known skills
 class ExtendedSkillForm(forms.Form):
     skills = Skill.objects.all()
 
-    requiredSkill = forms.CharField(
-            label="Required Skill",
-            widget=forms.Select(choices=[(s.id, s.skillName) for s in skills])
+    required_skills = forms.MultipleChoiceField(
+            choices = [(s.id, s.skillName) for s in skills],
+            label = "Required Skills",
+            required = True,
+            widget = forms.CheckboxSelectMultiple(),
             )
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for skill in self.skills:
-            field_name = "skill__" + str(skill.id)
-            self.fields[field_name] = forms.BooleanField(
-                    required=False,
-                    label=skill.skillName,
-                    )
+    known_skills = forms.MultipleChoiceField(
+            choices = [(s.id, s.skillName) for s in skills],
+            label = "Known Skills",
+            required = False,
+            widget = forms.CheckboxSelectMultiple(),
+            )
 
-    def getSkillFields(self):
-        for fname in self.fields:
-            if fname.startswith("skill__"):
-                yield self[fname]
