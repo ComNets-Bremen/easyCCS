@@ -2,11 +2,28 @@
 
 {% block content %}
 
-<h1>Index</h1>
+<h1>Index / Implemented functions</h1>
 <ul>
     <li><a href="{% url "getSkills" %}">getSkills</a>: Lists all Skills and shows the required skills and content modules.</li>
     <li><a href="{% url "getGraph" %}">getGraph</a>: shows a graph with the connections between the skills.</li>
     <li><a href="{% url "getSkillGraph" %}">getSkillGraph</a>: An adaptable version of the get graph site.</li>
+</ul>
+
+
+<h1>Ideas / further readings</h1>
+<ul>
+    <li>
+        Structured data for skill description, <a href="http://www.wikidata.org" target="_blank">wikidata.org</a>, <a href="https://www.mediawiki.org/wiki/Wikibase/DataModel/JSON" target="_blank">JSON data model description</a>, <a href="https://www.mediawiki.org/wiki/Wikibase/DataModel" target="_blank">Data model (draft)</a>
+    </li>
+
+    <li>
+        <a href="https://observablehq.com/@d3/gallery" target="_blank">D3js graph gallery</a>, <a href="https://bl.ocks.org/d3noob/8375092" target="_blank">Tree example</a>
+    </li>
+
+    <li>
+        <a href="https://de.wikipedia.org/wiki/Reusable_Learning_Object" target="_blank">Reusable learning objects (wiki)</a>
+
+    </li>
 </ul>
 
 {% endblock %}
