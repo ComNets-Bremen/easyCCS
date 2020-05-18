@@ -6,6 +6,8 @@ import os
 import uuid
 import datetime
 
+from django.urls import reverse
+
 # Create your models here.
 
 def getFilePath(instance, filename):
@@ -45,6 +47,10 @@ class Skill(models.Model):
             returnString += " (Alias for " + str(self.isAliasFor.skillName) + ")"
 
         return returnString
+
+
+    def get_absolute_url(self):
+        return reverse("detailSkill", args=[str(self.id)])
 
 
 class Content(models.Model):
