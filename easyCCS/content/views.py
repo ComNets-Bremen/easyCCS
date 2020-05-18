@@ -1,7 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.db.models.query import QuerySet
+
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 
 import numpy as np
 
@@ -94,6 +98,79 @@ def getSkillGraph(request):
                 "requiredContents" : requiredContents,
             })
 
+
+class SkillListView(ListView):
+    model = Skill
+    paginate_by = 50
+    title = "Skills"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if not "title" in context:
+            context["title"] = self.title
+        return context
+
+class SkillDetailView(DetailView):
+    model = Skill
+    title = "Skill detail view"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if not "title" in context:
+            context["title"] = self.title
+        return context
+
+
+
+
+class SkillCreate(CreateView):
+    model = Skill
+    fields = ["skillName","isAliasFor"]
+    title = "Add new skill"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if not "title" in context:
+            context["title"] = self.title
+        return context
+
+class SkillUpdate(UpdateView):
+    model = Skill
+    fields = ["skillName", "isAliasFor"]
+    title = "Change Skill"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if not "title" in context:
+            context["title"] = self.title
+        return context
+
+class SkillDelete(DeleteView):
+    model = Skill
+    title = "Delete Skill"
+    success_url = reverse_lazy("listSkills")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if not "title" in context:
+            context["title"] = self.title
+        return context
+
+
+
+
+class ContentCreate(CreateView):
+    model = Content
+    fields = ["contentName", "contentDescription", "requiredSkills", "newSkills"]
+    title = "Add new content"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if not "title" in context:
+            context["title"] = self.title
+        return context
+
+
 # Redirect to the app
 def redirectToApp(request):
     return redirect("/content")
@@ -104,6 +181,8 @@ def redirectToApp(request):
 ## Get Content objects for required skill
 def getContentsForSkill(skillId, knownContents = [], level=1, ignoreSkills=[]):
     newContents = []
+
+    # Got query set as parameter, iterate and call again
 
     if isinstance(skillId, QuerySet):
         for skill in skillId:
