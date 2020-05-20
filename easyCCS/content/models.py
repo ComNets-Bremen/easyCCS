@@ -48,7 +48,7 @@ class Skill(models.Model):
 
         return returnString
 
-
+    # Get link to detail view
     def get_absolute_url(self):
         return reverse("detailSkill", args=[str(self.id)])
 
@@ -72,6 +72,10 @@ class Content(models.Model):
             returnString += " (No content added)"
 
         return returnString
+
+    # Get link to detail view
+    def get_absolute_url(self):
+        return reverse("detailContent", args=[str(self.id)])
 
 
 # Signals etc. for file handling

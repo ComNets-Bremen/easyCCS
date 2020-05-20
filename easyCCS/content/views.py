@@ -120,9 +120,6 @@ class SkillDetailView(DetailView):
             context["title"] = self.title
         return context
 
-
-
-
 class SkillCreate(CreateView):
     model = Skill
     fields = ["skillName","isAliasFor"]
@@ -138,6 +135,7 @@ class SkillUpdate(UpdateView):
     model = Skill
     fields = ["skillName", "isAliasFor"]
     title = "Change Skill"
+    template_name = "content/generic_form.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -149,6 +147,7 @@ class SkillDelete(DeleteView):
     model = Skill
     title = "Delete Skill"
     success_url = reverse_lazy("listSkills")
+    template_name = "content/generic_confirm_delete.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -157,7 +156,26 @@ class SkillDelete(DeleteView):
         return context
 
 
+class ContentListView(ListView):
+    model = Content
+    paginate_by = 50
+    title = "Contents"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if not "title" in context:
+            context["title"] = self.title
+        return context
+
+class ContentDetailView(DetailView):
+    model = Content
+    title = "Content detail view"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if not "title" in context:
+            context["title"] = self.title
+        return context
 
 class ContentCreate(CreateView):
     model = Content
@@ -169,6 +187,32 @@ class ContentCreate(CreateView):
         if not "title" in context:
             context["title"] = self.title
         return context
+
+
+class ContentUpdate(UpdateView):
+    model = Content
+    fields = ["contentName",]
+    title = "Change Content"
+    template_name = "content/generic_form.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if not "title" in context:
+            context["title"] = self.title
+        return context
+
+class ContentDelete(DeleteView):
+    model = Content
+    title = "Delete Content"
+    success_url = reverse_lazy("listContents")
+    template_name = "content/generic_confirm_delete.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if not "title" in context:
+            context["title"] = self.title
+        return context
+
 
 
 # Redirect to the app
