@@ -124,6 +124,7 @@ class SkillCreate(CreateView):
     model = Skill
     fields = ["skillName","isAliasFor"]
     title = "Add new skill"
+    template_name = "content/generic_form.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -181,6 +182,7 @@ class ContentCreate(CreateView):
     model = Content
     fields = ["contentName", "contentDescription", "requiredSkills", "newSkills"]
     title = "Add new content"
+    template_name = "content/generic_form.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -191,7 +193,7 @@ class ContentCreate(CreateView):
 
 class ContentUpdate(UpdateView):
     model = Content
-    fields = ["contentName",]
+    fields = ["contentName", "contentDescription", "requiredSkills", "newSkills"]
     title = "Change Content"
     template_name = "content/generic_form.html"
 

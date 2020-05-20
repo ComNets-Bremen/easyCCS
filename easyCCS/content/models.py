@@ -8,7 +8,6 @@ import datetime
 
 from django.urls import reverse
 
-# Create your models here.
 
 def getFilePath(instance, filename):
     filename = "%s_%s" % (uuid.uuid4(), filename)
@@ -29,6 +28,23 @@ class Skill(models.Model):
             blank=True
             )
 
+    class Meta:
+        ordering = ["-id"]
+
+
+    def __str__(self):
+        returnString = self.skillName
+
+        if self.isAlias():
+            returnString += " (Alias for " + str(self.isAliasFor.skillName) + ")"
+
+        return returnString
+
+
+    # Get link to detail view
+    def get_absolute_url(self):
+        return reverse("detailSkill", args=[str(self.id)])
+
     def isAlias(self):
         if self.isAliasFor and self.isAliasFor != "":
             return True
@@ -40,18 +56,6 @@ class Skill(models.Model):
         else:
             return self
 
-    def __str__(self):
-        returnString = self.skillName
-
-        if self.isAlias():
-            returnString += " (Alias for " + str(self.isAliasFor.skillName) + ")"
-
-        return returnString
-
-    # Get link to detail view
-    def get_absolute_url(self):
-        return reverse("detailSkill", args=[str(self.id)])
-
 
 class Content(models.Model):
     contentName = models.CharField(max_length=200)
@@ -61,6 +65,9 @@ class Content(models.Model):
     newSkills = models.ManyToManyField("Skill", blank=True, related_name="skills_new")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["-id"]
 
 
     def __str__(self):
@@ -72,6 +79,7 @@ class Content(models.Model):
             returnString += " (No content added)"
 
         return returnString
+
 
     # Get link to detail view
     def get_absolute_url(self):
