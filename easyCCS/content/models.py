@@ -20,8 +20,8 @@ def deleteBinaryFile(instance):
             os.remove(instance.path)
 
 class Skill(models.Model):
-    skillName = models.CharField(max_length=200)
-    isAliasFor = models.ForeignKey(
+    skill_name = models.CharField(max_length=200)
+    is_alias_for = models.ForeignKey(
             "self",
             on_delete=models.SET_NULL,
             null=True,
@@ -33,10 +33,10 @@ class Skill(models.Model):
 
 
     def __str__(self):
-        returnString = self.skillName
+        returnString = self.skill_name
 
         if self.isAlias():
-            returnString += " (Alias for " + str(self.isAliasFor.skillName) + ")"
+            returnString += " (Alias for " + str(self.is_alias_for.skill_name) + ")"
 
         return returnString
 
@@ -46,23 +46,23 @@ class Skill(models.Model):
         return reverse("detailSkill", args=[str(self.id)])
 
     def isAlias(self):
-        if self.isAliasFor and self.isAliasFor != "":
+        if self.is_alias_for and self.is_alias_for != "":
             return True
         return False
 
     def getBaseSkill(self):
         if self.isAlias():
-            return self.isAliasFor
+            return self.is_alias_for
         else:
             return self
 
 
 class Content(models.Model):
-    contentName = models.CharField(max_length=200)
-    contentDescription = models.TextField()
-    binaryContent = models.FileField(upload_to=getFilePath, null=True, blank=True)
-    requiredSkills = models.ManyToManyField("Skill", blank=True, related_name="skills_required")
-    newSkills = models.ManyToManyField("Skill", blank=True, related_name="skills_new")
+    content_name = models.CharField(max_length=200)
+    content_description = models.TextField()
+    binary_content = models.FileField(upload_to=getFilePath, null=True, blank=True)
+    required_skills = models.ManyToManyField("Skill", blank=True, related_name="skills_required")
+    new_skills = models.ManyToManyField("Skill", blank=True, related_name="skills_new")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -71,11 +71,11 @@ class Content(models.Model):
 
 
     def __str__(self):
-        skills = [skill.skillName for skill in self.newSkills.all()]
-        returnString = "\"" + str(self.contentName) + "\""
+        skills = [skill.skill_name for skill in self.new_skills.all()]
+        returnString = "\"" + str(self.content_name) + "\""
         if len(skills) >0:
             returnString += " teaches the skills " + str(", ".join(skills))
-        if self.binaryContent == None or self.binaryContent == "":
+        if self.binary_content == None or self.binary_content == "":
             returnString += " (No content added)"
 
         return returnString
@@ -93,7 +93,7 @@ def auto_delete_file_on_delete(sender, instance, **kwargs):
     """
     sync file system to db: rm files if file field is set to blank
     """
-    deleteBinaryFile(instance.binaryContent)
+    deleteBinaryFile(instance.binary_content)
 
 @receiver(models.signals.pre_save, sender=Content)
 def auto_delete_file_on_change(sender, instance, **kwargs):
@@ -103,8 +103,8 @@ def auto_delete_file_on_change(sender, instance, **kwargs):
     if not instance.pk:
         return False
 
-    old_file = sender.objects.get(pk=instance.pk).binaryContent
+    old_file = sender.objects.get(pk=instance.pk).binary_content
 
-    new_file = instance.binaryContent
+    new_file = instance.binary_content
     if not old_file == new_file:
         deleteBinaryFile(old_file)

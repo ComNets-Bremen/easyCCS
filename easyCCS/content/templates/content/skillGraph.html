@@ -6,7 +6,7 @@
 {% if requiredContents %}
 <h2>Resulting graph for target skill{% if targetSkills|length > 1 %}s{%endif%}
     {% for skill in targetSkills %}
-        <i>{{skill.skillName}}</i>
+        <i>{{skill.skill_name}}</i>
         {% if forloop.last %}
         {% else %}
         , 
@@ -26,13 +26,13 @@
 
 {% for content in requiredContents %}
   <tr>
-      <td>{{ content.content.contentName}}</td>
+      <td>{{ content.content.content_name}}</td>
       <td>{{ content.level }}</td>
       <td>
           {% if content.content.requiredSkills.all %}
           <ul>
               {% for req in content.content.requiredSkills.all %}
-              <li> {{ req.skillName }}</li>
+              <li> {{ req.skill_name }}</li>
               {% endfor %}
           </ul>
           {% else %}
@@ -41,7 +41,7 @@
       </td>
       <td><ul>
               {% for req in content.content.newSkills.all %}
-              <li> {{ req.skillName }}</li>
+              <li> {{ req.skill_name }}</li>
               {% endfor %}
       </ul></td>
   </tr>

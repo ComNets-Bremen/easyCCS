@@ -8,7 +8,7 @@
 <table style="width:100%">
 {% for o in object_list %}
 <tr>
-    <td><a href="{% url "detailContent" o.id %}">{{ o.contentName }}</a></td>
+    <td><a href="{% url "detailContent" o.id %}">{{ o.content_name }}</a></td>
     <td><a href="{% url "updateContent" o.id %}">Edit</a></td>
     <td><a href="{% url "deleteContent" o.id %}">Delete</a></td>
 </tr>

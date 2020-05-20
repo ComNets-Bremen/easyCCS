@@ -11,11 +11,11 @@ class SkillAdmin(admin.ModelAdmin):
         )
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "isAliasFor":
+        if db_field.name == "is_alias_for":
             if hasattr(self, "object_id"):
-                kwargs["queryset"] =  Skill.objects.filter(isAliasFor=None).exclude(pk=self.object_id)
+                kwargs["queryset"] =  Skill.objects.filter(is_alias_for=None).exclude(pk=self.object_id)
             else:
-                kwargs["queryset"] =  Skill.objects.filter(isAliasFor=None)
+                kwargs["queryset"] =  Skill.objects.filter(is_alias_for=None)
 
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 

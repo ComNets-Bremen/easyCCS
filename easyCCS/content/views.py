@@ -27,7 +27,7 @@ def getTree(request, skillId):
     # Get list of content objects
     co = getContentsForSkill(skillId)
 
-    return render(request, 'content/printTree.html', {"contents" : co, "skill": requiredSkill.skillName})
+    return render(request, 'content/printTree.html', {"contents" : co, "skill": requiredSkill.skill_name})
 
 
 def getGraphJson(request):
@@ -38,18 +38,18 @@ def getGraphJson(request):
     for c in Content.objects.all():
         returnObject["nodes"].append({
             "id" : c.id,
-            "name" : str(c.contentName),
+            "name" : str(c.content_name),
             "label": ""
             })
 
         # Get all skills pointing to this Content
-        for requiredSkill in c.requiredSkills.all():
-            containingSkillContentObjects = Content.objects.filter(newSkills = requiredSkill)
+        for requiredSkill in c.required_skills.all():
+            containingSkillContentObjects = Content.objects.filter(new_skills = requiredSkill)
             for cs in containingSkillContentObjects:
                 returnObject["links"].append({
                     "source" : cs.id,
                     "target" : c.id,
-                    "type" : requiredSkill.skillName
+                    "type" : requiredSkill.skill_name
                     })
 
     # fill unhandled skills
@@ -122,7 +122,7 @@ class SkillDetailView(DetailView):
 
 class SkillCreate(CreateView):
     model = Skill
-    fields = ["skillName","isAliasFor"]
+    fields = ["skill_name","is_alias_for"]
     title = "Add new skill"
     template_name = "content/generic_form.html"
 
@@ -134,7 +134,7 @@ class SkillCreate(CreateView):
 
 class SkillUpdate(UpdateView):
     model = Skill
-    fields = ["skillName", "isAliasFor"]
+    fields = ["skill_name", "is_alias_for"]
     title = "Change Skill"
     template_name = "content/generic_form.html"
 
@@ -180,7 +180,7 @@ class ContentDetailView(DetailView):
 
 class ContentCreate(CreateView):
     model = Content
-    fields = ["contentName", "contentDescription", "requiredSkills", "newSkills"]
+    fields = ["content_name", "content_description", "required_skills", "new_skills"]
     title = "Add new content"
     template_name = "content/generic_form.html"
 
@@ -193,7 +193,7 @@ class ContentCreate(CreateView):
 
 class ContentUpdate(UpdateView):
     model = Content
-    fields = ["contentName", "contentDescription", "requiredSkills", "newSkills"]
+    fields = ["content_name", "content_description", "required_skills", "new_skills"]
     title = "Change Content"
     template_name = "content/generic_form.html"
 
@@ -244,13 +244,13 @@ def getContentsForSkill(skillId, knownContents = [], level=1, ignoreSkills=[]):
     if skillId in ignoreSkills:
         return None
 
-    content = Content.objects.filter(newSkills=skillId)
+    content = Content.objects.filter(new_skills=skillId)
 
     for c in content:
         if c.id not in knownContents and c.id not in newContents:
             newContents.append(ContentObjectWithPrio(c.id, level, c))
 
-    contentRequiredSkills = content.values_list("requiredSkills", flat=True).all()
+    contentRequiredSkills = content.values_list("required_skills", flat=True).all()
 
     for o in contentRequiredSkills:
         if o and o in ignoreSkills:
@@ -273,11 +273,11 @@ def getAdjacencyMatrix():
     adjMatrix = np.zeros((len(nodes), len(nodes)), dtype=int)
 
     for node in nodes:
-        requiredSkills = Content.objects.filter(pk=node).values("requiredSkills")
+        requiredSkills = Content.objects.filter(pk=node).values("required_skills")
         for skill in requiredSkills:
             teachesSkills = sorted(
                     Content.objects.filter(
-                        newSkills=skill["requiredSkills"]
+                        newSkills=skill["required_skills"]
                         ).values_list("id", flat=True)
                     )
             for teachesSkill in teachesSkills:
@@ -286,7 +286,7 @@ def getAdjacencyMatrix():
     # Get the names
     names = dict()
     for node in nodes:
-        names[node] = Content.objects.filter(pk=node).get().contentName
+        names[node] = Content.objects.filter(pk=node).get().content_name
 
     return (names, nodes, adjMatrix)
 

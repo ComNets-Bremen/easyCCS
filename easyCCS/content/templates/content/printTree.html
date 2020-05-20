@@ -13,13 +13,13 @@
   </tr>
   {% for content in contents %}
   <tr>
-      <td>{{ content.content.contentName}}</td>
+      <td>{{ content.content.content_name}}</td>
       <td>{{ content.level }}</td>
       <td>
           {% if content.content.requiredSkills.all %}
           <ul>
               {% for req in content.content.requiredSkills.all %}
-              <li> {{ req.skillName }}</li>
+              <li> {{ req.skill_name }}</li>
               {% endfor %}
           </ul>
           {% else %}
@@ -28,7 +28,7 @@
       </td>
       <td><ul>
               {% for req in content.content.newSkills.all %}
-              <li> {{ req.skillName }}</li>
+              <li> {{ req.skill_name }}</li>
               {% endfor %}
       </ul></td>
   </tr>

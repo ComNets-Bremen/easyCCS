@@ -8,7 +8,7 @@
 <table style="width:100%">
 {% for skill in object_list %}
 <tr>
-    <td><a href="{% url "detailSkill" skill.id %}">{{ skill.skillName }}</a></td>
+    <td><a href="{% url "detailSkill" skill.id %}">{{ skill.skill_name }}</a></td>
     <td><a href="{% url "updateSkill" skill.id %}">Edit</a></td>
     <td><a href="{% url "deleteSkill" skill.id %}">Delete</a></td>
 </tr>
