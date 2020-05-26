@@ -5,7 +5,8 @@ from .models import Skill, Content
 # Form to select required and already known skills
 class ExtendedSkillForm(forms.Form):
 
-    ## Create fields in init method
+    ## Create fields in init method. Direct definition will let the
+    # migration fail
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
