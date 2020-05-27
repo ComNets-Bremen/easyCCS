@@ -32,7 +32,7 @@
           {% if content.content.required_skills.all %}
           <ul>
               {% for req in content.content.required_skills.all %}
-              <li> {{ req.skill_name }}</li>
+              <li  {% if req.id in knownSkills %} class="text-secondary" {% else %} class="text-success" {% endif %}> {{ req.skill_name }}</li>
               {% endfor %}
           </ul>
           {% else %}
@@ -40,8 +40,8 @@
           {% endif %}
       </td>
       <td><ul>
-              {% for req in content.content.new_skills.all %}
-              <li> {{ req.skill_name }}</li>
+              {% for new in content.content.new_skills.all %}
+              <li> {{ new.skill_name }}</li>
               {% endfor %}
       </ul></td>
   </tr>
@@ -49,6 +49,11 @@
 {% endfor %}
 
  </table>
+ <h3>Colors in graph / table</h3>
+ <ul>
+     <li class="text-secondary">Skill marked as known by user</li>
+     <li class="text-success">Skill found by algorithm</li>
+ </ul>
 
 {% else %}
 <p>No content modules found</p>

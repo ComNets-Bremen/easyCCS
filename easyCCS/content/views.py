@@ -77,6 +77,7 @@ def getSkillGraph(request):
     form = None
     targetSkills = None
     requiredContents = None
+    knownSkills = None
 
 
     if request.method == "POST":
@@ -96,6 +97,7 @@ def getSkillGraph(request):
                 "form" : form,
                 "targetSkills" : targetSkills,
                 "requiredContents" : requiredContents,
+                "knownSkills" : knownSkills,
             })
 
 
@@ -238,7 +240,6 @@ def getContentsForSkill(skillId, knownContents = [], level=1, ignoreSkills=[]):
                 if nc and nc not in newContents and nc not in knownContents:
                     newContents.append(nc)
         return newContents
-
 
 
     if skillId in ignoreSkills:
