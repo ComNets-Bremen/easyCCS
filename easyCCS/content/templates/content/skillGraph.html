@@ -1,5 +1,11 @@
 {% extends "base_generic.html" %}
 
+{% if jsonSkills %}
+{% block add_head %}
+{% include "content/d3-head.html" %}
+{% endblock %}
+{% endif %}
+
 {% block content %}
 <h1>SkillGraph</h1>
 
@@ -54,6 +60,16 @@
      <li class="text-secondary">Skill marked as known by user</li>
      <li class="text-success">Skill found by algorithm</li>
  </ul>
+
+ {% if jsonSkills %}
+ <script>
+     var levels = {{ jsonSkills|safe }};
+{% include "content/subtemplate-graph.html" %}
+
+ </script>
+ <div id="graph"></div>
+ <script>createGraph();</script>
+ {% endif %}
 
 {% else %}
 <p>No content modules found</p>
