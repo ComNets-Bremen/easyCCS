@@ -7,6 +7,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 
+from django.contrib.auth.decorators import login_required
+
 import numpy as np
 
 from .models import Skill, Content
@@ -14,15 +16,16 @@ from .forms import ExtendedSkillForm
 
 import json
 
+@login_required
 def index(request):
     return render(request, "content/index.html", {"title" : "Overview"})
 
-
+@login_required
 def getSkills(request):
     skills = Skill.objects
     return render(request, 'content/skillOverview.html', {'skills':skills})
 
-
+@login_required
 def getTree(request, skillId):
     requiredSkill = Skill.objects.get(pk=skillId)
 
@@ -31,7 +34,7 @@ def getTree(request, skillId):
 
     return render(request, 'content/printTree.html', {"contents" : co, "skill": requiredSkill.skill_name})
 
-
+@login_required
 def getGraphJson(request):
     returnObject = dict()
     returnObject["nodes"] = list()
@@ -71,10 +74,12 @@ def getGraphJson(request):
 
     return JsonResponse(returnObject)
 
+@login_required
 def getGraph(request):
     return render(request, 'content/d3graph.html', {"jsonUrl":reverse("getGraphJson")})
 
 
+@login_required
 def getSkillGraph(request):
     form = None
     targetSkills = None
@@ -189,7 +194,6 @@ class SkillDelete(DeleteView):
             context["title"] = self.title
         return context
 
-
 class ContentListView(ListView):
     model = Content
     paginate_by = 50
@@ -223,7 +227,6 @@ class ContentCreate(CreateView):
             context["title"] = self.title
         return context
 
-
 class ContentUpdate(UpdateView):
     model = Content
     fields = ["content_name", "content_description", "required_skills", "new_skills"]
@@ -235,6 +238,7 @@ class ContentUpdate(UpdateView):
         if not "title" in context:
             context["title"] = self.title
         return context
+
 
 class ContentDelete(DeleteView):
     model = Content
