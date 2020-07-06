@@ -95,28 +95,29 @@ def getSkillGraph(request):
             requiredContents = getContentsForSkill(targetSkills, ignoreSkills=knownSkills)
 
 
-            # Get the levels and the connections aka parents
 
-            jsonSkills = list() # results
-            checkLevel = 1      # Start checking at level 1
-            foundOneLevel = True# Continue as long as we find at least one item for this level
+            if requiredContents:
+                # Get the levels and the connections aka parents
 
+                jsonSkills = list() # results
+                checkLevel = 1      # Start checking at level 1
+                foundOneLevel = True# Continue as long as we find at least one item for this level
 
-            while foundOneLevel: # iterate over levels
-                foundOneLevel = False # Didn't find anything till now
-                levelContents = list()
+                while foundOneLevel: # iterate over levels
+                    foundOneLevel = False # Didn't find anything till now
+                    levelContents = list()
 
-                for content in requiredContents: # Check if something at this level is available
-                    if content.level == checkLevel:
-                        foundOneLevel = True
-                        parents = [] # Find parents for this level
-                        for r_s in content.content.new_skills.all(): # Get required skill for this level
-                            for c in requiredContents:
-                                if r_s in c.content.required_skills.all(): # Check for all other required contents if this skill is required.
-                                    parents.append(c.id)
-                        levelContents.append({"id" : content.id, "name" : content.content.content_name, "parents" : parents}) # Store data for json object
-                checkLevel += 1
-                jsonSkills.append(levelContents)
+                    for content in requiredContents: # Check if something at this level is available
+                        if content.level == checkLevel:
+                            foundOneLevel = True
+                            parents = [] # Find parents for this level
+                            for r_s in content.content.new_skills.all(): # Get required skill for this level
+                                for c in requiredContents:
+                                    if r_s in c.content.required_skills.all(): # Check for all other required contents if this skill is required.
+                                        parents.append(c.id)
+                            levelContents.append({"id" : content.id, "name" : content.content.content_name, "parents" : parents}) # Store data for json object
+                    checkLevel += 1
+                    jsonSkills.append(levelContents)
 
     else:
         form = ExtendedSkillForm()
