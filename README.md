@@ -3,6 +3,18 @@ easyCCS
 
 An easy to use content curation tool
 
+venv tools
+==========
+
+- `pip3 install Django`
+- `pip3 install numpy`
+
+
+after installing
+================
+
+- `./manage.py migrate`
+- `./manage.py createsuperuser`
 
 TODO
 ====
