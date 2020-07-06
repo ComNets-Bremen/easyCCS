@@ -30,7 +30,8 @@ ALLOWED_HOSTS = [
         "::1",
         "localhost",
         "192.168.222.11"
-        "134.102.137.104"
+        "134.102.137.104",
+        "easyccs.comnets.uni-bremen.de"
         ]
 
 
