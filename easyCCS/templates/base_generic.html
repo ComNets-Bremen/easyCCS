@@ -62,7 +62,15 @@
               <a class="dropdown-item" href="{% url 'listContents' %}">Manage Content</a>
               <a class="dropdown-item" href="{% url 'listSkills' %}">Manage Skills</a>
             </div>
+        </li>
 
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="dropdown-01" href="#", data-toggle="dropdown", aria-haspopup="true" aria-expand="false">Data representation</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown-01">
+              <a class="dropdown-item" href="{% url 'getGraph' %}">Complete graph</a>
+              <a class="dropdown-item" href="{% url 'getSkillGraph' %}">Selectable Skill Graph</a>
+              <a class="dropdown-item" href="{% url 'getSkills' %}">Get Skill dependencies (static)</a>
+            </div>
         </li>
 
           <li class="nav-item">
