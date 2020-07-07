@@ -164,11 +164,16 @@ class SkillCreate(CreateView):
     title = "Add new skill"
     template_name = "content/generic_form.html"
 
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if not "title" in context:
             context["title"] = self.title
         return context
+
+    def get_success_url(self):
+        return reverse('listSkills')
+
 
 class SkillUpdate(UpdateView):
     model = Skill
@@ -226,6 +231,9 @@ class ContentCreate(CreateView):
         if not "title" in context:
             context["title"] = self.title
         return context
+
+    def get_success_url(self):
+        return reverse('listContents')
 
 class ContentUpdate(UpdateView):
     model = Content
