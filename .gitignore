@@ -192,3 +192,7 @@ tags
 .vim
 
 # End of https://www.gitignore.io/api/vim,django,python
+
+# Ignore local settings
+easyCCS/easyCCS/settings_local.py
+
