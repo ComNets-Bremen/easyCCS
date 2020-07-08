@@ -7,4 +7,12 @@
 <p>{{object}}</p>
 <p>{{object.id}}</p>
 
+<hr class="my-4">
+<p>
+<a href="{% url "updateSkill" object.id %}">Edit</a>
+&nbsp;
+<a href="{% url "deleteSkill" object.id %}">Delete</a>
+</p>
+
+
 {% endblock %}

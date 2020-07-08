@@ -4,7 +4,14 @@
 
 <h1>{{title}}</h1>
 
-<p>{{object}}</p>
-<p>{{object.id}}</p>
+<p>Object rescission: {{object}}</p>
+<p>Database ID: {{object.id}}</p>
+<p>Workload: {{object.content_workload}}</p>
 
+<hr class="my-4">
+<p>
+<a href="{% url "updateContent" object.id %}">Edit</a>
+&nbsp;
+<a href="{% url "deleteContent" object.id %}">Delete</a>
+</p>
 {% endblock %}
