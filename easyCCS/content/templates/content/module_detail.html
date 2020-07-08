@@ -4,9 +4,21 @@
 
 <h1>{{title}}</h1>
 
-<p>Object description: {{object}}</p>
+<p>Object name: {{object.module_name}}</p>
+<p>Description: {{object.module_description}}</p>
+
 <p>Database ID: {{object.id}}</p>
-<p>Required (input) skills:</p>
+
+<h2>Content objects included in this module</h2>
+{%if object.module_content_modules %}
+<ul>
+{% for m in object.module_content_modules.all %}
+<li><a href="{% url "detailContent" m.id %}">{{ m.content_name }}</a></li>
+{% endfor %}
+</ul>
+{% endif %}
+
+<h2>Required (input) skills</h2>
 
 {% if object.required_skills %}
 <ul>
@@ -16,7 +28,7 @@
 </ul>
 {% endif %}
 
-<p>New (output) skills:</p>
+<h2>New (output) skills</h2>
 
 {% if object.new_skills %}
 <ul>
@@ -26,7 +38,9 @@
 </ul>
 {% endif %}
 
-Workload: {{object.get_workload}} {{workload_unit}}
+
+<h2>Workload</h2>
+{{object.get_workload}} {{workload_unit}}
 
 <hr class="my-4">
 <p>

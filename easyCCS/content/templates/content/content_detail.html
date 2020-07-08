@@ -2,11 +2,11 @@
 
 {% block content %}
 
-<h1>{{title}}</h1>
+<h1>{{title}}: {{object.content_name}}</h1>
 
-<p>Object description: {{object}}</p>
+<p>Object description: {{object.content_description}}</p>
 <p>Database ID: {{object.id}}</p>
-<p>Workload: {{object.content_workload}}</p>
+<p>Workload: {{object.content_workload}} {{workload_unit}}</p>
 
 <hr class="my-4">
 <p>
