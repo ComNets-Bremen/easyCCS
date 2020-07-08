@@ -8,6 +8,8 @@ import datetime
 
 from django.urls import reverse
 
+from django.conf import settings
+
 
 def getFilePath(instance, filename):
     filename = "%s_%s" % (uuid.uuid4(), filename)
@@ -66,7 +68,7 @@ class Content(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
-    content_workload = models.FloatField(default=0.0)
+    content_workload = models.FloatField(default=0.0, help_text=str(settings.WORKLOAD_UNIT))
 
     class Meta:
         ordering = ["-id"]
