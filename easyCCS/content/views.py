@@ -187,6 +187,9 @@ class SkillUpdate(UpdateView):
             context["title"] = self.title
         return context
 
+    def get_success_url(self):
+        return reverse('listSkills')
+
 class SkillDelete(DeleteView):
     model = Skill
     title = "Delete Skill"
@@ -222,7 +225,7 @@ class ContentDetailView(DetailView):
 
 class ContentCreate(CreateView):
     model = Content
-    fields = ["content_name", "content_description", "required_skills", "new_skills"]
+    fields = ["content_name", "content_description", "required_skills", "new_skills", "content_workload"]
     title = "Add new content"
     template_name = "content/generic_form.html"
 
@@ -237,7 +240,7 @@ class ContentCreate(CreateView):
 
 class ContentUpdate(UpdateView):
     model = Content
-    fields = ["content_name", "content_description", "required_skills", "new_skills"]
+    fields = ["content_name", "content_description", "required_skills", "new_skills", "content_workload"]
     title = "Change Content"
     template_name = "content/generic_form.html"
 
@@ -246,6 +249,9 @@ class ContentUpdate(UpdateView):
         if not "title" in context:
             context["title"] = self.title
         return context
+
+    def get_success_url(self):
+        return reverse('listContents')
 
 
 class ContentDelete(DeleteView):
