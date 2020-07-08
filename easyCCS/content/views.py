@@ -9,6 +9,8 @@ from django.views.generic.detail import DetailView
 
 from django.contrib.auth.decorators import login_required
 
+from django.conf import settings
+
 import numpy as np
 
 from .models import Skill, Content
@@ -88,6 +90,8 @@ def getSkillGraph(request):
 
     jsonSkills = None
 
+    workload = None
+
 
     if request.method == "POST":
         form = ExtendedSkillForm(request.POST)
@@ -99,7 +103,8 @@ def getSkillGraph(request):
 
             requiredContents = getContentsForSkill(targetSkills, ignoreSkills=knownSkills)
 
-
+            # Calculate overall workload
+            workload = sum([c.content.content_workload for c in requiredContents])
 
             if requiredContents:
                 # Get the levels and the connections aka parents
@@ -134,6 +139,8 @@ def getSkillGraph(request):
                 "requiredContents" : requiredContents,
                 "knownSkills" : knownSkills,
                 "jsonSkills" : json.dumps(jsonSkills),
+                "workload" : workload,
+                "workload_unit" : settings.WORKLOAD_UNIT,
             })
 
 
@@ -211,6 +218,8 @@ class ContentListView(ListView):
         context = super().get_context_data(**kwargs)
         if not "title" in context:
             context["title"] = self.title
+        if not "workload_unit" in context:
+            context["workload_unit"] = settings.WORKLOAD_UNIT
         return context
 
 class ContentDetailView(DetailView):
