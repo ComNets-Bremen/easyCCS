@@ -9,9 +9,17 @@
     <li><a href="{% url "getSkillGraph" %}">getSkillGraph</a>: An adaptable version of the get graph site.</li>
 
     <li><a href="{% url "listSkills" %}">List and manage skills</a></li>
-
     <li><a href="{% url "listContents" %}">List and manage content</a></li>
+    <li><a href="{% url "listModules" %}">List and manage modules</a></li>
 
+</ul>
+
+<h1>About the general idea and structure</h1>
+
+<ul>
+    <li>A <b>Skill</b> describes kind of knowledge. Skills are names or identifiers and should describe the kind of knowledge.</li>
+    <li>A <b>Content</b> object contains material to teach certain skills. It can also require skills to successfully work on this content object.</li>
+    <li>A <b>Module</b> contains several content objects and is used to group related content objects. Like content objects, the modules also have required and new skills.</li>
 </ul>
 
 
