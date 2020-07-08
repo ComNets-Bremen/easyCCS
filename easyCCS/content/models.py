@@ -66,6 +66,8 @@ class Content(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    content_workload = models.FloatField(default=0.0)
+
     class Meta:
         ordering = ["-id"]
 
