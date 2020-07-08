@@ -8,6 +8,29 @@
 <p>Database ID: {{object.id}}</p>
 <p>Workload: {{object.content_workload}} {{workload_unit}}</p>
 
+<h2>Required (input) skills</h2>
+
+{% if object.required_skills %}
+<ul>
+{% for s in object.required_skills.all%}
+<li><a href="{% url "detailSkill" s.id %}">{{s}}</a></li>
+{% endfor %}
+</ul>
+{% endif %}
+
+<h2>New (output) skills</h2>
+
+{% if object.new_skills %}
+<ul>
+{% for s in object.new_skills.all %}
+<li><a href="{% url "detailSkill" s.id %}">{{s}}</a></li>
+{% endfor %}
+</ul>
+{% endif %}
+
+
+
+
 <hr class="my-4">
 <p>
 <a href="{% url "updateContent" object.id %}">Edit</a>
