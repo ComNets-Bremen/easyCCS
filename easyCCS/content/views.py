@@ -230,6 +230,9 @@ class ContentDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         if not "title" in context:
             context["title"] = self.title
+        if not "workload_unit" in context:
+            context["workload_unit"] = settings.WORKLOAD_UNIT
+
         return context
 
 class ContentCreate(CreateView):
