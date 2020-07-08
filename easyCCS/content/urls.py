@@ -25,4 +25,10 @@ urlpatterns = [
         path('update/content/<int:pk>', login_required(views.ContentUpdate.as_view()), name="updateContent"),
         path('delete/content/<int:pk>', login_required(views.ContentDelete.as_view()), name="deleteContent"),
 
+        path('list/module', login_required(views.ModuleListView.as_view()), name="listModules"),
+        path('detail/module/<int:pk>', login_required(views.ModuleDetailView.as_view()), name="detailModule"),
+        path('create/module', login_required(views.ModuleCreate.as_view()), name="createModule"),
+        path('update/module/<int:pk>', login_required(views.ModuleUpdate.as_view()), name="updateModule"),
+        path('delete/module/<int:pk>', login_required(views.ModuleDelete.as_view()), name="deleteModule"),
+
         ]

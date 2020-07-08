@@ -13,7 +13,7 @@ from django.conf import settings
 
 import numpy as np
 
-from .models import Skill, Content
+from .models import Skill, Content, Module
 from .forms import ExtendedSkillForm
 
 import json
@@ -275,6 +275,73 @@ class ContentDelete(DeleteView):
             context["title"] = self.title
         return context
 
+class ModuleListView(ListView):
+    model = Module
+    paginate_by = 50
+    title = "Modules"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if not "title" in context:
+            context["title"] = self.title
+        if not "workload_unit" in context:
+            context["workload_unit"] = settings.WORKLOAD_UNIT
+        return context
+
+class ModuleDetailView(DetailView):
+    model = Module
+    title = "Module detail view"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if not "title" in context:
+            context["title"] = self.title
+        if not "workload_unit" in context:
+            context["workload_unit"] = settings.WORKLOAD_UNIT
+        return context
+
+class ModuleCreate(CreateView):
+    model = Module
+    fields = ["module_name", "module_description", "module_content_modules"]
+    title = "Add new module"
+    template_name = "content/generic_form.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if not "title" in context:
+            context["title"] = self.title
+        return context
+
+    def get_success_url(self):
+        return reverse('listModules')
+
+class ModuleUpdate(UpdateView):
+    model = Module
+    fields = ["module_name", "module_description", "module_content_modules"]
+    title = "Change Module"
+    template_name = "content/generic_form.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if not "title" in context:
+            context["title"] = self.title
+        return context
+
+    def get_success_url(self):
+        return reverse('listModules')
+
+
+class ModuleDelete(DeleteView):
+    model = Module
+    title = "Delete Module"
+    success_url = reverse_lazy("listModules")
+    template_name = "content/generic_confirm_delete.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if not "title" in context:
+            context["title"] = self.title
+        return context
 
 
 # Redirect to the app

@@ -1,0 +1,37 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>{{title}}</h1>
+
+<p>Object description: {{object}}</p>
+<p>Database ID: {{object.id}}</p>
+<p>Required (input) skills:</p>
+
+{% if object.required_skills %}
+<ul>
+{% for s in object.required_skills%}
+<li><a href="{% url "detailSkill" s.id %}">{{s}}</a></li>
+{% endfor %}
+</ul>
+{% endif %}
+
+<p>New (output) skills:</p>
+
+{% if object.new_skills %}
+<ul>
+{% for s in object.new_skills%}
+<li><a href="{% url "detailSkill" s.id %}">{{s}}</a></li>
+{% endfor %}
+</ul>
+{% endif %}
+
+Workload: {{object.get_workload}} {{workload_unit}}
+
+<hr class="my-4">
+<p>
+<a href="{% url "updateModule" object.id %}">Edit</a>
+&nbsp;
+<a href="{% url "deleteModule" object.id %}">Delete</a>
+</p>
+{% endblock %}
