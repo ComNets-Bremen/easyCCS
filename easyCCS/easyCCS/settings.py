@@ -143,6 +143,7 @@ LOGIN_REDIRECT_URL = "/"
 
 MAIN_TITLE = "easyCCS"
 
+WORKLOAD_UNIT = "minutes"
 
 # Overwrite settings by local ones (if available)
 try:
