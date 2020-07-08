@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.db.models import Q
 
-from .models import Skill, Content
+from .models import Skill, Content, Module
 
 class SkillAdmin(admin.ModelAdmin):
     def change_view(self, request, object_id, form_url='', extra_context=None):
@@ -11,6 +11,7 @@ class SkillAdmin(admin.ModelAdmin):
         )
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        # Exclude self for foreign key
         if db_field.name == "is_alias_for":
             if hasattr(self, "object_id"):
                 kwargs["queryset"] =  Skill.objects.filter(is_alias_for=None).exclude(pk=self.object_id)
@@ -26,3 +27,4 @@ class ContentAdmin(admin.ModelAdmin):
 
 admin.site.register(Skill, SkillAdmin)
 admin.site.register(Content, ContentAdmin)
+admin.site.register(Module)

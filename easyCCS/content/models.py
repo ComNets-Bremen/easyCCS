@@ -90,6 +90,51 @@ class Content(models.Model):
         return reverse("detailContent", args=[str(self.id)])
 
 
+class Module(models.Model):
+    module_name = models.CharField(max_length=200)
+    module_description = models.TextField()
+
+    module_content_modules = models.ManyToManyField("Content", blank=True)
+
+    class Meta:
+        ordering = ["-id"]
+
+    def __str__(self):
+        return self.module_name
+
+    def get_absolute_url(self):
+        return reverse("detailModule", args=[str(self.id),])
+
+    def __get_required_skills(self):
+        all_required = []
+        for c in self.module_content_modules.all():
+            for s in c.required_skills.all():
+                if s not in all_required:
+                    all_required.append(s)
+        return all_required
+
+    def __get_new_skills(self):
+        all_new = []
+        for c in self.module_content_modules.all():
+            for s in c.new_skills.all():
+                if s not in all_new:
+                    all_new.append(s)
+        return all_new
+
+
+    def required_skills(self):
+        # Return the skills required by this module
+        return [s for s in self.__get_required_skills() if s not in self.__get_new_skills()]
+
+    def new_skills(self):
+        # Return the new skills covered by this module
+        return [s for s in self.__get_new_skills() if s not in self.__get_required_skills()]
+
+    def get_workload(self):
+        # Return the overall workload of this module
+        return sum([w.content_workload for w in self.module_content_modules.all()])
+
+
 # Signals etc. for file handling
 
 @receiver(models.signals.post_delete, sender=Content)
