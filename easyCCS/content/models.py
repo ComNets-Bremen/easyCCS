@@ -2,9 +2,11 @@ from django.db import models
 from django.dispatch import receiver
 from django.conf import settings
 from django.db.models.signals import post_delete
+
 import os
 import uuid
 import datetime
+import json
 
 from django.urls import reverse
 
@@ -23,40 +25,19 @@ def deleteBinaryFile(instance):
 
 class Skill(models.Model):
     skill_name = models.CharField(max_length=200)
-    is_alias_for = models.ForeignKey(
-            "self",
-            on_delete=models.SET_NULL,
-            null=True,
-            blank=True
-            )
+    skill_descriptive_keywords = models.TextField(blank=True, help_text="Space separated keywords for searching the skill.")
 
     class Meta:
         ordering = ["-id"]
 
 
     def __str__(self):
-        returnString = self.skill_name
-
-        if self.isAlias():
-            returnString += " (Alias for " + str(self.is_alias_for.skill_name) + ")"
-
-        return returnString
+        return self.skill_name
 
 
     # Get link to detail view
     def get_absolute_url(self):
         return reverse("detailSkill", args=[str(self.id)])
-
-    def isAlias(self):
-        if self.is_alias_for and self.is_alias_for != "":
-            return True
-        return False
-
-    def getBaseSkill(self):
-        if self.isAlias():
-            return self.is_alias_for
-        else:
-            return self
 
 
 class Content(models.Model):
@@ -88,6 +69,37 @@ class Content(models.Model):
     # Get link to detail view
     def get_absolute_url(self):
         return reverse("detailContent", args=[str(self.id)])
+
+
+class LinkProperty(models.Model):
+    content_start = models.ForeignKey("Content", on_delete=models.CASCADE, related_name = "content_start")
+    content_target = models.ForeignKey("Content", on_delete=models.CASCADE, related_name = "content_target")
+    link_skill = models.ForeignKey("Skill", on_delete=models.CASCADE)
+    properties = models.TextField(blank=True)
+
+    class Meta:
+        ordering = ["-id"]
+
+    def __str__(self):
+        return "Link from " + str(self.content_start) + " to " + str(self.content_target) + " with skill " + str(self.link_skill)
+
+    def get_properties(self):
+        return json.loads(self.properties)
+
+    def get_property(self, name):
+        p = json.loads(self.properties)
+        if name in p:
+            return p[name]
+        else:
+            return None
+
+    def set_property(self, name, value, overwrite=True):
+        p = json.loads(self.properties)
+        if name in p and not overwrite:
+            return False
+        p[name] = value
+        self.properties = json.dumps(p)
+        self.save()
 
 
 class Module(models.Model):
