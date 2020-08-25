@@ -14,7 +14,7 @@ from django.conf import settings
 import numpy as np
 
 from .models import Skill, Content, Module
-from .forms import ExtendedSkillForm
+from .forms import ExtendedSkillForm, ContentForm, SkillForm, ModuleForm
 
 import json
 
@@ -167,9 +167,10 @@ class SkillDetailView(DetailView):
 
 class SkillCreate(CreateView):
     model = Skill
-    fields = ["skill_name","is_alias_for"]
     title = "Add new skill"
     template_name = "content/generic_form.html"
+
+    form_class = SkillForm
 
 
     def get_context_data(self, **kwargs):
@@ -184,9 +185,10 @@ class SkillCreate(CreateView):
 
 class SkillUpdate(UpdateView):
     model = Skill
-    fields = ["skill_name", "is_alias_for"]
     title = "Change Skill"
     template_name = "content/generic_form.html"
+
+    form_class = SkillForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -237,9 +239,10 @@ class ContentDetailView(DetailView):
 
 class ContentCreate(CreateView):
     model = Content
-    fields = ["content_name", "content_description", "required_skills", "new_skills", "content_workload"]
     title = "Add new content"
     template_name = "content/generic_form.html"
+
+    form_class = ContentForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -252,9 +255,9 @@ class ContentCreate(CreateView):
 
 class ContentUpdate(UpdateView):
     model = Content
-    fields = ["content_name", "content_description", "required_skills", "new_skills", "content_workload"]
     title = "Change Content"
     template_name = "content/generic_form.html"
+    form_class = ContentForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -305,9 +308,10 @@ class ModuleDetailView(DetailView):
 
 class ModuleCreate(CreateView):
     model = Module
-    fields = ["module_name", "module_description", "module_content_modules"]
     title = "Add new module"
     template_name = "content/generic_form.html"
+
+    form_class = ModuleForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -320,9 +324,10 @@ class ModuleCreate(CreateView):
 
 class ModuleUpdate(UpdateView):
     model = Module
-    fields = ["module_name", "module_description", "module_content_modules"]
     title = "Change Module"
     template_name = "content/generic_form.html"
+
+    form_class = ModuleForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
