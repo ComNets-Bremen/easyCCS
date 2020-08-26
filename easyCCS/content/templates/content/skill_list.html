@@ -9,8 +9,8 @@
 {% for skill in object_list %}
 <tr>
     <td><a href="{% url "detailSkill" skill.id %}">{{ skill.skill_name }}</a></td>
-    <td><a href="{% url "updateSkill" skill.id %}">Edit</a></td>
-    <td><a href="{% url "deleteSkill" skill.id %}">Delete</a></td>
+    <td><a href="{% url "updateSkill" skill.id %}" class="btn btn-primary">Edit</a>
+    <a href="{% url "deleteSkill" skill.id %}" class="btn btn-danger">Delete</a></td>
 </tr>
 {% endfor %}
 </table>
@@ -36,6 +36,6 @@ No objects
     </span>
 </div>
 
-<a href="{% url "createSkill" %}">create new skill</a>
+<a href="{% url "createSkill" %}" class="btn btn-success">create new skill</a>
 
 {% endblock %}

@@ -4,14 +4,15 @@
 
 <h1>{{title}}</h1>
 
-<p>{{object}}</p>
-<p>{{object.id}}</p>
-
+<p>{{ object }}</p>
+<p>{{ object.id }}</p>
+<h2>Keywords</h2>
+<p>{% if object.skill_descriptive_keywords %}{{ object.skill_descriptive_keywords }}{% else %} None {% endif %}</p>
 <hr class="my-4">
 <p>
-<a href="{% url "updateSkill" object.id %}">Edit</a>
+<a href="{% url "updateSkill" object.id %}" class="btn btn-primary">Edit</a>
 &nbsp;
-<a href="{% url "deleteSkill" object.id %}">Delete</a>
+<a href="{% url "deleteSkill" object.id %}" class="btn btn-danger">Delete</a>
 </p>
 
 

@@ -44,8 +44,8 @@
 
 <hr class="my-4">
 <p>
-<a href="{% url "updateModule" object.id %}">Edit</a>
+<a href="{% url "updateModule" object.id %}" class="btn btn-primary">Edit</a>
 &nbsp;
-<a href="{% url "deleteModule" object.id %}">Delete</a>
+<a href="{% url "deleteModule" object.id %}" class="btn btn-danger">Delete</a>
 </p>
 {% endblock %}

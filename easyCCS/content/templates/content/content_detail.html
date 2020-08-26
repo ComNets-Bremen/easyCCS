@@ -33,12 +33,17 @@
 <a href="{{ object.binary_content.url }}">{{ object.binary_content }}</a>
 {% endif %}
 
+<h2>Administrative data</h2>
+<ul>
+    <li>Created: {{ object.created }}</li>
+    <li>Last update: {{ object.updated }} </li>
+</ul>
 
 
 <hr class="my-4">
 <p>
-<a href="{% url "updateContent" object.id %}">Edit</a>
+<a href="{% url "updateContent" object.id %}" class="btn btn-primary">Edit</a>
 &nbsp;
-<a href="{% url "deleteContent" object.id %}">Delete</a>
+<a href="{% url "deleteContent" object.id %}" class="btn btn-danger">Delete</a>
 </p>
 {% endblock %}

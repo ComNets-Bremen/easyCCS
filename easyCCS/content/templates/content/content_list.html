@@ -10,8 +10,8 @@
 <tr>
     <td><a href="{% url "detailContent" o.id %}">{{ o.content_name }}</a></td>
     <td>Workload: {{ o.content_workload }} {{workload_unit}}</td>
-    <td><a href="{% url "updateContent" o.id %}">Edit</a></td>
-    <td><a href="{% url "deleteContent" o.id %}">Delete</a></td>
+    <td><a href="{% url "updateContent" o.id %}" class="btn btn-primary">Edit</a>
+    <a href="{% url "deleteContent" o.id %}" class="btn btn-danger">Delete</a></td>
 </tr>
 {% endfor %}
 </table>
@@ -37,6 +37,6 @@ No objects
     </span>
 </div>
 
-<a href="{% url "createContent" %}">create new Content</a>
+<a href="{% url "createContent" %}" class="btn btn-success">create new Content</a>
 
 {% endblock %}
