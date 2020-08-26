@@ -1,6 +1,11 @@
 from django import forms
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 
 from .models import Skill, Content, Module
+
+from django.forms.utils import ErrorList
+
 
 # Form to select required and already known skills
 class ExtendedSkillForm(forms.Form):
@@ -26,10 +31,29 @@ class ExtendedSkillForm(forms.Form):
                 widget = forms.CheckboxSelectMultiple(),
                 )
 
+
+## Error list formats
+
+# Format the unbound field errors using the bootstrap danger class
+class DivErrorList(ErrorList):
+    def __str__(self):
+        return self.as_divs()
+    def as_divs(self):
+        if not self: return ''
+        return ''.join(['<div class="alert alert-danger">%s</div>' % e for e in self])
+
+
 ## ModelForms
 
 # Form config for Content modules
 class ContentForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        # Is an error_class given? No -> use our one with bootstrap
+        if not "error_class" in kwargs:
+            kwargs["error_class"] = DivErrorList
+        super().__init__(*args, **kwargs)
+
     class Meta:
         model = Content
         fields = ["content_name", "content_description", "required_skills", "new_skills", "content_workload", "binary_content"]
@@ -50,6 +74,16 @@ class ContentForm(forms.ModelForm):
 
                     }),
                 }
+
+
+    def clean(self):
+        # Ensure in and out skills are not the same
+        same_skills = list(set(self.cleaned_data["required_skills"]) & set(self.cleaned_data["new_skills"]))
+
+        if same_skills:
+            raise ValidationError(_("The following skills can not be input and output skill at the same time: ") + str(", ".join([s.skill_name for s in same_skills])))
+
+        return self.cleaned_data
 
 
 # Form config for Skill modules
