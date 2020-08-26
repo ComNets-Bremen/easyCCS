@@ -42,6 +42,38 @@ class DivErrorList(ErrorList):
         if not self: return ''
         return ''.join(['<div class="alert alert-danger">%s</div>' % e for e in self])
 
+## Widgets
+
+# Widget which allow searching by keywords
+class SelectMultipleTokens(forms.SelectMultiple):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+    def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+        ids = []
+
+        # Collect the id of the skills from the widget
+        for og in context["widget"]["optgroups"]:
+            if len(og[1]) > 0:
+                ids.append(og[1][0]["value"])
+
+        # One query: Get all descriptions / keywords from the db
+        skill_desc = Skill.objects.filter(id__in=ids).values_list("id", "skill_descriptive_keywords")
+        # Reordering: Create a dict with the id as the key and the description
+        # as the value
+        desc_dict = {s[0] : s[1] for s in skill_desc}
+
+        # Set the data-tokens attribute for the corresponding options
+        for og in context["widget"]["optgroups"]:
+            if len(og[1]) > 0:
+                value = og[1][0]["value"]
+                if value in desc_dict and len(desc_dict[value]) > 0:
+                    og[1][0]["attrs"]["data-tokens"] = desc_dict[value]
+
+        # new context done
+        return context
 
 ## ModelForms
 
@@ -64,8 +96,8 @@ class ContentForm(forms.ModelForm):
                 }
 
         widgets = {
-                "required_skills" : forms.SelectMultiple(attrs = select_options),
-                "new_skills" : forms.SelectMultiple(attrs = select_options),
+                "required_skills" : SelectMultipleTokens(attrs = select_options),
+                "new_skills" : SelectMultipleTokens(attrs = select_options),
                 "content_name" : forms.TextInput(attrs={"class" : "form-control"}),
                 "content_description" : forms.Textarea(attrs={"class" : "form-control"}),
                 "content_workload" : forms.NumberInput(attrs={"class" : "form-control"}),
