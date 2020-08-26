@@ -32,7 +32,7 @@ class ExtendedSkillForm(forms.Form):
 class ContentForm(forms.ModelForm):
     class Meta:
         model = Content
-        fields = ["content_name", "content_description", "required_skills", "new_skills", "content_workload"]
+        fields = ["content_name", "content_description", "required_skills", "new_skills", "content_workload", "binary_content"]
         select_options = {
                 "class" : "selectpicker form-control",
                 "data-size" : 10,
@@ -45,6 +45,10 @@ class ContentForm(forms.ModelForm):
                 "content_name" : forms.TextInput(attrs={"class" : "form-control"}),
                 "content_description" : forms.Textarea(attrs={"class" : "form-control"}),
                 "content_workload" : forms.NumberInput(attrs={"class" : "form-control"}),
+                "binary_content" : forms.ClearableFileInput(attrs={
+                    "class" : "form-control",
+
+                    }),
                 }
 
 

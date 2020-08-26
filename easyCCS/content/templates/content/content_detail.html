@@ -28,6 +28,10 @@
 </ul>
 {% endif %}
 
+{% if object.binary_content %}
+<h2>Binary lecture content</h2>
+<a href="{{ object.binary_content.url }}">{{ object.binary_content }}</a>
+{% endif %}
 
 
 

@@ -257,6 +257,7 @@ class ContentUpdate(UpdateView):
     model = Content
     title = "Change Content"
     template_name = "content/generic_form.html"
+
     form_class = ContentForm
 
     def get_context_data(self, **kwargs):
