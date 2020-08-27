@@ -47,6 +47,8 @@ class DivErrorList(ErrorList):
 # Widget which allow searching by keywords
 class SelectMultipleTokens(forms.SelectMultiple):
     def __init__(self, *args, **kwargs):
+        self.keyword_model = kwargs.pop("keyword_model")
+        self.keyword_field = kwargs.pop("keyword_field")
         super().__init__(*args, **kwargs)
 
 
@@ -60,7 +62,7 @@ class SelectMultipleTokens(forms.SelectMultiple):
                 ids.append(og[1][0]["value"])
 
         # One query: Get all descriptions / keywords from the db
-        skill_desc = Skill.objects.filter(id__in=ids).values_list("id", "skill_descriptive_keywords")
+        skill_desc = self.keyword_model.objects.filter(id__in=ids).values_list("id", self.keyword_field)
         # Reordering: Create a dict with the id as the key and the description
         # as the value
         desc_dict = {s[0] : s[1] for s in skill_desc}
@@ -96,8 +98,8 @@ class ContentForm(forms.ModelForm):
                 }
 
         widgets = {
-                "required_skills" : SelectMultipleTokens(attrs = select_options),
-                "new_skills" : SelectMultipleTokens(attrs = select_options),
+                "required_skills" : SelectMultipleTokens(attrs=select_options, keyword_model=Skill, keyword_field="skill_descriptive_keywords"),
+                "new_skills" : SelectMultipleTokens(attrs=select_options, keyword_model=Skill, keyword_field="skill_descriptive_keywords"),
                 "content_name" : forms.TextInput(attrs={"class" : "form-control"}),
                 "content_description" : forms.Textarea(attrs={"class" : "form-control"}),
                 "content_workload" : forms.NumberInput(attrs={"class" : "form-control"}),
