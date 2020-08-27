@@ -6,6 +6,12 @@ from .models import Skill, Content, Module
 
 from django.forms.utils import ErrorList
 
+SELECT_CSS_ATTRS = {
+        "class" : "selectpicker form-control",
+        "data-size" : 10,
+        "data-live-search" : "true",
+        }
+
 
 # Form to select required and already known skills
 class ExtendedSkillForm(forms.Form):
@@ -21,14 +27,22 @@ class ExtendedSkillForm(forms.Form):
                 choices = [(s.id, s.skill_name) for s in skills],
                 label = "Required Skills",
                 required = True,
-                widget = forms.CheckboxSelectMultiple(),
+                widget = SelectMultipleTokens(
+                    attrs = SELECT_CSS_ATTRS,
+                    keyword_model=Skill,
+                    keyword_field="skill_descriptive_keywords",
+                    ),
                 )
 
         self.fields["known_skills"] = forms.MultipleChoiceField(
                 choices = [(s.id, s.skill_name) for s in skills],
                 label = "Known Skills",
                 required = False,
-                widget = forms.CheckboxSelectMultiple(),
+                widget = SelectMultipleTokens(
+                    attrs = SELECT_CSS_ATTRS,
+                    keyword_model=Skill,
+                    keyword_field="skill_descriptive_keywords",
+                    ),
                 )
 
 
@@ -91,15 +105,10 @@ class ContentForm(forms.ModelForm):
     class Meta:
         model = Content
         fields = ["content_name", "content_description", "required_skills", "new_skills", "content_workload", "binary_content"]
-        select_options = {
-                "class" : "selectpicker form-control",
-                "data-size" : 10,
-                "data-live-search" : "true",
-                }
 
         widgets = {
-                "required_skills" : SelectMultipleTokens(attrs=select_options, keyword_model=Skill, keyword_field="skill_descriptive_keywords"),
-                "new_skills" : SelectMultipleTokens(attrs=select_options, keyword_model=Skill, keyword_field="skill_descriptive_keywords"),
+                "required_skills" : SelectMultipleTokens(attrs=SELECT_CSS_ATTRS, keyword_model=Skill, keyword_field="skill_descriptive_keywords"),
+                "new_skills" : SelectMultipleTokens(attrs=SELECT_CSS_ATTRS, keyword_model=Skill, keyword_field="skill_descriptive_keywords"),
                 "content_name" : forms.TextInput(attrs={"class" : "form-control"}),
                 "content_description" : forms.Textarea(attrs={"class" : "form-control"}),
                 "content_workload" : forms.NumberInput(attrs={"class" : "form-control"}),
@@ -148,4 +157,5 @@ class ModuleForm(forms.ModelForm):
                 "module_name" : forms.TextInput(attrs={"class" : "form-control"}),
 
                 }
+
 
