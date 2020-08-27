@@ -3,6 +3,8 @@ from django.http import HttpResponse, JsonResponse
 from django.urls import reverse, reverse_lazy
 from django.db.models.query import QuerySet
 
+from django.db.models import Q
+
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -212,8 +214,18 @@ class SkillDelete(DeleteView):
 
 class ContentListView(ListView):
     model = Content
-    paginate_by = 50
+    paginate_by = 10
     title = "Contents"
+
+    def get_queryset(self):
+        content_filter = self.request.GET.get("content_filter", "")
+        print(content_filter)
+        q_filter =  self.model.objects.filter(
+                Q(content_name__icontains=content_filter) |
+                Q(content_description__icontains=content_filter)
+                )
+
+        return q_filter
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -221,6 +233,8 @@ class ContentListView(ListView):
             context["title"] = self.title
         if not "workload_unit" in context:
             context["workload_unit"] = settings.WORKLOAD_UNIT
+
+        context["content_filter"] = self.request.GET.get("content_filter", '')
         return context
 
 class ContentDetailView(DetailView):
