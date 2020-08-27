@@ -19,6 +19,10 @@ class ExtendedSkillForm(forms.Form):
     ## Create fields in init method. Direct definition will let the
     # migration fail
     def __init__(self, *args, **kwargs):
+        # Is an error_class given? No -> use our one with bootstrap
+        if not "error_class" in kwargs:
+            kwargs["error_class"] = DivErrorList
+
         super().__init__(*args, **kwargs)
 
         skills = Skill.objects.all()
@@ -44,6 +48,18 @@ class ExtendedSkillForm(forms.Form):
                     keyword_field="skill_descriptive_keywords",
                     ),
                 )
+
+    def clean(self):
+        # Ensure in and out skills are not the same
+        same_skills = list(set(self.cleaned_data["required_skills"]) & set(self.cleaned_data["known_skills"]))
+        same_skills = [int(s) for s in same_skills]
+
+        same_skill_objects = Skill.objects.filter(id__in=same_skills)
+
+        if same_skills:
+            raise ValidationError(_("The following skills can not be required and known skill at the same time: ") + str(", ".join([s.skill_name for s in same_skill_objects])))
+
+        return self.cleaned_data
 
 
 ## Error list formats
