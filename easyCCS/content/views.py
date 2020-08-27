@@ -100,7 +100,6 @@ def getSkillGraph(request):
 
             knownSkills = Skill.objects.filter(pk__in = form.cleaned_data["known_skills"]).values_list("id", flat=True)
 
-
             requiredContents = getContentsForSkill(targetSkills, ignoreSkills=knownSkills)
 
             # Calculate overall workload
@@ -363,7 +362,6 @@ def redirectToApp(request):
 ## Get Content objects for required skill
 def getContentsForSkill(skillId, knownContents = [], level=1, ignoreSkills=[]):
     newContents = []
-
     # Got query set as parameter, iterate and call again
 
     if isinstance(skillId, QuerySet):
@@ -375,17 +373,17 @@ def getContentsForSkill(skillId, knownContents = [], level=1, ignoreSkills=[]):
                     newContents.append(nc)
         return newContents
 
-
+    # Already known -> skip
     if skillId in ignoreSkills:
         return None
 
-    content = Content.objects.filter(new_skills=skillId)
+    content = Content.objects.filter(new_skills=skillId).exclude(id__in=[c.id for c in knownContents + newContents])
 
     for c in content:
         if c.id not in knownContents and c.id not in newContents:
             newContents.append(ContentObjectWithPrio(c.id, level, c))
 
-    contentRequiredSkills = content.values_list("required_skills", flat=True).all()
+    contentRequiredSkills = content.values_list("required_skills", flat=True)
 
     for o in contentRequiredSkills:
         if o and o in ignoreSkills:
