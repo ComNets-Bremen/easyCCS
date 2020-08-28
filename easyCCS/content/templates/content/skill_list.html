@@ -13,7 +13,14 @@
 </form>
 
 {% if object_list %}
-<table style="width:100%">
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Skill title</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
 {% for skill in object_list %}
 <tr>
     <td><a href="{% url "detailSkill" skill.id %}">{{ skill.skill_name }}</a></td>
@@ -21,9 +28,12 @@
     <a href="{% url "deleteSkill" skill.id %}" class="btn btn-danger">Delete</a></td>
 </tr>
 {% endfor %}
+    </tbody>
 </table>
 {% else %}
-No objects
+<div class="alert alert-warning" role="alert">
+    No objects found
+</div>
 {% endif %}
 
 

@@ -6,18 +6,29 @@
 <h1>{{title}}</h1>
 
 {% if object_list %}
-<table style="width:100%">
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Module Title</th>
+            <th scope="col">Workload</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
 {% for o in object_list %}
 <tr>
     <td><a href="{% url "detailModule" o.id %}">{{ o.module_name }}</a></td>
-    <td>Workload: {{o.get_workload}} {{workload_unit}}</td>
+    <td>{{o.get_workload}} {{workload_unit}}</td>
     <td><a href="{% url "updateModule" o.id %}" class="btn btn-primary">Edit</a>
     <a href="{% url "deleteModule" o.id %}" class="btn btn-danger">Delete</a></td>
 </tr>
 {% endfor %}
+    </tbody>
 </table>
 {% else %}
-No objects
+<div class="alert alert-warning" role="alert">
+    No objects found
+</div>
 {% endif %}
 
 

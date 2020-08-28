@@ -11,18 +11,29 @@
     <input type="submit" value="Filter Content" class="btn btn-primary mb-2">
 </form>
 {% if object_list %}
-<table style="width:100%">
+<table class="table">
+    <thead>
+<tr>
+    <th scope="col">Content title</th>
+    <th scope="col">Workload</th>
+    <th scope="col">Action</th>
+</tr>
+    </thead>
+    <tbody>
 {% for o in object_list %}
 <tr>
     <td><a href="{% url "detailContent" o.id %}">{{ o.content_name }}</a></td>
-    <td>Workload: {{ o.content_workload }} {{workload_unit}}</td>
+    <td>{{ o.content_workload }} {{workload_unit}}</td>
     <td><a href="{% url "updateContent" o.id %}" class="btn btn-primary">Edit</a>
     <a href="{% url "deleteContent" o.id %}" class="btn btn-danger">Delete</a></td>
 </tr>
 {% endfor %}
+    </tbody>
 </table>
 {% else %}
-No objects
+<div class="alert alert-warning" role="alert">
+    No objects found
+</div>
 {% endif %}
 
 
