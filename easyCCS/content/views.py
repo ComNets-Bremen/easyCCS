@@ -147,14 +147,25 @@ def getSkillGraph(request):
 
 class SkillListView(ListView):
     model = Skill
-    paginate_by = 50
+    paginate_by = 10
     title = "Skills"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if not "title" in context:
             context["title"] = self.title
+        context["skill_filter"] = self.request.GET.get("skill_filter", '')
         return context
+
+    def get_queryset(self):
+        skill_filter = self.request.GET.get("skill_filter", "")
+        q_filter =  self.model.objects.filter(
+                Q(skill_name__icontains=skill_filter) |
+                Q(skill_descriptive_keywords__icontains=skill_filter)
+                )
+        return q_filter
+
+
 
 class SkillDetailView(DetailView):
     model = Skill
@@ -219,7 +230,6 @@ class ContentListView(ListView):
 
     def get_queryset(self):
         content_filter = self.request.GET.get("content_filter", "")
-        print(content_filter)
         q_filter =  self.model.objects.filter(
                 Q(content_name__icontains=content_filter) |
                 Q(content_description__icontains=content_filter)

@@ -1,8 +1,16 @@
 {% extends "base_generic.html" %}
+{% load pagination_extras%}
 
 {% block content %}
 
 <h1>{{title}}</h1>
+
+<form method="GET" class="form-inline">
+    <div class="form-group mb-2">
+        <input type="text" value="{{skill_filter}}" name="skill_filter" class="form-control"placeholder="Filter keywords">
+    </div>
+    <input type="submit" value="Filter Content" class="btn btn-primary mb-2">
+</form>
 
 {% if object_list %}
 <table style="width:100%">
@@ -18,23 +26,35 @@
 No objects
 {% endif %}
 
-<div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-        {% endif %}
 
-        <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-        </span>
+{% if page_obj.paginator.num_pages > 1 %}
+<nav>
+  <ul class="pagination justify-content-center">
+    <li class="page-item {% if not page_obj.has_previous %} disabled {% endif %}">
+    <a class="page-link" href="?{% update_query page=1 %}" tabindex="-1">First</a>
+    </li>
 
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
-    </span>
-</div>
+    <li class="page-item {% if not page_obj.has_previous %} disabled {% endif %}">
+        <a class="page-link" href="{% if page_obj.has_previous %}?{% update_query page=page_obj.previous_page_number %}{% else %}#{% endif %}" tabindex="-1">Previous</a>
+    </li>
+
+    {% for p in page_obj.paginator.page_range %}
+    <li class="page-item {% if p == page_obj.number %}active{% endif %}"><a class="page-link" href="?{% update_query page=p%}">{{ p }}</a></li>
+
+    {% endfor %}
+    <li class="page-item {% if not page_obj.has_next %} disabled {% endif %}">
+      <a class="page-link" href="{% if page_obj.has_next %}?{% update_query page=page_obj.next_page_number %}{% else %}#{% endif %}">Next</a>
+    </li>
+    <li class="page-item {% if not page_obj.has_next %} disabled {% endif %}">
+        <a class="page-link" href="?{% update_query page=page_obj.paginator.num_pages %}" tabindex="-1">Last</a>
+    </li>
+
+  </ul>
+</nav>
+{% endif %}
+
+
+
 
 <a href="{% url "createSkill" %}" class="btn btn-success">create new skill</a>
 
