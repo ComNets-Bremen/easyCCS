@@ -2,7 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
-from .models import Skill, Content, Module
+from .models import Skill, Content, Module, Keyword
 
 from django.forms.utils import ErrorList
 
@@ -120,11 +120,13 @@ class ContentForm(forms.ModelForm):
 
     class Meta:
         model = Content
-        fields = ["content_name", "content_description", "required_skills", "new_skills", "content_workload", "binary_content"]
+        fields = ["content_name", "content_description", "required_skills", "new_skills", "content_keywords", "content_workload", "binary_content"]
 
         widgets = {
                 "required_skills" : SelectMultipleTokens(attrs=SELECT_CSS_ATTRS, keyword_model=Skill, keyword_field="skill_descriptive_keywords"),
                 "new_skills" : SelectMultipleTokens(attrs=SELECT_CSS_ATTRS, keyword_model=Skill, keyword_field="skill_descriptive_keywords"),
+                "new_skills" : SelectMultipleTokens(attrs=SELECT_CSS_ATTRS, keyword_model=Skill, keyword_field="skill_descriptive_keywords"),
+                "content_keywords" : SelectMultipleTokens(attrs=SELECT_CSS_ATTRS, keyword_model=Keyword, keyword_field="keyword_name"),
                 "content_name" : forms.TextInput(attrs={"class" : "form-control"}),
                 "content_description" : forms.Textarea(attrs={"class" : "form-control"}),
                 "content_workload" : forms.NumberInput(attrs={"class" : "form-control"}),
@@ -149,11 +151,12 @@ class ContentForm(forms.ModelForm):
 class SkillForm(forms.ModelForm):
     class Meta:
         model = Skill
-        fields = ["skill_name", "skill_descriptive_keywords"]
+        fields = ["skill_name", "skill_descriptive_keywords", "skill_keywords"]
 
         widgets = {
                 "skill_name" : forms.TextInput(attrs={"class" : "form-control"}),
                 "skill_descriptive_keywords" : forms.Textarea(attrs={"class" : "form-control"}),
+                "skill_keywords" : SelectMultipleTokens(attrs=SELECT_CSS_ATTRS, keyword_model=Keyword, keyword_field="keyword_name"),
                 }
 
 

@@ -28,6 +28,18 @@
 </ul>
 {% endif %}
 
+
+{% if object.content_keywords.all %}
+<h2>General Keywords</h2>
+<ul>
+{% for k in object.content_keywords.all %}
+<li>{{k}}</li>
+{% endfor %}
+</ul>
+{% endif %}
+
+
+
 {% if object.binary_content %}
 <h2>Binary lecture content</h2>
 <a href="{{ object.binary_content.url }}">{{ object.binary_content }}</a>

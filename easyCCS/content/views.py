@@ -15,7 +15,7 @@ from django.conf import settings
 
 import numpy as np
 
-from .models import Skill, Content, Module
+from .models import Skill, Content, Module, Keyword
 from .forms import ExtendedSkillForm, ContentForm, SkillForm, ModuleForm
 
 import json
@@ -161,7 +161,8 @@ class SkillListView(ListView):
         skill_filter = self.request.GET.get("skill_filter", "")
         q_filter =  self.model.objects.filter(
                 Q(skill_name__icontains=skill_filter) |
-                Q(skill_descriptive_keywords__icontains=skill_filter)
+                Q(skill_descriptive_keywords__icontains=skill_filter) |
+                Q(skill_keywords__keyword_name__icontains=skill_filter)
                 )
         return q_filter
 
@@ -232,7 +233,8 @@ class ContentListView(ListView):
         content_filter = self.request.GET.get("content_filter", "")
         q_filter =  self.model.objects.filter(
                 Q(content_name__icontains=content_filter) |
-                Q(content_description__icontains=content_filter)
+                Q(content_description__icontains=content_filter) |
+                Q(content_keywords__keyword_name__icontains=content_filter)
                 )
 
         return q_filter
@@ -375,6 +377,17 @@ class ModuleDelete(DeleteView):
             context["title"] = self.title
         return context
 
+
+class KeywordListView(ListView):
+    model = Keyword
+    paginate_by = 20
+    title = "Keywords"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if not "title" in context:
+            context["title"] = self.title
+        return context
 
 # Redirect to the app
 def redirectToApp(request):

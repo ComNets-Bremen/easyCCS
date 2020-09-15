@@ -31,4 +31,7 @@ urlpatterns = [
         path('update/module/<int:pk>', login_required(views.ModuleUpdate.as_view()), name="updateModule"),
         path('delete/module/<int:pk>', login_required(views.ModuleDelete.as_view()), name="deleteModule"),
 
+        path('list/keywords', login_required(views.KeywordListView.as_view()), name="listKeywords"),
+
+
         ]

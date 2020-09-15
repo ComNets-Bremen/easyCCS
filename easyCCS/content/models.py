@@ -27,6 +27,7 @@ def deleteBinaryFile(instance):
 class Skill(models.Model):
     skill_name = models.CharField(max_length=200)
     skill_descriptive_keywords = models.TextField(blank=True, help_text="Space separated keywords for searching the skill.")
+    skill_keywords = models.ManyToManyField("Keyword", blank=True, related_name="skill_keyword")
 
     class Meta:
         ordering = ["-id"]
@@ -51,6 +52,8 @@ class Content(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     content_workload = models.FloatField(default=0.0, help_text=str(settings.WORKLOAD_UNIT))
+
+    content_keywords = models.ManyToManyField("Keyword", blank=True, related_name="content_keyword")
 
     class Meta:
         ordering = ["-id"]
@@ -146,6 +149,16 @@ class Module(models.Model):
     def get_workload(self):
         # Return the overall workload of this module
         return sum([w.content_workload for w in self.module_content_modules.all()])
+
+
+class Keyword(models.Model):
+    keyword_name = models.CharField(max_length=100)
+
+    class Meta:
+        ordering = ["keyword_name"]
+
+    def __str__(self):
+        return self.keyword_name
 
 
 # Signals etc. for file handling
