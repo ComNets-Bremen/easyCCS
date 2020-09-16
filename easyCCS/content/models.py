@@ -1,6 +1,7 @@
 from django.db import models
 from django.dispatch import receiver
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.db.models.signals import post_delete
 from django.utils.translation import gettext_lazy as _
 
@@ -150,7 +151,7 @@ class Module(models.Model):
         # Return the overall workload of this module
         return sum([w.content_workload for w in self.module_content_modules.all()])
 
-
+# Keyword class for grouping data
 class Keyword(models.Model):
     keyword_name = models.CharField(max_length=100)
 
@@ -159,6 +160,26 @@ class Keyword(models.Model):
 
     def __str__(self):
         return self.keyword_name
+
+
+# Store dependency configuration
+class StoredConfiguration(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    stored_data = models.TextField()
+    storage_name = models.CharField(max_length=100)
+    user = models.ForeignKey(
+            get_user_model(),
+            on_delete = models.CASCADE,
+            default=None,
+            null=True,
+            )
+
+    class Meta:
+        ordering = ["-id"]
+
+    def __str__(self):
+        return self.storage_name
+
 
 
 # Signals etc. for file handling
