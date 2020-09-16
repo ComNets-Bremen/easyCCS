@@ -93,8 +93,24 @@
 
     {{form.as_p}}
 
-    <input type="submit" value="Submit" class="btn btn-primary">
+    <input type="submit" value="Submit" name="submit_data" class="btn btn-primary">
+    {% if requiredContents %}
+    <input type="submit" value="Save" name="store_data" class="btn btn-secondary">
+    {% endif %}
 
 </form>
+<hr />
+<h2>Load Graph</h2>
+<form action="" method="post">
+
+    {% csrf_token %}
+
+    {{load_form.as_p}}
+
+    <input type="submit" value="Load Data" name="load_data" class="btn btn-primary">
+
+</form>
+
+
 
 {% endblock %}

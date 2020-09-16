@@ -12,6 +12,7 @@ urlpatterns = [
         path('graphJson', views.getGraphJson, name="getGraphJson"),
         path('getGraph', views.getGraph, name="getGraph"),
         path('getSkillGraph', views.getSkillGraph, name="getSkillGraph"),
+        path('getSkillGraph/<int:loadFormId>', views.getSkillGraph, name="getSkillGraphId"),
 
         path('list/skills', login_required(views.SkillListView.as_view()), name="listSkills"),
         path('detail/skill/<int:pk>', login_required(views.SkillDetailView.as_view()), name="detailSkill"),

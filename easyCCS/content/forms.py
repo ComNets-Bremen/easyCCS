@@ -2,7 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
-from .models import Skill, Content, Module, Keyword
+from .models import Skill, Content, Module, Keyword, StoredConfiguration
 
 from django.forms.utils import ErrorList
 
@@ -22,6 +22,8 @@ class ExtendedSkillForm(forms.Form):
         # Is an error_class given? No -> use our one with bootstrap
         if not "error_class" in kwargs:
             kwargs["error_class"] = DivErrorList
+
+        self.request = kwargs.pop("request", None)
 
         super().__init__(*args, **kwargs)
 
@@ -49,6 +51,8 @@ class ExtendedSkillForm(forms.Form):
                     ),
                 )
 
+        self.fields["title"] = forms.CharField(max_length=100, required=False)
+
     def clean(self):
         # Ensure in and out skills are not the same
         same_skills = list(set(self.cleaned_data["required_skills"]) & set(self.cleaned_data["known_skills"]))
@@ -59,8 +63,53 @@ class ExtendedSkillForm(forms.Form):
         if same_skills:
             raise ValidationError(_("The following skills can not be required and known skill at the same time: ") + str(", ".join([s.skill_name for s in same_skill_objects])))
 
+        # Ensure a name is given
+        if "store_data" in self.data and len(self.cleaned_data["title"]) == 0:
+            raise ValidationError(_("Title is too short"))
+
+        # Ensure unique names (for one user)
+        if "store_data" in self.data and StoredConfiguration.objects.filter(user=self.request.user, storage_name=self.cleaned_data["title"]).count():
+            raise ValidationError(_("Name already used. Cannot store this configuration with the given name."))
+
         return self.cleaned_data
 
+# Form for loading stored data from db
+class LoadExtendedSkillForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        # Is an error_class given? No -> use our one with bootstrap
+        if not "error_class" in kwargs:
+            kwargs["error_class"] = DivErrorList
+
+        self.request = kwargs.pop("request", None)
+
+        super().__init__(*args, **kwargs)
+
+        configNames = None
+        if self.request.user.is_superuser:
+            configNames = StoredConfiguration.objects.all()
+        else:
+            configNames = StoredConfiguration.objects.filter(user=self.request.user)
+
+        choices=[(c.id, c.storage_name) for c in configNames],
+
+        if self.request.user.is_superuser:
+            choices=[(c.id, c.storage_name + " (" + str(c.user) + ")") for c in configNames]
+
+
+
+        self.fields["config_id"] = forms.ChoiceField(
+                choices=choices,
+                label="Select configuration to load",
+                widget = forms.Select(
+                    attrs = SELECT_CSS_ATTRS,
+                )
+                )
+
+    def clean(self):
+        config_id = self.cleaned_data["config_id"]
+        if not self.request.user.is_superuser and StoredConfiguration.objects.filter(user=self.request.user, id=config_id).count() == 0:
+            raise ValidationError(_("User has no access to this dataset"))
+        return self.cleaned_data
 
 ## Error list formats
 

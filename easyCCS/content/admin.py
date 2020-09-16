@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.db.models import Q
 
-from .models import Skill, Content, Module, LinkProperty, Keyword
+from .models import Skill, Content, Module, LinkProperty, Keyword, StoredConfiguration
 
 
 class ContentAdmin(admin.ModelAdmin):
@@ -24,9 +24,15 @@ class KeywordAdmin(admin.ModelAdmin):
     ordering = ["keyword_name"]
     search_fields = ["keyword_name"]
 
+class StoredConfigurationAdmin(admin.ModelAdmin):
+    ordering = ["-id"]
+    readonly_fields = ["created", "stored_data", "user"]
+    list_display = ["storage_name", "created", "user"]
+
 admin.site.register(Skill, SkillAdmin)
 admin.site.register(Content, ContentAdmin)
 admin.site.register(Module)
 admin.site.register(LinkProperty, LinkPropertyAdmin)
 admin.site.register(Keyword, KeywordAdmin)
+admin.site.register(StoredConfiguration, StoredConfigurationAdmin)
 

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.db.models.query import QuerySet
 
@@ -15,10 +15,14 @@ from django.conf import settings
 
 import numpy as np
 
-from .models import Skill, Content, Module, Keyword
-from .forms import ExtendedSkillForm, ContentForm, SkillForm, ModuleForm
+from .models import Skill, Content, Module, Keyword, StoredConfiguration
+from .forms import ExtendedSkillForm, ContentForm, SkillForm, ModuleForm, LoadExtendedSkillForm
 
 import json
+
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
+
 
 @login_required
 def index(request):
@@ -84,8 +88,8 @@ def getGraph(request):
 
 
 @login_required
-def getSkillGraph(request):
-    form = None
+def getSkillGraph(request, loadFormId=None):
+    form = ExtendedSkillForm(request=request)
     targetSkills = None
     requiredContents = None
     knownSkills = None
@@ -96,42 +100,75 @@ def getSkillGraph(request):
 
 
     if request.method == "POST":
-        form = ExtendedSkillForm(request.POST)
+
+        if "load_data" in request.POST: # Check which form was clicked. Here: Load data
+            loadForm = LoadExtendedSkillForm(request.POST, request=request)
+            if loadForm.is_valid():
+                print(loadForm.cleaned_data)
+                config_data = StoredConfiguration.objects.get(id=loadForm.cleaned_data["config_id"])
+                form = ExtendedSkillForm(json.loads(config_data.stored_data), request=request)
+        else: # Other form. Populate with request
+            form = ExtendedSkillForm(request.POST, request=request)
+
         if form.is_valid():
-            targetSkills = Skill.objects.filter(pk__in = form.cleaned_data["required_skills"])
+            if "store_data" in form.data: # User requested to store the data
+                sd = json.dumps(form.cleaned_data)
+                sc = StoredConfiguration(
+                        storage_name=form.cleaned_data["title"],
+                        stored_data = sd,
+                        user = request.user,
+                        )
+                sc.save()
+                return HttpResponseRedirect(
+                        reverse("getSkillGraphId", args=(sc.id,))
+                        )
 
-            knownSkills = Skill.objects.filter(pk__in = form.cleaned_data["known_skills"]).values_list("id", flat=True)
+    else: # GET request
+        if loadFormId:
+            config_data = None
+            if request.user.is_superuser:
+                config_data = StoredConfiguration.objects.filter(id=loadFormId)
+            else:
+                config_data = StoredConfiguration.objects.filter(id=loadFormId, user=request.user)
+            if len(config_data) == 1:
+                form = ExtendedSkillForm(json.loads(config_data[0].stored_data), request=request)
+            else:
+                form = ExtendedSkillForm(request=request)
 
-            requiredContents = getContentsForSkill(targetSkills, ignoreSkills=knownSkills)
+    # We have a form with valid data: Show graph
+    if form.is_bound and form.is_valid():
+        targetSkills = Skill.objects.filter(pk__in = form.cleaned_data["required_skills"])
 
-            # Calculate overall workload
-            workload = sum([c.content.content_workload for c in requiredContents])
+        knownSkills = Skill.objects.filter(pk__in = form.cleaned_data["known_skills"]).values_list("id", flat=True)
 
-            if requiredContents:
-                # Get the levels and the connections aka parents
+        requiredContents = getContentsForSkill(targetSkills, ignoreSkills=knownSkills)
 
-                jsonSkills = list() # results
-                checkLevel = 1      # Start checking at level 1
-                foundOneLevel = True# Continue as long as we find at least one item for this level
+        # Calculate overall workload
+        workload = sum([c.content.content_workload for c in requiredContents])
 
-                while foundOneLevel: # iterate over levels
-                    foundOneLevel = False # Didn't find anything till now
-                    levelContents = list()
+        if requiredContents:
+            # Get the levels and the connections aka parents
 
-                    for content in requiredContents: # Check if something at this level is available
-                        if content.level == checkLevel:
-                            foundOneLevel = True
-                            parents = [] # Find parents for this level
-                            for r_s in content.content.new_skills.all(): # Get required skill for this level
-                                for c in requiredContents:
-                                    if r_s in c.content.required_skills.all(): # Check for all other required contents if this skill is required.
-                                        parents.append(c.id)
-                            levelContents.append({"id" : content.id, "name" : content.content.content_name, "parents" : parents}) # Store data for json object
-                    checkLevel += 1
-                    jsonSkills.append(levelContents)
+            jsonSkills = list() # results
+            checkLevel = 1      # Start checking at level 1
+            foundOneLevel = True# Continue as long as we find at least one item for this level
 
-    else:
-        form = ExtendedSkillForm()
+            while foundOneLevel: # iterate over levels
+                foundOneLevel = False # Didn't find anything till now
+                levelContents = list()
+
+                for content in requiredContents: # Check if something at this level is available
+                    if content.level == checkLevel:
+                        foundOneLevel = True
+                        parents = [] # Find parents for this level
+                        for r_s in content.content.new_skills.all(): # Get required skill for this level
+                            for c in requiredContents:
+                                if r_s in c.content.required_skills.all(): # Check for all other required contents if this skill is required.
+                                    parents.append(c.id)
+                        levelContents.append({"id" : content.id, "name" : content.content.content_name, "parents" : parents}) # Store data for json object
+                checkLevel += 1
+                jsonSkills.append(levelContents)
+
 
     return render(request, "content/skillGraph.html",
             {
@@ -142,6 +179,7 @@ def getSkillGraph(request):
                 "jsonSkills" : json.dumps(jsonSkills),
                 "workload" : workload,
                 "workload_unit" : settings.WORKLOAD_UNIT,
+                "load_form" : LoadExtendedSkillForm(request=request),
             })
 
 
