@@ -91,7 +91,7 @@ def getGraph(request):
 def getSkillGraph(request, loadFormId=None):
     form = ExtendedSkillForm(request=request)
     targetSkills = None
-    requiredContents = None
+    orderedRequiredContents = None
     knownSkills = None
 
     jsonSkills = None
@@ -143,38 +143,39 @@ def getSkillGraph(request, loadFormId=None):
 
         requiredContents = getContentsForSkill(targetSkills, ignoreSkills=knownSkills)
 
-        # Calculate overall workload
-        workload = sum([c.content.content_workload for c in requiredContents])
+        orderedRequiredContents = orderContents(requiredContents)
 
-        if requiredContents:
+        # Calculate overall workload
+        workload = sum([c.content.content_workload for c in orderedRequiredContents])
+
+        if orderedRequiredContents:
             # Get the levels and the connections aka parents
 
             jsonSkills = list() # results
-            checkLevel = 1      # Start checking at level 1
-            foundOneLevel = True# Continue as long as we find at least one item for this level
 
-            while foundOneLevel: # iterate over levels
-                foundOneLevel = False # Didn't find anything till now
-                levelContents = list()
+            for checkLevel in range(max([orc.level for orc in orderedRequiredContents])+1):
+                levelContents = [c for c in orderedRequiredContents if c.level == checkLevel]
+                levelContentsDicts = []
+                for lc in levelContents:
+                    parents = []
+                    for rs in lc.content.required_skills.all():
+                        for content in orderedRequiredContents:
+                            if content.level >= checkLevel:
+                                continue
+                            if rs in content.content.new_skills.all():
+                                parents.append(content.content.id)
+                    levelContentsDicts.append({"id" : lc.content.id, "name": lc.content.content_name, "parents" : parents})
+                if len(levelContentsDicts):
+                    jsonSkills.append(levelContentsDicts)
 
-                for content in requiredContents: # Check if something at this level is available
-                    if content.level == checkLevel:
-                        foundOneLevel = True
-                        parents = [] # Find parents for this level
-                        for r_s in content.content.new_skills.all(): # Get required skill for this level
-                            for c in requiredContents:
-                                if r_s in c.content.required_skills.all(): # Check for all other required contents if this skill is required.
-                                    parents.append(c.id)
-                        levelContents.append({"id" : content.id, "name" : content.content.content_name, "parents" : parents}) # Store data for json object
-                checkLevel += 1
-                jsonSkills.append(levelContents)
+    print(jsonSkills)
 
 
     return render(request, "content/skillGraph.html",
             {
                 "form" : form,
                 "targetSkills" : targetSkills,
-                "requiredContents" : requiredContents,
+                "requiredContents" : orderedRequiredContents,
                 "knownSkills" : knownSkills,
                 "jsonSkills" : json.dumps(jsonSkills),
                 "workload" : workload,
@@ -497,6 +498,79 @@ def getAdjacencyMatrix():
         names[node] = Content.objects.filter(pk=node).get().content_name
 
     return (names, nodes, adjMatrix)
+
+
+## Order the required contents using the level
+def orderContents(requiredContents):
+    if requiredContents == None:
+        return None
+
+    allOutputSkills = []
+
+    handledSkills = []
+
+    for rq in requiredContents:
+        rq.level = -1
+        for skill in rq.content.new_skills.all():
+            if skill not in allOutputSkills:
+                allOutputSkills.append(skill)
+
+    for rq in requiredContents:
+        if len(rq.content.required_skills.all()):
+            foundOne = False
+            for skill in rq.content.required_skills.all():
+                if skill in allOutputSkills:
+                    foundOne = True
+                    break
+            if not foundOne:
+                rq.level = 1
+                for s in rq.content.new_skills.all():
+                    if s not in handledSkills:
+                        handledSkills.append(s)
+        else:
+            # Empty list -> not skills required
+            rq.level = 1
+            for s in rq.content.new_skills.all():
+                if s not in handledSkills:
+                    handledSkills.append(s)
+
+
+    ## At this point, we know which contents are the base contents. These are set to level 1
+
+    # Idea: We check all contents for skills which are in general taught in
+    # this block but not yet taught. If no requirements are there: Set the
+    # current level. So the blocks will only show up in the right order if all
+    # required input skills are satisfied.
+
+    # level < 0 -> unhandled content module
+    # TODO: Lots of loops. Maybe increase performance?
+
+    checkLevel = 2
+    while(len([rq.level for rq in requiredContents if rq.level < 0])):
+        newSkillsInLoop = []
+        for rq in requiredContents:
+            if rq.level < 0:
+                # unhandled content
+                allSkillsKnown = True
+                for s in rq.content.required_skills.all():
+                    if s in allOutputSkills and s not in handledSkills:
+                        allSkillsKnown = False
+                        break
+                if allSkillsKnown:
+                    rq.level = checkLevel
+                    for s in rq.content.new_skills.all():
+                        if s not in newSkillsInLoop:
+                            newSkillsInLoop.append(s)
+        checkLevel += 1
+        for s in newSkillsInLoop:
+            if s not in handledSkills:
+                handledSkills.append(s)
+
+    # We have all the correct levels. Now return sorted list
+    return sorted(requiredContents, key=lambda k: k.level)
+
+
+
 
 
 ## Class for data and level representation
