@@ -72,7 +72,7 @@
   // layout
   const padding = 8
   const node_height = 22
-  const node_width = 70
+  const node_width = 100
   const bundle_width = 14
   const level_y_padding = 16
   const metro_d = 4
@@ -122,7 +122,7 @@
   links.forEach(l => {
     l.yt = l.target.y + l.target.bundles_index[l.bundle.id].i*metro_d - l.target.bundles.length*metro_d/2 + metro_d/2
     l.ys = l.source.y
-    l.c1 = l.source.level-l.target.level > 1 ? node_width+c : c
+    l.c1 = l.source.level-l.target.level > 1 ? node_width/2+c : c
     l.c2 = c
   })
 
@@ -169,6 +169,7 @@ function createGraph() {
             A${ l.c2 } ${ l.c2 } 90 0 0 ${ l.xb+l.c2 } ${ l.ys }
             L${ l.xs } ${ l.ys }`
         ).join("");
+
         path_1 = document.createElementNS(svgNS, "path");
         path_1.setAttributeNS(null, "class", "link");
         path_1.setAttributeNS(null, "stroke", "white");
