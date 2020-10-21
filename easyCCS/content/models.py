@@ -4,16 +4,19 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db.models.signals import post_delete
 from django.utils.translation import gettext_lazy as _
+from django.core.validators import RegexValidator
 
 import os
 import uuid
 import datetime
 import json
+from SPARQLWrapper import SPARQLWrapper, JSON
 
 from django.urls import reverse
 
 from django.conf import settings
 
+RELATED_PROPERTIES = ["P31", "P279", "P737", "P277", "P366"]
 
 def getFilePath(instance, filename):
     filename = "%s_%s" % (uuid.uuid4(), filename)
@@ -41,6 +44,74 @@ class Skill(models.Model):
     # Get link to detail view
     def get_absolute_url(self):
         return reverse("detailSkill", args=[str(self.id)])
+
+class WikidataEntry(models.Model):
+    wikidata_id = models.CharField(
+            blank=False,
+            unique=True,
+            max_length=12,
+            help_text=_("The wikidata item id"),
+            validators=[RegexValidator("^Q[1-9]\d*$", message=_("Invalid format. Should be Q<number>."))]
+            )
+    wikidata_name = models.CharField(max_length=100, default="")
+    wikidata_related_fields = models.ManyToManyField("self", blank=True, symmetrical=True, help_text="Related fields available in this installations.")
+    wikidata_related_fields_raw = models.TextField(blank=True, help_text="Related fields according to wikidata")
+
+    def save(self, *args, **kwargs):
+        if self.id and self.wikidata_name != self.wikidata_id:
+            # we do not update existing items here. This is only done
+            # automatically (unless wikidata download was not successful)
+            pass
+        else:
+            self.wikidata_name = self.wikidata_id
+            self.updateWikidata(save=False)
+
+
+        super().save(*args, **kwargs)  # Call the "real" save() method.
+
+
+    def __str__(self):
+        return self.wikidata_name
+
+    def getRelatedRaw(self):
+        related_raw = []
+        if self.wikidata_related_fields_raw:
+            related_raw = [f["q"] for f in json.loads(self.wikidata_related_fields_raw)]
+        return related_raw
+
+    def updateRelated(self):
+        ids = WikidataEntry.objects.filter(wikidata_id__in=self.getRelatedRaw()).values_list("id", flat=True)
+        for i in ids:
+            self.wikidata_related_fields.add(i)
+
+    def updateWikidata(self, save=True):
+        results = queryWikidata(self.wikidata_id)
+        if results:
+
+            # Find label
+            for i in results["results"]["bindings"]:
+                if i["propLabel"]["value"] == "identity":
+                    self.wikidata_name = i["valLabel"]["value"]
+                    break
+
+            # Get the properties from the query and store them
+            props = []
+            for i in results["results"]["bindings"]:
+                if i["propUrl"]["value"].split("/")[-1] in RELATED_PROPERTIES:
+                    props.append({
+                        "p" : i["propUrl"]["value"].split("/")[-1],
+                        "q" : i["valUrl"]["value"].split("/")[-1],
+                        "pLabel" : i["propLabel"]["value"],
+                        "qLabel" : i["valLabel"]["value"],
+                        "pUrl" : i["propUrl"],
+                        "qUrl" : i["valUrl"],
+                        })
+
+            self.wikidata_related_fields_raw = json.dumps(props)
+            if save:
+                self.save()
+            
+
 
 
 class Content(models.Model):
@@ -204,3 +275,44 @@ def auto_delete_file_on_change(sender, instance, **kwargs):
     new_file = instance.binary_content
     if not old_file == new_file:
         deleteBinaryFile(old_file)
+
+
+def queryWikidata(q):
+    sparql = SPARQLWrapper("https://query.wikidata.org/sparql")
+    query = """
+        PREFIX entity: <http://www.wikidata.org/entity/>
+        #partial results
+
+        SELECT ?propUrl ?propLabel ?valUrl ?valLabel
+        WHERE
+        {
+            hint:Query hint:optimizer 'None' .
+                {       BIND(entity:%s AS ?valUrl) .
+                        BIND("N/A" AS ?propUrl ) .
+                        BIND("identity"@en AS ?propLabel ) .
+                }
+            UNION
+                {       entity:%s ?propUrl ?valUrl .
+                        ?property ?ref ?propUrl .
+                        ?property rdf:type wikibase:Property .
+                        ?property rdfs:label ?propLabel
+                }
+
+            ?valUrl rdfs:label ?valLabel
+            FILTER (LANG(?valLabel) = 'en') .
+            FILTER (lang(?propLabel) = 'en' )
+        }
+        ORDER BY ?propUrl ?valUrl
+    """ % (q, q)
+    sparql.setQuery(query)
+    sparql.setReturnFormat(JSON)
+    ret = None
+    try:
+        ret = sparql.query().convert()
+    except Exception as e:
+        ret = None
+        print(e)
+        # More messages, debugging etc.
+    return ret
+
+
