@@ -16,7 +16,7 @@ from django.urls import reverse
 
 from django.conf import settings
 
-RELATED_PROPERTIES = ["P31", "P279", "P737", "P277", "P366"]
+RELATED_PROPERTIES = ["P31", "P279", "P737", "P277", "P366", "1535", "1542", "828", "1709", "527", "1963"]
 
 def getFilePath(instance, filename):
     filename = "%s_%s" % (uuid.uuid4(), filename)
