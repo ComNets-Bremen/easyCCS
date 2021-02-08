@@ -1,42 +1,25 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
+<h1 class="display-3">easyCCS</h1>
 
-<h1>Index / Implemented functions</h1>
-<ul>
-    <li><a href="{% url "getSkills" %}">getSkills</a>: Lists all Skills and shows the required skills and content modules.</li>
-    <li><a href="{% url "getGraph" %}">getGraph</a>: shows a graph with the connections between the skills.</li>
-    <li><a href="{% url "getSkillGraph" %}">getSkillGraph</a>: An adaptable version of the get graph site.</li>
+<p>
+Creating new lectures and aligning the contents to the students
+and their knowledge can be a challenging work for all levels of
+education: Knowledge dependencies between the different blocks
+of lectures are not always visible. The problem increases if content
+from third parties like colleagues or from the Internet is being
+used. The content curation tool described in this poster aims on
+this challenge and offers a way of automatic, skill-based lecture
+creation and dependency management. The objective is that the
+lecturer can enter the required skills as well as the type of teaching
+materials and the system will generate a complete course from
+available contents.
+</p>
 
-    <li><a href="{% url "listSkills" %}">List and manage skills</a></li>
-    <li><a href="{% url "listContents" %}">List and manage content</a></li>
-    <li><a href="{% url "listModules" %}">List and manage modules</a></li>
+<p>
+<i>easyCCS</i> - the easy content curation system aims on this challenge and allows an easy management of lecturing content. Stay tuned for additional information!
+</p>
 
-</ul>
-
-<h1>About the general idea and structure</h1>
-
-<ul>
-    <li>A <b>Skill</b> describes kind of knowledge. Skills are names or identifiers and should describe the kind of knowledge.</li>
-    <li>A <b>Content</b> object contains material to teach certain skills. It can also require skills to successfully work on this content object.</li>
-    <li>A <b>Module</b> contains several content objects and is used to group related content objects. Like content objects, the modules also have required and new skills.</li>
-</ul>
-
-
-<h1>Ideas / further readings</h1>
-<ul>
-    <li>
-        Structured data for skill description, <a href="http://www.wikidata.org" target="_blank">wikidata.org</a>, <a href="https://www.mediawiki.org/wiki/Wikibase/DataModel/JSON" target="_blank">JSON data model description</a>, <a href="https://www.mediawiki.org/wiki/Wikibase/DataModel" target="_blank">Data model (draft)</a>
-    </li>
-
-    <li>
-        <a href="https://observablehq.com/@d3/gallery" target="_blank">D3js graph gallery</a>, <a href="https://bl.ocks.org/d3noob/8375092" target="_blank">Tree example</a>
-    </li>
-
-    <li>
-        <a href="https://de.wikipedia.org/wiki/Reusable_Learning_Object" target="_blank">Reusable learning objects (wiki)</a>
-
-    </li>
-</ul>
 
 {% endblock %}

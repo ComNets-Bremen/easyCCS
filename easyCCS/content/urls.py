@@ -37,5 +37,6 @@ urlpatterns = [
         path('request-access/', views.request_access, name="request_access"),
         path('request-access-thanks/', views.request_access_thanks, name="request_access_thanks"),
 
+        path('current_status/', views.current_status, name="current_status"),
 
         ]

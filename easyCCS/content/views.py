@@ -28,6 +28,10 @@ from django.utils.translation import gettext_lazy as _
 def index(request):
     return render(request, "content/index.html", {"title" : "Overview"})
 
+@login_required
+def current_status(request):
+    return render(request, "content/current_status.html", {"title" : "Current Status and System Overview"})
+
 def request_access(request):
     if request.method == "POST":
         form = RequestAccessForm(request.POST)
