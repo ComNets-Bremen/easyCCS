@@ -34,5 +34,8 @@ urlpatterns = [
 
         path('list/keywords', login_required(views.KeywordListView.as_view()), name="listKeywords"),
 
+        path('request-access/', views.request_access, name="request_access"),
+        path('request-access-thanks/', views.request_access_thanks, name="request_access_thanks"),
+
 
         ]

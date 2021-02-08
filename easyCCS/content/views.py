@@ -16,17 +16,46 @@ from django.conf import settings
 import numpy as np
 
 from .models import Skill, Content, Module, Keyword, StoredConfiguration
-from .forms import ExtendedSkillForm, ContentForm, SkillForm, ModuleForm, LoadExtendedSkillForm
+from .forms import ExtendedSkillForm, ContentForm, SkillForm, ModuleForm, LoadExtendedSkillForm, RequestAccessForm
 
 import json
 
+from django.core.mail import send_mail
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 
-@login_required
 def index(request):
     return render(request, "content/index.html", {"title" : "Overview"})
+
+def request_access(request):
+    if request.method == "POST":
+        form = RequestAccessForm(request.POST)
+        if form.is_valid():
+            msg = "Request for demo access\n\n"
+            for field in form.cleaned_data:
+                msg += field + ": " + str(form.cleaned_data[field]) + "\n\n"
+
+            send_mail(
+                'Demo Access Request',
+                msg,
+                str(form.cleaned_data["mail"]),
+                ["cn_server@comnets.uni-bremen.de",],
+#                [ConfigKeyValueStorage.config.get_value("DEFAULT_RECEIVER_MAIL_ADDRESS"),],
+                fail_silently=False,
+            )
+            return HttpResponseRedirect(reverse('request_access_thanks'))
+    else:
+        form = RequestAccessForm()
+
+    return render(request, 'content/request_access.html', {'form': form, 'title': "Request demo access"})
+
+def request_access_thanks(request):
+    return render(request, 'content/request_access_thanks.html', {'title': "Thanks for your request"})
+
+
+
+
 
 @login_required
 def getSkills(request):
