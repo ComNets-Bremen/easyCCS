@@ -129,6 +129,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+DEFAULT_SENDER_MAIL_ADDRESS = "cn_server@comnets.uni-bremen.de"
+DEFAULT_RECEIVER_MAIL_ADDRESS = DEFAULT_SENDER_MAIL_ADDRESS
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
