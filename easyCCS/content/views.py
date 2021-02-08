@@ -15,7 +15,7 @@ from django.conf import settings
 
 import numpy as np
 
-from .models import Skill, Content, Module, Keyword, StoredConfiguration
+from .models import Skill, Content, Module, Keyword, StoredConfiguration, ConfigKeyValueStorage
 from .forms import ExtendedSkillForm, ContentForm, SkillForm, ModuleForm, LoadExtendedSkillForm, RequestAccessForm
 
 import json
@@ -40,8 +40,7 @@ def request_access(request):
                 'Demo Access Request',
                 msg,
                 str(form.cleaned_data["mail"]),
-                ["cn_server@comnets.uni-bremen.de",],
-#                [ConfigKeyValueStorage.config.get_value("DEFAULT_RECEIVER_MAIL_ADDRESS"),],
+                [ConfigKeyValueStorage.config.get_value("DEFAULT_RECEIVER_MAIL_ADDRESS"),],
                 fail_silently=False,
             )
             return HttpResponseRedirect(reverse('request_access_thanks'))

@@ -4,7 +4,7 @@ from django import forms
 from django.urls import path
 from django.shortcuts import render, redirect
 
-from .models import Skill, Content, Module, LinkProperty, Keyword, StoredConfiguration, WikidataEntry
+from .models import Skill, Content, Module, LinkProperty, Keyword, StoredConfiguration, WikidataEntry, ConfigKeyValueStorage
 
 import io
 import csv
@@ -142,4 +142,5 @@ admin.site.register(WikidataEntry, WikidataEntryAdmin)
 admin.site.register(LinkProperty, LinkPropertyAdmin)
 admin.site.register(Keyword, KeywordAdmin)
 admin.site.register(StoredConfiguration, StoredConfigurationAdmin)
+admin.site.register(ConfigKeyValueStorage)
 

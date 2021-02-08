@@ -315,4 +315,51 @@ def queryWikidata(q):
         # More messages, debugging etc.
     return ret
 
+###
+# Config management (overwrite settings.py)
+###
+
+# Validator for config code
+def is_valid_python(value):
+    try:
+        eval(value)
+    except:
+        raise ValidationError(
+                _("Invalid python code"),
+                )
+
+## Manager class for key value storage access
+#
+# Tries to access the value from the key value storage. Not defined -> tries to
+# access using settings. Not defines -> return None
+class ConfigKeyValueStorageManager(models.Manager):
+    def get_value(self, key, default=None):
+        o = default
+        try:
+            o = eval(self.model.objects.get(config_key=key).config_value, {}, {})
+        except self.model.DoesNotExist:
+            # Get key from settings.py
+            if hasattr(settings, key):
+                o = getattr(settings, key)
+        return o
+
+## Simple key value storage management for config (besides settings.py)
+class ConfigKeyValueStorage(models.Model):
+    config_key = models.CharField(
+            max_length = 100,
+            unique=True
+            )
+
+    config_value = models.CharField(
+            max_length = 100,
+            validators = [is_valid_python],
+            help_text = _("A python expression like \"abc\", [1, 2, 3], True etc."),
+            )
+
+    objects = models.Manager()
+    config = ConfigKeyValueStorageManager()
+
+    def __str__(self):
+        return str(self.config_key) + "=" + str(self.config_value)
+
 
