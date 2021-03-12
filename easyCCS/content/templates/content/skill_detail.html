@@ -18,11 +18,13 @@
 </ul>
 {% endif %}
 <hr class="my-4">
+
+{% if perms.content.skill_manager %}
 <p>
 <a href="{% url "updateSkill" object.id %}" class="btn btn-primary">Edit</a>
 &nbsp;
 <a href="{% url "deleteSkill" object.id %}" class="btn btn-danger">Delete</a>
 </p>
-
+{% endif %}
 
 {% endblock %}

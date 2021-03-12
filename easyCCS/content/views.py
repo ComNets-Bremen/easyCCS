@@ -9,9 +9,9 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 
-from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth.decorators import login_required, permission_required
 from django.conf import settings
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 import numpy as np
 
@@ -249,10 +249,11 @@ class SkillDetailView(DetailView):
             context["title"] = self.title
         return context
 
-class SkillCreate(CreateView):
+class SkillCreate(PermissionRequiredMixin, CreateView):
     model = Skill
     title = "Add new skill"
     template_name = "content/generic_form.html"
+    permission_required ='content.skill_manager'
 
     form_class = SkillForm
 
@@ -266,11 +267,11 @@ class SkillCreate(CreateView):
     def get_success_url(self):
         return reverse('listSkills')
 
-
-class SkillUpdate(UpdateView):
+class SkillUpdate(PermissionRequiredMixin, UpdateView):
     model = Skill
     title = "Change Skill"
     template_name = "content/generic_form.html"
+    permission_required ='content.skill_manager'
 
     form_class = SkillForm
 
@@ -283,11 +284,12 @@ class SkillUpdate(UpdateView):
     def get_success_url(self):
         return reverse('listSkills')
 
-class SkillDelete(DeleteView):
+class SkillDelete(PermissionRequiredMixin, DeleteView):
     model = Skill
     title = "Delete Skill"
     success_url = reverse_lazy("listSkills")
     template_name = "content/generic_confirm_delete.html"
+    permission_required  =  'content.skill_manager'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -333,10 +335,11 @@ class ContentDetailView(DetailView):
 
         return context
 
-class ContentCreate(CreateView):
+class ContentCreate(PermissionRequiredMixin, CreateView):
     model = Content
     title = "Add new content"
     template_name = "content/generic_form.html"
+    permission_required = "content.content_manager"
 
     form_class = ContentForm
 
@@ -349,10 +352,11 @@ class ContentCreate(CreateView):
     def get_success_url(self):
         return reverse('listContents')
 
-class ContentUpdate(UpdateView):
+class ContentUpdate(PermissionRequiredMixin, UpdateView):
     model = Content
     title = "Change Content"
     template_name = "content/generic_form.html"
+    permission_required = "content.content_manager"
 
     form_class = ContentForm
 
@@ -366,11 +370,12 @@ class ContentUpdate(UpdateView):
         return reverse('listContents')
 
 
-class ContentDelete(DeleteView):
+class ContentDelete(PermissionRequiredMixin, DeleteView):
     model = Content
     title = "Delete Content"
     success_url = reverse_lazy("listContents")
     template_name = "content/generic_confirm_delete.html"
+    permission_required = "content.content_manager"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

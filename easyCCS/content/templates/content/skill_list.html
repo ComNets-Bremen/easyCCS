@@ -24,8 +24,12 @@
 {% for skill in object_list %}
 <tr>
     <td><a href="{% url "detailSkill" skill.id %}">{{ skill.skill_name }}</a></td>
-    <td><a href="{% url "updateSkill" skill.id %}" class="btn btn-primary">Edit</a>
-    <a href="{% url "deleteSkill" skill.id %}" class="btn btn-danger">Delete</a></td>
+    <td>
+        {% if perms.content.skill_manager %}
+        <a href="{% url "updateSkill" skill.id %}" class="btn btn-primary">Edit</a>
+        <a href="{% url "deleteSkill" skill.id %}" class="btn btn-danger">Delete</a>
+        {% endif %}
+    </td>
 </tr>
 {% endfor %}
     </tbody>
@@ -65,7 +69,7 @@
 
 
 
-
+{% if perms.content.skill_manager %}
 <a href="{% url "createSkill" %}" class="btn btn-success">create new skill</a>
-
+{% endif %}
 {% endblock %}

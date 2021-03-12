@@ -35,6 +35,7 @@ class Skill(models.Model):
 
     class Meta:
         ordering = ["-id"]
+        permissions = (('skill_manager', 'Manage Skills')),
 
 
     def __str__(self):
@@ -110,7 +111,6 @@ class WikidataEntry(models.Model):
             self.wikidata_related_fields_raw = json.dumps(props)
             if save:
                 self.save()
-            
 
 
 
@@ -129,6 +129,8 @@ class Content(models.Model):
 
     class Meta:
         ordering = ["-id"]
+        permissions = (('content_manager', 'Manage Content Items')),
+
 
 
     def __str__(self):
