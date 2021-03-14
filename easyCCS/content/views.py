@@ -25,14 +25,30 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 
+
 def index(request):
+    """ Show the overview page
+
+    Just render the overview page
+    """
+
     return render(request, "content/index.html", {"title" : "Overview"})
 
 @login_required
 def current_status(request):
+    """ Show the current project status
+
+    Show the project status page
+    """
+
     return render(request, "content/current_status.html", {"title" : "Current Status and System Overview"})
 
 def request_access(request):
+    """ Request a demo access to easyCCS
+
+    Allow people to request demo access to the service.
+    """
+
     if request.method == "POST":
         form = RequestAccessForm(request.POST)
         if form.is_valid():
@@ -54,19 +70,30 @@ def request_access(request):
     return render(request, 'content/request_access.html', {'form': form, 'title': "Request demo access"})
 
 def request_access_thanks(request):
+    """ Thank you page for requesting access
+
+    Just show a thank you message
+    """
+
     return render(request, 'content/request_access_thanks.html', {'title': "Thanks for your request"})
-
-
-
 
 
 @login_required
 def getSkills(request):
+    """ Skill overview (static version)
+
+    Show the overview of the available skills
+    """
     skills = Skill.objects
     return render(request, 'content/skillOverview.html', {'skills':skills})
 
 @login_required
 def getTree(request, skillId):
+    """ Print the complete tree of all skills (static version)
+
+    Show a graph with all skills and all contents
+    """
+
     requiredSkill = Skill.objects.get(pk=skillId)
 
     # Get list of content objects
@@ -76,6 +103,11 @@ def getTree(request, skillId):
 
 @login_required
 def getGraphJson(request):
+    """ Get json data for graph
+
+    json object for D3 data representation
+    """
+
     returnObject = dict()
     returnObject["nodes"] = list()
     returnObject["links"] = list()
@@ -116,11 +148,21 @@ def getGraphJson(request):
 
 @login_required
 def getGraph(request):
+    """ Render a complete D3 graph
+
+    required the output of getGraphJson
+    """
+
     return render(request, 'content/d3graph.html', {"jsonUrl":reverse("getGraphJson")})
 
 
 @login_required
 def getSkillGraph(request, loadFormId=None):
+    """ Selectable skill graph
+
+    Allow to select the skills and contents by the user
+    """
+
     form = ExtendedSkillForm(request=request)
     targetSkills = None
     orderedRequiredContents = None
@@ -217,6 +259,11 @@ def getSkillGraph(request, loadFormId=None):
 
 
 class SkillListView(ListView):
+    """ List view for skills
+
+    generic view
+    """
+
     model = Skill
     paginate_by = 10
     title = "Skills"
@@ -240,6 +287,11 @@ class SkillListView(ListView):
 
 
 class SkillDetailView(DetailView):
+    """ Skill detail view
+
+    generic view
+    """
+
     model = Skill
     title = "Skill detail view"
 
@@ -250,6 +302,11 @@ class SkillDetailView(DetailView):
         return context
 
 class SkillCreate(PermissionRequiredMixin, CreateView):
+    """ Skill create view
+
+    generic view
+    """
+
     model = Skill
     title = "Add new skill"
     template_name = "content/generic_form.html"
@@ -268,6 +325,11 @@ class SkillCreate(PermissionRequiredMixin, CreateView):
         return reverse('listSkills')
 
 class SkillUpdate(PermissionRequiredMixin, UpdateView):
+    """ Skill update view
+
+    generic view
+    """
+
     model = Skill
     title = "Change Skill"
     template_name = "content/generic_form.html"
@@ -285,6 +347,11 @@ class SkillUpdate(PermissionRequiredMixin, UpdateView):
         return reverse('listSkills')
 
 class SkillDelete(PermissionRequiredMixin, DeleteView):
+    """ Skill delete view
+
+    generic view
+    """
+
     model = Skill
     title = "Delete Skill"
     success_url = reverse_lazy("listSkills")
@@ -298,6 +365,11 @@ class SkillDelete(PermissionRequiredMixin, DeleteView):
         return context
 
 class ContentListView(ListView):
+    """ content list view
+
+    generic view
+    """
+
     model = Content
     paginate_by = 10
     title = "Contents"
@@ -323,6 +395,11 @@ class ContentListView(ListView):
         return context
 
 class ContentDetailView(DetailView):
+    """ content detail view
+
+    generic view
+    """
+
     model = Content
     title = "Content detail view"
 
@@ -336,6 +413,11 @@ class ContentDetailView(DetailView):
         return context
 
 class ContentCreate(PermissionRequiredMixin, CreateView):
+    """ content create view
+
+    generic view
+    """
+
     model = Content
     title = "Add new content"
     template_name = "content/generic_form.html"
@@ -353,6 +435,11 @@ class ContentCreate(PermissionRequiredMixin, CreateView):
         return reverse('listContents')
 
 class ContentUpdate(PermissionRequiredMixin, UpdateView):
+    """ content update view
+
+    generic view
+    """
+
     model = Content
     title = "Change Content"
     template_name = "content/generic_form.html"
@@ -371,6 +458,11 @@ class ContentUpdate(PermissionRequiredMixin, UpdateView):
 
 
 class ContentDelete(PermissionRequiredMixin, DeleteView):
+    """ content delete view
+
+    generic view
+    """
+
     model = Content
     title = "Delete Content"
     success_url = reverse_lazy("listContents")
@@ -384,6 +476,11 @@ class ContentDelete(PermissionRequiredMixin, DeleteView):
         return context
 
 class ModuleListView(ListView):
+    """ module list view
+
+    generic view
+    """
+
     model = Module
     paginate_by = 50
     title = "Modules"
@@ -397,6 +494,11 @@ class ModuleListView(ListView):
         return context
 
 class ModuleDetailView(DetailView):
+    """ module detail view
+
+    generic view
+    """
+
     model = Module
     title = "Module detail view"
 
@@ -409,6 +511,11 @@ class ModuleDetailView(DetailView):
         return context
 
 class ModuleCreate(CreateView):
+    """ module create view
+
+    generic view
+    """
+
     model = Module
     title = "Add new module"
     template_name = "content/generic_form.html"
@@ -425,6 +532,11 @@ class ModuleCreate(CreateView):
         return reverse('listModules')
 
 class ModuleUpdate(UpdateView):
+    """ module update view
+
+    generic view
+    """
+
     model = Module
     title = "Change Module"
     template_name = "content/generic_form.html"
@@ -442,6 +554,11 @@ class ModuleUpdate(UpdateView):
 
 
 class ModuleDelete(DeleteView):
+    """ module delete view
+
+    generic view
+    """
+
     model = Module
     title = "Delete Module"
     success_url = reverse_lazy("listModules")
@@ -455,6 +572,11 @@ class ModuleDelete(DeleteView):
 
 
 class KeywordListView(ListView):
+    """ keyword list view
+
+    generic view
+    """
+
     model = Keyword
     paginate_by = 20
     title = "List of known Keywords"
@@ -467,6 +589,10 @@ class KeywordListView(ListView):
 
 # Redirect to the app
 def redirectToApp(request):
+    """ Redirect to app
+
+    default redirect to app sub-url
+    """
     return redirect("/content")
 
 
