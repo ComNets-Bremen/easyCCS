@@ -14,18 +14,25 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 
 from django.conf.urls.static import static
 from django.conf import settings
+from django.views.static import serve
 
 from content import views as cviews
 
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def protected_serve(request, path, document_root=None, show_indexes=False):
+    return serve(request, path, document_root, show_indexes)
 
 urlpatterns = [
     path("", cviews.redirectToApp),
     path("content/", include("content.urls")),
     path('admin/', admin.site.urls),
+    re_path(r'^%s(?P<path>.*)$' % settings.MEDIA_URL[1:], protected_serve, {'document_root': settings.MEDIA_ROOT}),
     path("accounts/", include('django.contrib.auth.urls')),
     ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 
