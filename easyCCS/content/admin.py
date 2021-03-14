@@ -29,7 +29,8 @@ class SkillAdmin(admin.ModelAdmin):
 
 class KeywordAdmin(admin.ModelAdmin):
     ordering = ["keyword_name"]
-    search_fields = ["keyword_name"]
+    search_fields = ["keyword_name", "keyword_related_wikidata",]
+    autocomplete_fields = ["keyword_related_wikidata",]
 
 class StoredConfigurationAdmin(admin.ModelAdmin):
     ordering = ["-id"]
@@ -41,6 +42,7 @@ class WikidataEntryAdmin(admin.ModelAdmin):
     readonly_fields = ["wikidata_name", "wikidata_related_fields_raw", "wikidata_related_fields"]
     list_display = ["wikidata_name", ]
     actions = ["update_all_related", "update_from_wikidata", "export_to_csv"]
+    search_fields = ["wikidata_name", "wikidata_related_fields__wikidata_name"]
 
     change_list_template = "content/admin/entities/wikidata_entry_changelist.html"
 

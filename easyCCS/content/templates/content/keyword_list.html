@@ -7,10 +7,25 @@
 
 {% if object_list %}
 <table class="table">
+    <thead>
+        <tr>
+            <th>Keyword name</th>
+            <th>Related wikidata items</th>
+
+        </tr>
+    </thead>
     <tbody>
 {% for o in object_list %}
 <tr>
     <td>{{o.keyword_name}}</td>
+    <td>
+        {% for wd in o.keyword_related_wikidata.all %}
+        <a href="{{ wd.getWikidataUrl }}" target="_blank">{{wd}}</a>{% if not forloop.last %}, {% endif %}
+        {% empty %}
+        No related wikidata entries for this keyword.
+        {% endfor %}
+
+    </td>
 </tr>
 {% endfor %}
     </tbody>

@@ -18,6 +18,8 @@ from django.conf import settings
 
 RELATED_PROPERTIES = ["P31", "P279", "P737", "P277", "P366", "1535", "1542", "828", "1709", "527", "1963"]
 
+WIKIDATA_BASE_URL = "https://www.wikidata.org/wiki/"
+
 def getFilePath(instance, filename):
     filename = "%s_%s" % (uuid.uuid4(), filename)
     return os.path.join("content", filename)
@@ -111,6 +113,8 @@ class WikidataEntry(models.Model):
             self.wikidata_related_fields_raw = json.dumps(props)
             if save:
                 self.save()
+    def getWikidataUrl(self):
+        return WIKIDATA_BASE_URL + str(self.wikidata_id)
 
 
 
@@ -227,6 +231,7 @@ class Module(models.Model):
 # Keyword class for grouping data
 class Keyword(models.Model):
     keyword_name = models.CharField(max_length=100)
+    keyword_related_wikidata = models.ManyToManyField(WikidataEntry, blank=True, help_text="Related wikidata fields in this installation.")
 
     class Meta:
         ordering = ["keyword_name"]

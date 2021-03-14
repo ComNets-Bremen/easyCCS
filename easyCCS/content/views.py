@@ -457,7 +457,7 @@ class ModuleDelete(DeleteView):
 class KeywordListView(ListView):
     model = Keyword
     paginate_by = 20
-    title = "Keywords"
+    title = "List of known Keywords"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
