@@ -25,10 +25,9 @@
 </h2>
 
 
- <table style="width:100%">
+<table class="table">
   <tr>
     <th>Content</th>
-    <th>Content level</th>
     <th>Workload</th>
     <th>Required Skills</th>
     <th>New Skills</th>
@@ -36,14 +35,13 @@
 
 {% for content in requiredContents %}
   <tr>
-      <td>{{ content.content.content_name}}</td>
-      <td>{{ content.level }}</td>
+      <td><a href="{% url "detailContent" content.id %}">{{ content.content.content_name}}</a></td>
       <td>{{ content.content.content_workload }} {{workload_unit}}
       <td>
           {% if content.content.required_skills.all %}
           <ul>
               {% for req in content.content.required_skills.all %}
-              <li  {% if req.id in knownSkills %} class="text-secondary" {% else %} class="text-success" {% endif %}> {{ req.skill_name }}</li>
+              <li  {% if req.id in knownSkills %} class="text-secondary" {% else %} class="text-success" {% endif %}>{% if req in criticalSkills %}&#10060;{% endif %} {{ req.skill_name }} </li>
               {% endfor %}
           </ul>
           {% else %}
@@ -52,7 +50,7 @@
       </td>
       <td><ul>
               {% for new in content.content.new_skills.all %}
-              <li> {{ new.skill_name }}</li>
+              <li> <a href="{% url "detailSkill" new.id %}">{{ new.skill_name }}</a></li>
               {% endfor %}
       </ul></td>
   </tr>
@@ -60,11 +58,24 @@
 {% endfor %}
 
  </table>
- <h3>Colors in graph / table</h3>
  <ul>
      <li class="text-secondary">Skill marked as known by user</li>
      <li class="text-success">Skill found by algorithm</li>
+     <li>&#10060; No content found for the given skill</li>
  </ul>
+
+ <hr>
+
+ {% if criticalSkills %}
+ <h3> Critical skills found</h3>
+ The following skills are required but no corresponding content was found:
+ <ul>
+     {% for cs in criticalSkills %}
+     <li>{{cs}}</li>
+     {% endfor %}
+ </ul>
+ {% endif %}
+
  {% if workload %}
  <h3>Workload</h3>
  {{ workload }} {{workload_unit}}
@@ -76,7 +87,7 @@
 {% include "content/subtemplate-graph.html" %}
 
  </script>
- <div id="graph"></div>
+ <span id="graph"></div>
  <script>createGraph();</script>
  {% endif %}
 

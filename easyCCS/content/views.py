@@ -167,6 +167,7 @@ def getSkillGraph(request, loadFormId=None):
     targetSkills = None
     orderedRequiredContents = None
     knownSkills = None
+    criticalSkills = None
 
     jsonSkills = None
 
@@ -216,8 +217,17 @@ def getSkillGraph(request, loadFormId=None):
         knownSkills = Skill.objects.filter(pk__in = form.cleaned_data["known_skills"]).values_list("id", flat=True)
 
         requiredContents = getContentsForSkill(targetSkills, ignoreSkills=knownSkills)
-
         orderedRequiredContents = orderContents(requiredContents)
+
+        allSkills = [c[0].id for c in [co.content.new_skills.all() for co in orderedRequiredContents]] + list(knownSkills)
+
+        criticalSkills = []
+        for co in orderedRequiredContents:
+            rs = co.content.required_skills.all()
+            for s in rs:
+                if s.id not in allSkills:
+                    criticalSkills.append(s)
+
 
         # Calculate overall workload
         workload = sum([c.content.content_workload for c in orderedRequiredContents])
@@ -243,7 +253,8 @@ def getSkillGraph(request, loadFormId=None):
                     jsonSkills.append(levelContentsDicts)
 
     print(jsonSkills)
-
+    print("knownSkills", knownSkills)
+    print("cirticalSkills", criticalSkills)
 
     return render(request, "content/skillGraph.html",
             {
@@ -251,6 +262,7 @@ def getSkillGraph(request, loadFormId=None):
                 "targetSkills" : targetSkills,
                 "requiredContents" : orderedRequiredContents,
                 "knownSkills" : knownSkills,
+                "criticalSkills" : criticalSkills,
                 "jsonSkills" : json.dumps(jsonSkills),
                 "workload" : workload,
                 "workload_unit" : settings.WORKLOAD_UNIT,
