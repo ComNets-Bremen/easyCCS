@@ -49,6 +49,9 @@
 <ul>
     <li>Created: {{ object.created }}</li>
     <li>Last update: {{ object.updated }} </li>
+    {% if object.added_by %}
+    <li>Added by: {{ object.added_by.get_full_name|default:object.added_by.username }}</li>
+    {% endif %}
 </ul>
 
 

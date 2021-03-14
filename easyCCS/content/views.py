@@ -437,6 +437,14 @@ class ContentCreate(PermissionRequiredMixin, CreateView):
 
     form_class = ContentForm
 
+    # Store current user name
+    def form_valid(self, form):
+        content = form.save(commit=False)
+        content.added_by = self.request.user
+        content.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+    # Add title
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if not "title" in context:

@@ -126,6 +126,8 @@ class Content(models.Model):
     new_skills = models.ManyToManyField("Skill", blank=True, related_name="skills_new")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    added_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL, help_text="User who added this content")
+    is_public = models.BooleanField(default=True, help_text="Is this content visible to all users.")
 
     content_workload = models.FloatField(default=0.0, help_text=str(settings.WORKLOAD_UNIT))
 
@@ -146,7 +148,6 @@ class Content(models.Model):
             returnString += " (No content added)"
 
         return returnString
-
 
     # Get link to detail view
     def get_absolute_url(self):
