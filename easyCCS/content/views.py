@@ -636,7 +636,9 @@ def getContentsForSkill(skillId, knownContents = [], level=1, ignoreSkills=[]):
     if skillId in ignoreSkills:
         return None
 
-    content = Content.objects.filter(new_skills=skillId).exclude(id__in=[c.id for c in knownContents + newContents])
+    content = Content.objects.none()
+    if skillId:
+        content = Content.objects.filter(new_skills=skillId).exclude(id__in=[c.id for c in knownContents + newContents])
 
     for c in content:
         if c.id not in knownContents and c.id not in newContents:
