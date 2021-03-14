@@ -40,9 +40,18 @@
 
 
 
+{% if object.binary_content or object.url_content %}
+<h2>Lecture content</h2>
+<ul>
 {% if object.binary_content %}
-<h2>Binary lecture content</h2>
-<a href="{{ object.binary_content.url }}">{{ object.binary_content }}</a>
+<li><a href="{{ object.binary_content.url }}">{{ object.binary_content }}</a></li>
+{% endif %}
+
+{% if object.url_content %}
+<li><a href="{{ object.url_content }}" target="_blank">{{ object.url_content }}</a></li>
+{% endif %}
+
+</ul>
 {% endif %}
 
 <h2>Administrative data</h2>

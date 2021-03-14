@@ -121,7 +121,8 @@ class WikidataEntry(models.Model):
 class Content(models.Model):
     content_name = models.CharField(max_length=200)
     content_description = models.TextField()
-    binary_content = models.FileField(upload_to=getFilePath, null=True, blank=True)
+    binary_content = models.FileField(upload_to=getFilePath, null=True, blank=True, help_text="binary content like a file or a video.")
+    url_content    = models.URLField(null=True, blank=True, help_text="URL of related content.")
     required_skills = models.ManyToManyField("Skill", blank=True, related_name="skills_required")
     new_skills = models.ManyToManyField("Skill", blank=True, related_name="skills_new")
     created = models.DateTimeField(auto_now_add=True)
@@ -144,7 +145,7 @@ class Content(models.Model):
         returnString = "\"" + str(self.content_name) + "\""
         if len(skills) >0:
             returnString += " teaches the skills " + str(", ".join(skills))
-        if self.binary_content == None or self.binary_content == "":
+        if not self.binary_content and not self.url_content:
             returnString += " (No content added)"
 
         return returnString
