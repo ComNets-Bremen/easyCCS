@@ -169,7 +169,7 @@ class ContentForm(forms.ModelForm):
 
     class Meta:
         model = Content
-        fields = ["content_name", "content_description", "required_skills", "new_skills", "content_keywords", "content_workload", "binary_content"]
+        fields = ["content_name", "content_description", "required_skills", "new_skills", "content_keywords", "content_workload", "binary_content", "url_content"]
 
         widgets = {
                 "required_skills" : SelectMultipleTokens(attrs=SELECT_CSS_ATTRS, keyword_model=Skill, keyword_field="skill_descriptive_keywords"),
@@ -181,8 +181,8 @@ class ContentForm(forms.ModelForm):
                 "content_workload" : forms.NumberInput(attrs={"class" : "form-control"}),
                 "binary_content" : forms.ClearableFileInput(attrs={
                     "class" : "form-control",
-
                     }),
+                "url_content" : forms.URLInput(attrs={"class" : "form-control"}),
                 }
 
 
