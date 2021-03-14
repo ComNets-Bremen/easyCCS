@@ -219,7 +219,7 @@ def getSkillGraph(request, loadFormId=None):
         requiredContents = getContentsForSkill(targetSkills, ignoreSkills=knownSkills)
         orderedRequiredContents = orderContents(requiredContents)
 
-        allSkills = [c[0].id for c in [co.content.new_skills.all() for co in orderedRequiredContents]] + list(knownSkills)
+        allSkills = [c[0].id for c in [co.content.new_skills.all() for co in orderedRequiredContents] if c] + list(knownSkills)
 
         criticalSkills = []
         for co in orderedRequiredContents:
