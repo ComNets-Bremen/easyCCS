@@ -141,8 +141,9 @@ var svgNS = "http://www.w3.org/2000/svg";
 
 function createGraph() {
     var svg = document.createElementNS(svgNS, "svg");
-    svg.setAttributeNS(null, "width", window.innerWidth);
+    svg.setAttributeNS(null, "width", "100%");
     svg.setAttributeNS(null, "height", layout.height);
+
 
     var style = document.createElementNS(svgNS, "style");
     style.appendChild(document.createTextNode(`
