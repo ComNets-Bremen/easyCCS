@@ -46,7 +46,7 @@ def current_status(request):
 def mail_request(request, form_type="RequestAccessForm"):
     """ Request a demo access to easyCCS
 
-    Allow people to request demo access to the service.
+    Allow contacting the authors in different ways
     """
     useForm = RequestAccessForm
     subject = "Request for demo access"
