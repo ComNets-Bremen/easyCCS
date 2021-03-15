@@ -90,7 +90,7 @@ class LoadExtendedSkillForm(forms.Form):
         else:
             configNames = StoredConfiguration.objects.filter(user=self.request.user)
 
-        choices=[(c.id, c.storage_name) for c in configNames],
+        choices=[(c.id, c.storage_name) for c in configNames]
 
         if self.request.user.is_superuser:
             choices=[(c.id, c.storage_name + " (" + str(c.user) + ")") for c in configNames]
