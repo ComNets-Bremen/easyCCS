@@ -34,8 +34,9 @@ urlpatterns = [
 
         path('list/keywords', login_required(views.KeywordListView.as_view()), name="listKeywords"),
 
-        path('request-access/', views.request_access, name="request_access"),
-        path('request-access-thanks/', views.request_access_thanks, name="request_access_thanks"),
+        path('mail-request/', views.mail_request, name="mail_request"),
+        path('mail-thanks/', views.mail_thanks, name="mail_thanks"),
+        path('contact-form', views.mail_request, {"form_type":"ContactForm"}, name="contact_form"),
 
         path('current_status/', views.current_status, name="current_status"),
 

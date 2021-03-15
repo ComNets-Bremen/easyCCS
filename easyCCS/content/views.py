@@ -16,7 +16,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 import numpy as np
 
 from .models import Skill, Content, Module, Keyword, StoredConfiguration, ConfigKeyValueStorage
-from .forms import ExtendedSkillForm, ContentForm, SkillForm, ModuleForm, LoadExtendedSkillForm, RequestAccessForm
+from .forms import ExtendedSkillForm, ContentForm, SkillForm, ModuleForm, LoadExtendedSkillForm, RequestAccessForm, ContactForm
 
 import json
 
@@ -43,39 +43,49 @@ def current_status(request):
 
     return render(request, "content/current_status.html", {"title" : "Current Status and System Overview"})
 
-def request_access(request):
+def mail_request(request, form_type="RequestAccessForm"):
     """ Request a demo access to easyCCS
 
     Allow people to request demo access to the service.
     """
+    useForm = RequestAccessForm
+    subject = "Request for demo access"
+    heading = "easyCCS Account Request"
+    infotext = "Our easy Content Curation System (easyCCS) is currently in a closed beta test. Using this form, you can request a demo account."
+
+    if form_type == "ContactForm":
+        useForm = ContactForm
+        subject = "Contact regarding easyCSS from the webpage"
+        heading = "Contact us"
+        infotext = "You would like to get into contact with us? Just fill out this form and we will come back to you shortly."
 
     if request.method == "POST":
-        form = RequestAccessForm(request.POST)
+        form = useForm(request.POST)
         if form.is_valid():
-            msg = "Request for demo access\n\n"
+            msg = subject + "\n\n"
             for field in form.cleaned_data:
                 msg += field + ": " + str(form.cleaned_data[field]) + "\n\n"
 
             send_mail(
-                'Demo Access Request',
+                subject,
                 msg,
                 str(form.cleaned_data["mail"]),
                 [ConfigKeyValueStorage.config.get_value("DEFAULT_RECEIVER_MAIL_ADDRESS"),],
                 fail_silently=False,
             )
-            return HttpResponseRedirect(reverse('request_access_thanks'))
+            return HttpResponseRedirect(reverse('mail_thanks'))
     else:
-        form = RequestAccessForm()
+        form = useForm()
 
-    return render(request, 'content/request_access.html', {'form': form, 'title': "Request demo access"})
+    return render(request, 'content/mail_request.html', {'form': form, 'title': "Request demo access", 'heading': heading, 'infotext': infotext})
 
-def request_access_thanks(request):
+def mail_thanks(request):
     """ Thank you page for requesting access
 
     Just show a thank you message
     """
 
-    return render(request, 'content/request_access_thanks.html', {'title': "Thanks for your request"})
+    return render(request, 'content/mail_thanks.html', {'title': "Thanks for your request"})
 
 
 @login_required

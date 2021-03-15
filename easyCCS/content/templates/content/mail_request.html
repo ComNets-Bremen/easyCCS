@@ -2,10 +2,12 @@
 
 {% block content %}
 
-<h1>easyCCS Account Request</h1>
-<p>Our <i>easy Content Curation System</i> (easyCCS) is currently in a closed beta test. Using this form, you can request a demo account.</p>
+<h1>{{ heading }}</h1>
+<p>
+{{ infotext }}
+<p>
 
-<form action="{% url 'request_access' %}" method="post">
+<form method="post">
     {% csrf_token %}
 
     {% if form.non_form_errors %}
