@@ -35,7 +35,20 @@
 
 {% for content in requiredContents %}
   <tr>
-      <td><a href="{% url "detailContent" content.id %}">{{ content.content.content_name}}</a></td>
+      <td>
+          <a href="{% url "detailContent" content.id %}">{{ content.content.content_name}}</a>
+          {% if content.content.binary_content %}
+          <a href="{{ content.content.binary_content.url }}">
+          <i class="fa fa-download"></i>
+          </a>
+          {% endif %}
+          {% if content.content.url_content %}
+          <a href="{{ content.content.url_content }}" target="_blank">
+          <i class="fa fa-globe"></i>
+          </a>
+          {% endif %}
+
+      </td>
       <td>{{ content.content.content_workload }} {{workload_unit}}
       <td>
           {% if content.content.required_skills.all %}
