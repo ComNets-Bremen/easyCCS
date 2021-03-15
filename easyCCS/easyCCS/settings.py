@@ -136,9 +136,9 @@ DEFAULT_RECEIVER_MAIL_ADDRESS = DEFAULT_SENDER_MAIL_ADDRESS
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "static"))
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
-MEDIA_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "uploads"))
+MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
 MEDIA_URL = '/media/'
 
 LOGIN_REDIRECT_URL = "/"
