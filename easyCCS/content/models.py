@@ -113,6 +113,7 @@ class WikidataEntry(models.Model):
             self.wikidata_related_fields_raw = json.dumps(props)
             if save:
                 self.save()
+
     def getWikidataUrl(self):
         return WIKIDATA_BASE_URL + str(self.wikidata_id)
 
@@ -240,6 +241,15 @@ class Keyword(models.Model):
 
     def __str__(self):
         return self.keyword_name
+
+    def get_cross_keywords(self):
+        keyword_ids = []
+
+        for kw in self.keyword_related_wikidata.all():
+            for k in kw.wikidata_related_fields.all():
+                keyword_ids.append(k.id)
+
+        return WikidataEntry.objects.filter(id__in=keyword_ids).order_by("wikidata_name")
 
 
 # Store dependency configuration
