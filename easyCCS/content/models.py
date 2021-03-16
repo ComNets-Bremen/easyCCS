@@ -10,7 +10,7 @@ import os
 import uuid
 import datetime
 import json
-from SPARQLWrapper import SPARQLWrapper, JSON
+import urllib.request
 
 from django.urls import reverse
 
@@ -19,6 +19,7 @@ from django.conf import settings
 RELATED_PROPERTIES = ["P31", "P279", "P737", "P277", "P366", "1535", "1542", "828", "1709", "527", "1963"]
 
 WIKIDATA_BASE_URL = "https://www.wikidata.org/wiki/"
+WIKIDATA_ENDPOINT = "https://www.wikidata.org/wiki/Special:EntityData/"
 
 def getFilePath(instance, filename):
     filename = "%s_%s" % (uuid.uuid4(), filename)
@@ -89,26 +90,26 @@ class WikidataEntry(models.Model):
 
     def updateWikidata(self, save=True):
         results = queryWikidata(self.wikidata_id)
-        if results:
+        if results and len(results) and self.wikidata_id in results["entities"]:
+            q_val = results["entities"][self.wikidata_id]
 
-            # Find label
-            for i in results["results"]["bindings"]:
-                if i["propLabel"]["value"] == "identity":
-                    self.wikidata_name = i["valLabel"]["value"]
-                    break
-
-            # Get the properties from the query and store them
             props = []
-            for i in results["results"]["bindings"]:
-                if i["propUrl"]["value"].split("/")[-1] in RELATED_PROPERTIES:
-                    props.append({
-                        "p" : i["propUrl"]["value"].split("/")[-1],
-                        "q" : i["valUrl"]["value"].split("/")[-1],
-                        "pLabel" : i["propLabel"]["value"],
-                        "qLabel" : i["valLabel"]["value"],
-                        "pUrl" : i["propUrl"],
-                        "qUrl" : i["valUrl"],
-                        })
+
+            # Get a name, default to Q-ID
+            if "labels" in q_val and "en" in q_val["labels"]:
+                self.wikidata_name = q_val["labels"]["en"]["value"]
+
+            # get properties
+            if "claims" in q_val:
+                for rp in RELATED_PROPERTIES:
+                    if rp in q_val["claims"]:
+                        for p in q_val["claims"][rp]:
+                            props.append({
+                                "p" : rp,
+                                "q" : p["mainsnak"]["datavalue"]["value"]["id"]
+                                })
+
+            # TODO Store more properties?
 
             self.wikidata_related_fields_raw = json.dumps(props)
             if save:
@@ -246,6 +247,7 @@ class Keyword(models.Model):
         keyword_ids = []
 
         for kw in self.keyword_related_wikidata.all():
+            keyword_ids.append(kw.id)
             for k in kw.wikidata_related_fields.all():
                 keyword_ids.append(k.id)
 
@@ -297,37 +299,10 @@ def auto_delete_file_on_change(sender, instance, **kwargs):
 
 
 def queryWikidata(q):
-    sparql = SPARQLWrapper("https://query.wikidata.org/sparql")
-    query = """
-        PREFIX entity: <http://www.wikidata.org/entity/>
-        #partial results
-
-        SELECT ?propUrl ?propLabel ?valUrl ?valLabel
-        WHERE
-        {
-            hint:Query hint:optimizer 'None' .
-                {       BIND(entity:%s AS ?valUrl) .
-                        BIND("N/A" AS ?propUrl ) .
-                        BIND("identity"@en AS ?propLabel ) .
-                }
-            UNION
-                {       entity:%s ?propUrl ?valUrl .
-                        ?property ?ref ?propUrl .
-                        ?property rdf:type wikibase:Property .
-                        ?property rdfs:label ?propLabel
-                }
-
-            ?valUrl rdfs:label ?valLabel
-            FILTER (LANG(?valLabel) = 'en') .
-            FILTER (lang(?propLabel) = 'en' )
-        }
-        ORDER BY ?propUrl ?valUrl
-    """ % (q, q)
-    sparql.setQuery(query)
-    sparql.setReturnFormat(JSON)
     ret = None
     try:
-        ret = sparql.query().convert()
+        response = urllib.request.urlopen(WIKIDATA_ENDPOINT + str(q) + ".json")
+        ret = json.loads(response.read())
     except Exception as e:
         ret = None
         print(e)
