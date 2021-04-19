@@ -4,7 +4,7 @@ from django import forms
 from django.urls import path
 from django.shortcuts import render, redirect
 
-from .models import Skill, Content, Module, LinkProperty, Keyword, StoredConfiguration, WikidataEntry, ConfigKeyValueStorage
+from .models import Skill, Content, Module, LinkProperty, StoredConfiguration, WikidataKeyword, ConfigKeyValueStorage
 
 import io
 import csv
@@ -15,7 +15,7 @@ class ContentAdmin(admin.ModelAdmin):
     readonly_fields = ["created", "updated"]
     save_as = True
     autocomplete_fields = ["required_skills", "new_skills", "content_keywords"]
-    search_fields = ["content_keywords__keyword_name", "content_name"]
+    search_fields = ["content_keywords__wikidata_name", "content_name", "content_keywords__wikidata_related_fields"]
 
 
 class LinkPropertyAdmin(admin.ModelAdmin):
@@ -25,19 +25,14 @@ class LinkPropertyAdmin(admin.ModelAdmin):
 class SkillAdmin(admin.ModelAdmin):
     ordering = ["-id"]
     autocomplete_fields = ["skill_keywords"]
-    search_fields = ["skill_name", "skill_descriptive_keywords", "skill_keywords__keyword_name"]
-
-class KeywordAdmin(admin.ModelAdmin):
-    ordering = ["keyword_name"]
-    search_fields = ["keyword_name", "keyword_related_wikidata",]
-    autocomplete_fields = ["keyword_related_wikidata",]
+    search_fields = ["skill_name", "skill_keywords__wikidata_name", "skill_keywords__wikidata_related_fields"]
 
 class StoredConfigurationAdmin(admin.ModelAdmin):
     ordering = ["-id"]
     readonly_fields = ["created", "stored_data", "user"]
     list_display = ["storage_name", "created", "user"]
 
-class WikidataEntryAdmin(admin.ModelAdmin):
+class WikidataKeywordAdmin(admin.ModelAdmin):
     ordering = ["wikidata_name"]
     readonly_fields = ["wikidata_name", "wikidata_related_fields_raw", "wikidata_related_fields"]
     list_display = ["wikidata_name", ]
@@ -82,13 +77,13 @@ class WikidataEntryAdmin(admin.ModelAdmin):
         return local_urls + urls
 
     def update_all_related_web(self, request):
-        queryset = WikidataEntry.objects.all()
+        queryset = WikidataKeyword.objects.all()
         self.update_all_related(request, queryset)
         self.message_user(request, "Updated all field relations")
         return redirect("..")
 
     def export_csv(self, request):
-        queryset = WikidataEntry.objects.all()
+        queryset = WikidataKeyword.objects.all()
         return self.export_to_csv(request, queryset)
 
 
@@ -98,21 +93,21 @@ class WikidataEntryAdmin(admin.ModelAdmin):
             csv_data = io.StringIO(csv_file.read().decode("UTF-8"))
             reader = csv.reader(csv_data)
             # assume 1st column is wikidata id
-            known_objects = WikidataEntry.objects.all().values_list("wikidata_id", flat=True)
+            known_objects = WikidataKeyword.objects.all().values_list("wikidata_id", flat=True)
             ids = []
             for line in reader:
                 print(line)
                 if line[0].startswith("Q"):
                     if line[0] in known_objects:
                         continue
-                    ids.append(WikidataEntry(wikidata_id=line[0]))
+                    ids.append(WikidataKeyword(wikidata_id=line[0]))
 
             if len(ids):
                 for i in ids:
                     i.save()
 
             # update all relations
-            for o in WikidataEntry.objects.all():
+            for o in WikidataKeyword.objects.all():
                 o.updateRelated()
 
 
@@ -136,13 +131,11 @@ class CsvImportForm(forms.Form):
     csv_file = forms.FileField()
 
 
-
 admin.site.register(Skill, SkillAdmin)
 admin.site.register(Content, ContentAdmin)
 admin.site.register(Module)
-admin.site.register(WikidataEntry, WikidataEntryAdmin)
+admin.site.register(WikidataKeyword, WikidataKeywordAdmin)
 admin.site.register(LinkProperty, LinkPropertyAdmin)
-admin.site.register(Keyword, KeywordAdmin)
 admin.site.register(StoredConfiguration, StoredConfigurationAdmin)
 admin.site.register(ConfigKeyValueStorage)
 

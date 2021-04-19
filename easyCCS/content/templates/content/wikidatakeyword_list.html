@@ -10,26 +10,18 @@
     <thead>
         <tr>
             <th>Keyword name</th>
-            <th>Related wikidata items</th>
-            <th>Additional related wikidata items</th>
+            <th>Related keywords</th>
         </tr>
     </thead>
     <tbody>
 {% for o in object_list %}
 <tr>
-    <td>{{o.keyword_name}}</td>
+    <td>{{o.wikidata_name}}</td>
     <td>
-        {% for wd in o.keyword_related_wikidata.all %}
+        {% for wd in o.wikidata_related_fields.all %}
             <a href="{{ wd.getWikidataUrl }}" target="_blank">{{wd}}</a>{% if not forloop.last %}, {% endif %}
         {% empty %}
-            No related wikidata entries for this keyword.
-        {% endfor %}
-    </td>
-    <td>
-        {% for kw in o.get_cross_keywords %}
-            <a href="{{ kw.getWikidataUrl }}" target="_blank">{{ kw }}</a>{% if not forloop.last %}, {% endif %}
-        {% empty %}
-            No additional keywords found
+            No related entries for this keyword.
         {% endfor %}
     </td>
 </tr>

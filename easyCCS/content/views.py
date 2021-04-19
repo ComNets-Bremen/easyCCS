@@ -15,7 +15,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 
 import numpy as np
 
-from .models import Skill, Content, Module, Keyword, StoredConfiguration, ConfigKeyValueStorage
+from .models import Skill, Content, Module, WikidataKeyword, StoredConfiguration, ConfigKeyValueStorage
 from .forms import ExtendedSkillForm, ContentForm, SkillForm, ModuleForm, LoadExtendedSkillForm, RequestAccessForm, ContactForm
 
 import json
@@ -301,8 +301,7 @@ class SkillListView(ListView):
         skill_filter = self.request.GET.get("skill_filter", "")
         q_filter =  self.model.objects.filter(
                 Q(skill_name__icontains=skill_filter) |
-                Q(skill_descriptive_keywords__icontains=skill_filter) |
-                Q(skill_keywords__keyword_name__icontains=skill_filter)
+                Q(skill_keywords__wikidata_name__icontains=skill_filter)
                 )
         return q_filter
 
@@ -400,8 +399,7 @@ class ContentListView(ListView):
         content_filter = self.request.GET.get("content_filter", "")
         q_filter =  self.model.objects.filter(
                 Q(content_name__icontains=content_filter) |
-                Q(content_description__icontains=content_filter) |
-                Q(content_keywords__keyword_name__icontains=content_filter)
+                Q(content_keywords__wikidata_name__icontains=content_filter)
                 )
 
         return q_filter
@@ -607,7 +605,7 @@ class KeywordListView(ListView):
     generic view
     """
 
-    model = Keyword
+    model = WikidataKeyword
     paginate_by = 20
     title = "List of known Keywords"
 

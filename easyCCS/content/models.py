@@ -33,8 +33,7 @@ def deleteBinaryFile(instance):
 
 class Skill(models.Model):
     skill_name = models.CharField(max_length=200)
-    skill_descriptive_keywords = models.TextField(blank=True, help_text="Space separated keywords for searching the skill.")
-    skill_keywords = models.ManyToManyField("Keyword", blank=True, related_name="skill_keyword")
+    skill_keywords = models.ManyToManyField("WikidataKeyword", blank=True, related_name="skill_keyword")
 
     class Meta:
         ordering = ["-id"]
@@ -49,7 +48,7 @@ class Skill(models.Model):
     def get_absolute_url(self):
         return reverse("detailSkill", args=[str(self.id)])
 
-class WikidataEntry(models.Model):
+class WikidataKeyword(models.Model):
     wikidata_id = models.CharField(
             blank=False,
             unique=True,
@@ -84,7 +83,7 @@ class WikidataEntry(models.Model):
         return related_raw
 
     def updateRelated(self):
-        ids = WikidataEntry.objects.filter(wikidata_id__in=self.getRelatedRaw()).values_list("id", flat=True)
+        ids = WikidataKeyword.objects.filter(wikidata_id__in=self.getRelatedRaw()).values_list("id", flat=True)
         for i in ids:
             self.wikidata_related_fields.add(i)
 
@@ -134,7 +133,7 @@ class Content(models.Model):
 
     content_workload = models.FloatField(default=0.0, help_text=str(settings.WORKLOAD_UNIT))
 
-    content_keywords = models.ManyToManyField("Keyword", blank=True, related_name="content_keyword")
+    content_keywords = models.ManyToManyField("WikidataKeyword", blank=True, related_name="content_keyword")
 
     class Meta:
         ordering = ["-id"]
@@ -232,26 +231,28 @@ class Module(models.Model):
         # Return the overall workload of this module
         return sum([w.content_workload for w in self.module_content_modules.all()])
 
+
+## TODO: Remove
 # Keyword class for grouping data
-class Keyword(models.Model):
-    keyword_name = models.CharField(max_length=100)
-    keyword_related_wikidata = models.ManyToManyField(WikidataEntry, blank=True, help_text="Related wikidata fields in this installation.")
-
-    class Meta:
-        ordering = ["keyword_name"]
-
-    def __str__(self):
-        return self.keyword_name
-
-    def get_cross_keywords(self):
-        keyword_ids = []
-
-        for kw in self.keyword_related_wikidata.all():
-            keyword_ids.append(kw.id)
-            for k in kw.wikidata_related_fields.all():
-                keyword_ids.append(k.id)
-
-        return WikidataEntry.objects.filter(id__in=keyword_ids).order_by("wikidata_name")
+#class Keyword(models.Model):
+#    keyword_name = models.CharField(max_length=100)
+#    keyword_related_wikidata = models.ManyToManyField(WikidataKeyword, blank=True, help_text="Related wikidata fields in this installation.")
+#
+#    class Meta:
+#        ordering = ["keyword_name"]
+#
+#    def __str__(self):
+#        return self.keyword_name
+#
+#    def get_cross_keywords(self):
+#        keyword_ids = []
+#
+#        for kw in self.keyword_related_wikidata.all():
+#            keyword_ids.append(kw.id)
+#            for k in kw.wikidata_related_fields.all():
+#                keyword_ids.append(k.id)
+#
+#        return WikidataKeyword.objects.filter(id__in=keyword_ids).order_by("wikidata_name")
 
 
 # Store dependency configuration
