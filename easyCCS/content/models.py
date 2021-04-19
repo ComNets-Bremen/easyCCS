@@ -60,6 +60,9 @@ class WikidataKeyword(models.Model):
     wikidata_related_fields = models.ManyToManyField("self", blank=True, symmetrical=True, help_text="Related fields available in this installations.")
     wikidata_related_fields_raw = models.TextField(blank=True, help_text="Related fields according to wikidata")
 
+    class Meta:
+        ordering = ["wikidata_name",]
+
     def save(self, *args, **kwargs):
         if self.id and self.wikidata_name != self.wikidata_id:
             # we do not update existing items here. This is only done
