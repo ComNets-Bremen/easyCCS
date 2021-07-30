@@ -120,6 +120,10 @@ class WikidataKeyword(models.Model):
     def getWikidataUrl(self):
         return WIKIDATA_BASE_URL + str(self.wikidata_id)
 
+    def get_absolute_url(self):
+        return reverse("listKeywords")
+
+
 
 
 class Content(models.Model):

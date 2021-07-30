@@ -61,4 +61,10 @@
 </nav>
 {% endif %}
 
+
+{% if perms.content.content_manager %}
+<a href="{% url "createKeyword" %}" class="btn btn-success">Add wikidata item as keyword</a>
+{% endif %}
+
+
 {% endblock %}

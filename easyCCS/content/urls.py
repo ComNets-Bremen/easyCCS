@@ -32,7 +32,9 @@ urlpatterns = [
         path('update/module/<int:pk>', login_required(views.ModuleUpdate.as_view()), name="updateModule"),
         path('delete/module/<int:pk>', login_required(views.ModuleDelete.as_view()), name="deleteModule"),
 
-        path('list/keywords', login_required(views.KeywordListView.as_view()), name="listKeywords"),
+        path('list/keyword', login_required(views.KeywordListView.as_view()), name="listKeywords"),
+        path('create/keyword', login_required(views.KeywordCreate.as_view()), name="createKeyword"),
+        path('detail/keyword', login_required(views.KeywordDetailView.as_view()), name="detailKeyword"),
 
         path('mail-request/', views.mail_request, name="mail_request"),
         path('mail-thanks/', views.mail_thanks, name="mail_thanks"),

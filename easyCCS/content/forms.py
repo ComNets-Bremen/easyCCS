@@ -239,6 +239,13 @@ class ModuleForm(forms.ModelForm):
                 }
 
 
+class KeywordForm(forms.ModelForm):
+    class Meta:
+        model = WikidataKeyword
+        fields = ["wikidata_id", ]
+        widgets = {
+                "wikidata_id" : forms.TextInput(attrs={"class" : "form-control"}),
+                }
 
 class RequestAccessForm(forms.Form):
     name = forms.CharField(label='Your name', max_length=100, help_text="Your full name.")

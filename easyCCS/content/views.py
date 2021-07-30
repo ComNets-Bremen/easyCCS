@@ -16,7 +16,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 import numpy as np
 
 from .models import Skill, Content, Module, WikidataKeyword, StoredConfiguration, ConfigKeyValueStorage
-from .forms import ExtendedSkillForm, ContentForm, SkillForm, ModuleForm, LoadExtendedSkillForm, RequestAccessForm, ContactForm
+from .forms import ExtendedSkillForm, ContentForm, SkillForm, ModuleForm, KeywordForm, LoadExtendedSkillForm, RequestAccessForm, ContactForm
 
 import json
 
@@ -598,6 +598,21 @@ class ModuleDelete(DeleteView):
             context["title"] = self.title
         return context
 
+class KeywordDetailView(DetailView):
+    """ Keyword detail view
+
+    generic view
+    """
+
+    model = WikidataKeyword
+    title = "Wikidata keyword detail view"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if not "title" in context:
+            context["title"] = self.title
+        return context
+
 
 class KeywordListView(ListView):
     """ keyword list view
@@ -614,6 +629,31 @@ class KeywordListView(ListView):
         if not "title" in context:
             context["title"] = self.title
         return context
+
+
+class KeywordCreate(PermissionRequiredMixin, CreateView):
+    """ content create view
+
+    generic view
+    """
+
+    #TODO Check permission
+
+    model = WikidataKeyword
+    title = "Add new keyword"
+    template_name = "content/generic_form.html"
+    permission_required = "content.content_manager"
+
+    form_class = KeywordForm
+
+
+
+
+
+
+
+
+
 
 # Redirect to the app
 def redirectToApp(request):
