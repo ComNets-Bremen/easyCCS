@@ -196,3 +196,4 @@ tags
 # Ignore local settings
 easyCCS/easyCCS/settings_local.py
 
+easyCCS/django_easyccs.code-workspace

@@ -3,6 +3,11 @@ easyCCS
 
 An easy to use content curation tool
 
+client
+======
+
+Find a client related [README here](/client/README.md)
+
 venv tools
 ==========
 
