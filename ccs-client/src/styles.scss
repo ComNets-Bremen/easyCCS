@@ -1,13 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 
+/** Overwrite default typography of Angular Material theme **/
 @use '~@angular/material'as mat;
 
-$my-custom-level: mat.define-typography-level($font-family: Roboto,
-  $font-weight: 400,
-  $font-size: 3rem,
-  $line-height: 1,
-  $letter-spacing: normal,
-);
+$app-typography: mat.define-typography-config($body-1: mat.define-typography-level(16px, 20px, 400),
+  $input: mat.define-typography-level(16px, 1.25, 400));
+
+@include mat.core($app-typography);
 
 html,
 body {
@@ -26,8 +25,14 @@ body {
   width: 60%;
 }
 
-.basic-form-footer {}
+.basic-form-footer {
+  text-align: right;
+}
 
 .basic-form .mat-form-field-infix {
-  min-width: 250px;
+  min-width: 300px;
+}
+
+.mat-form-field {
+  min-width: 100%;
 }
