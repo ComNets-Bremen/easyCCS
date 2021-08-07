@@ -1,0 +1,33 @@
+/* You can add global styles to this file, and also import other style files */
+
+@use '~@angular/material'as mat;
+
+$my-custom-level: mat.define-typography-level($font-family: Roboto,
+  $font-weight: 400,
+  $font-size: 3rem,
+  $line-height: 1,
+  $letter-spacing: normal,
+);
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/** GENERAL **/
+.basic-form {
+  margin: 0 auto;
+  min-width: 300px;
+  width: 60%;
+}
+
+.basic-form-footer {}
+
+.basic-form .mat-form-field-infix {
+  min-width: 250px;
+}

@@ -1,0 +1,55 @@
+<h1 i18n>Login</h1>
+<div class="basic-form">
+  <form [formGroup]="userForm" (ngSubmit)="login(userForm.value)">
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label i18n>Benutzername</mat-label>
+        <input
+          matInput
+          placeholder="Benutzername"
+          i18n-placeholder="Benutzername"
+          formControlName="username"
+        />
+        <mat-icon matSuffix>account_box</mat-icon>
+        <mat-hint i18n>Melden Sie sich mit ihrem Benutzername an</mat-hint>
+        <mat-error
+          *ngIf="
+            !userForm.controls['username'].valid &&
+            userForm.controls['username'].dirty
+          "
+          i18n
+          >Name darf nicht leer sein</mat-error
+        >
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label i18n>Passwort</mat-label>
+        <input matInput type="password" formControlName="password" />
+        <mat-icon matSuffix>password</mat-icon>
+        <mat-hint i18n>Geben Sie ihr gewähltes Passwort ein</mat-hint>
+        <mat-error
+          *ngIf="
+            !userForm.controls['password'].valid &&
+            userForm.controls['password'].dirty
+          "
+          i18n
+          >Passwort darf nicht leer sein</mat-error
+        >
+      </mat-form-field>
+    </p>
+    <div class="basic-form-footer">
+      <button
+        mat-raised-button
+        type="submit"
+        class="pull-right"
+        color="primary"
+        i18n
+      >
+        Einloggen
+      </button>
+    </div>
+
+    <div class="clear-all"></div>
+  </form>
+</div>
