@@ -1,6 +1,6 @@
 # CcsClient
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.14.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.0.
 
 ## Development server
 
@@ -27,7 +27,16 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
 ## ANGULAR STEUP
+nom install, proxy.config, angular.json, scss styles, 
+task runner,
+vs code extensions
 Version 12, install nodejs 14.5 LTS
 angular material
 Angular cli
+
+## packages
+npm install ngx-cookie-service --save
+
+## Styling
+variables.scss
 

@@ -1,7 +1,35 @@
+@use '~@angular/material'as mat;
+@use "../assets/styles/variables.scss";
+
+
 .spacer {
   flex: 1 1 auto;
 }
 
 .mat-body {
   margin: 15px;
+}
+
+
+
+.main-footer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 46px;
+  background-color: adjust-color(mat.get-color-from-palette(variables.$accent-palette, "darker", $opacity: 0.3));
+  color: mat.get-color-from-palette(variables.$primary-palette, "darker");
+}
+
+.main-footer div {
+  padding: 5px;
+  cursor: pointer;
+  float: left;
+  margin-left: 15px;
+}
+
+.main-footer div img {
+  height: 21px;
+  width: auto;
 }

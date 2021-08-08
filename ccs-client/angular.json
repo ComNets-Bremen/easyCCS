@@ -6,9 +6,6 @@
     "ccs-client": {
       "projectType": "application",
       "schematics": {
-        "@schematics/angular:component": {
-          "style": "less"
-        },
         "@schematics/angular:application": {
           "strict": true
         }
@@ -130,11 +127,6 @@
           }
         }
       }
-    }
-  },
-  "schematics": {
-    "@schematics/angular:component": {
-      "styleext": "scss"
     }
   },
   "defaultProject": "ccs-client"

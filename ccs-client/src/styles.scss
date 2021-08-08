@@ -33,6 +33,12 @@ body {
   min-width: 300px;
 }
 
+.isLink {
+  cursor: pointer;
+  cursor: hand;
+}
+
+/** OVERRIDES **/
 .mat-form-field {
   min-width: 100%;
 }

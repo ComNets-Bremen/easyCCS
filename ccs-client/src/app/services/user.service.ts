@@ -1,5 +1,7 @@
-import { Injectable } from "@angular/core";
+import { Injectable, OnInit } from "@angular/core";
+import { CookieService } from "ngx-cookie-service";
 import { BaseUser } from "../classes/BaseUser";
+import { HttpService } from "./http.service";
 
 @Injectable({
   providedIn: "root",
@@ -7,13 +9,27 @@ import { BaseUser } from "../classes/BaseUser";
 export class UserService {
   public loggedIn = false;
 
-  constructor() {}
+  constructor(
+    private cookieService: CookieService,
+    private httpService: HttpService
+  ) {
+    const token = this.cookieService.get(this.httpService.tokenName);
+    if (token) {
+      this.httpService.token = token;
+      this.loggedIn = true;
+    } else {
+      this.loggedIn = false;
+    }
+  }
 
   public logIn(user: BaseUser): void {
     this.loggedIn = true;
+    this.httpService.token = "newsessiontoken";
+    this.cookieService.set(this.httpService.tokenName, this.httpService.token);
   }
 
   public logout(): void {
     this.loggedIn = false;
+    this.httpService.token = "";
   }
 }
