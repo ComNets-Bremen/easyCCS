@@ -1,6 +1,6 @@
 import { Injectable, OnInit } from "@angular/core";
 import { CookieService } from "ngx-cookie-service";
-import { BaseUser } from "../classes/BaseUser";
+import { BaseUser } from "../classes/baseUser";
 import { HttpService } from "./http.service";
 
 @Injectable({

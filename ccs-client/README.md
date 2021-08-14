@@ -34,9 +34,19 @@ Version 12, install nodejs 14.5 LTS
 angular material
 Angular cli
 
+
 ## packages
 npm install ngx-cookie-service --save
+http-status-enum
 
 ## Styling
 variables.scss
+
+## additional info
+httpInterceptor
+
+## TODOS
+move header stuff in interceptor
+[angular interceptor](https://angular.io/guide/http#intercepting-requests-and-responses)
+
 

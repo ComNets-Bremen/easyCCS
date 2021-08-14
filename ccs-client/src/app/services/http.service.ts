@@ -9,9 +9,21 @@ import { Observable } from "rxjs";
 export class HttpService {
   public token = "";
   public readonly tokenName = "ccsSession";
-  private readonly baseApi = "../rest/";
+  private readonly baseApi = "rest/";
   private readonly end = "/";
   constructor(private http: HttpClient, private cookieService: CookieService) {}
+
+  // CONTENT
+
+  public getContent(): Observable<any> {
+    const url = this.baseApi + "content" + this.end;
+    return this.getAuthRequest(url);
+  }
+
+  public deleteContent(id: number): Observable<any> {
+    const url = this.baseApi + "content/" + id + this.end;
+    return this.deleteAuthRequest(url);
+  }
 
   // default http requests
   private postRequest(nodeUrl: string, body: any): Observable<any> {

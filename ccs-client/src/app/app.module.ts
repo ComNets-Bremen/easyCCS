@@ -4,7 +4,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { AppRoutingModule } from "./app-routing.module";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 
 // Angular Material Modules
 import { MatToolbarModule } from "@angular/material/toolbar";
@@ -13,6 +13,8 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
+import { MatTableModule } from "@angular/material/table";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 // general packages
 import { CookieService } from "ngx-cookie-service";
@@ -31,6 +33,8 @@ import { SkillGraphComponent } from "./skill-graph/skill-graph.component";
 import { SkillDependencyComponent } from "./skill-dependency/skill-dependency.component";
 import { ImprintComponent } from "./imprint/imprint.component";
 import { PrivacyComponent } from "./privacy/privacy.component";
+import { ErrorInterceptorService } from "./services/error-interceptor.service";
+import { MyErrorModule, MyErrorHandler } from "./helper/errorHandler";
 
 @NgModule({
   declarations: [
@@ -59,8 +63,21 @@ import { PrivacyComponent } from "./privacy/privacy.component";
     ReactiveFormsModule,
     MatInputModule,
     HttpClientModule,
+    MatTableModule,
+    MatSnackBarModule,
+    MyErrorModule,
   ],
-  providers: [UserService, HttpService, CookieService],
+  providers: [
+    UserService,
+    HttpService,
+    CookieService,
+    MyErrorHandler,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptorService,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

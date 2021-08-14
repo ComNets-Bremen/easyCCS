@@ -38,6 +38,19 @@ body {
   cursor: hand;
 }
 
+.errorSnack,
+.errorSnack .mat-button {
+  background: #f44336;
+  color: white;
+}
+
+.warnSnack,
+.warnSnack .mat-button {
+  background: #f44336;
+  color: white;
+}
+
+
 /** OVERRIDES **/
 .mat-form-field {
   min-width: 100%;

@@ -5,7 +5,7 @@ import {
   FormControl,
   Validators,
 } from "@angular/forms";
-import { BaseUser } from "../classes/BaseUser";
+import { BaseUser } from "../classes/baseUser";
 import { UserService } from "../services/user.service";
 
 @Component({
