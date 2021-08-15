@@ -6,8 +6,8 @@ import { Environment } from "./ienvironment";
 
 export const environment: Environment = {
   production: false,
-  name: "debug",
-  test: false,
+  name: "test",
+  test: true,
 };
 
 /*

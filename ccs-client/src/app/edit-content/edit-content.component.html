@@ -1,0 +1,108 @@
+<mat-card>
+  <mat-card-title i18n>Edit content</mat-card-title>
+  <div class="base-form">
+    <form [formGroup]="editForm" (ngSubmit)="editContent(editForm.value)">
+      <p>
+        <mat-form-field appearance="standard">
+          <mat-label i18n>Name</mat-label>
+          <input
+            matInput
+            placeholder="Name"
+            i18n-placeholder="Name"
+            formControlName="name"
+          />
+          <mat-icon matSuffix>title</mat-icon>
+          <mat-hint i18n>Enter name</mat-hint>
+          <mat-error
+            *ngIf="
+              !editForm.controls['name'].valid &&
+              editForm.controls['name'].dirty
+            "
+            i18n
+            >Name must not be empty
+          </mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="standard">
+          <mat-label i18n>Description</mat-label>
+          <input
+            matInput
+            placeholder="Description"
+            i18n-placeholder="Description"
+            formControlName="desc"
+          />
+          <mat-icon matSuffix>hail</mat-icon>
+          <mat-hint i18n>Enter description</mat-hint>
+          <mat-error
+            *ngIf="
+              !editForm.controls['name'].valid &&
+              editForm.controls['name'].dirty
+            "
+            i18n
+            >Description must not be empty</mat-error
+          >
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-accordion multi>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title i18n> Required skills </mat-panel-title>
+              <mat-panel-description i18n>
+                Click to see all
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-list role="list">
+              <mat-list-item
+                role="listitem"
+                *ngFor="let reqSkill of content.required_skills"
+                >{{ reqSkill.skill_name }}</mat-list-item
+              >
+            </mat-list>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </p>
+      <p>
+        <mat-accordion multi>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title i18n> New skills </mat-panel-title>
+              <mat-panel-description i18n>
+                Click to see all
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-list role="list">
+              <mat-list-item
+                role="listitem"
+                *ngFor="let reqSkill of content.new_skills"
+                >{{ reqSkill.skill_name }}</mat-list-item
+              >
+            </mat-list>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </p>
+
+      <button
+        mat-raised-button
+        type="submit"
+        [disabled]="!editForm.valid"
+        color="primary"
+        class="pull-right"
+        i18n
+      >
+        Speichern
+      </button>
+      <button
+        mat-raised-button
+        (click)="goBack()"
+        color="accent"
+        class="pull-right right-margin"
+        i18n
+      >
+        Zurück
+      </button>
+      <div class="clear-all"></div>
+    </form>
+  </div>
+</mat-card>

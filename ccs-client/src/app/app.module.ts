@@ -15,6 +15,9 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatTableModule } from "@angular/material/table";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatSortModule } from "@angular/material/sort";
+import { MatExpansionModule } from "@angular/material/expansion";
+import { MatListModule } from "@angular/material/list";
 
 // general packages
 import { CookieService } from "ngx-cookie-service";
@@ -35,6 +38,7 @@ import { ImprintComponent } from "./imprint/imprint.component";
 import { PrivacyComponent } from "./privacy/privacy.component";
 import { ErrorInterceptorService } from "./services/error-interceptor.service";
 import { MyErrorModule, MyErrorHandler } from "./helper/errorHandler";
+import { EditContentComponent } from "./edit-content/edit-content.component";
 
 @NgModule({
   declarations: [
@@ -49,6 +53,7 @@ import { MyErrorModule, MyErrorHandler } from "./helper/errorHandler";
     SkillDependencyComponent,
     ImprintComponent,
     PrivacyComponent,
+    EditContentComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,6 +71,9 @@ import { MyErrorModule, MyErrorHandler } from "./helper/errorHandler";
     MatTableModule,
     MatSnackBarModule,
     MyErrorModule,
+    MatSortModule,
+    MatExpansionModule,
+    MatListModule,
   ],
   providers: [
     UserService,

@@ -20,6 +20,14 @@ export class ToolService {
     });
   }
 
+  public compare(
+    a: number | string,
+    b: number | string,
+    isAsc: boolean
+  ): number {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  }
+
   private getClassFromType(type: ESnackbarTypes): string {
     switch (type) {
       case ESnackbarTypes.Error:

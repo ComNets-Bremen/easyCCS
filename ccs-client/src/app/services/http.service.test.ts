@@ -1,7 +1,8 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { CookieService } from "ngx-cookie-service";
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
+import { ContentTestData } from "../test/testdata";
 
 @Injectable({
   providedIn: "root",
@@ -11,18 +12,20 @@ export class HttpService {
   public readonly tokenName = "ccsSession";
   private readonly baseApi = "rest/";
   private readonly end = "/";
-  constructor(private http: HttpClient, private cookieService: CookieService) {}
+  constructor(private http: HttpClient, private cookieService: CookieService) {
+    ContentTestData.create();
+  }
 
   // CONTENT
 
   public getContentAll(): Observable<any> {
     const url = this.baseApi + "content" + this.end;
-    return this.getAuthRequest(url);
+    return of(ContentTestData.contents);
   }
 
   public getContent(id: number): Observable<any> {
     const url = this.baseApi + `content/${id}` + this.end;
-    return this.getAuthRequest(url);
+    return of(ContentTestData.getbyId(id));
   }
 
   public deleteContent(id: number): Observable<any> {

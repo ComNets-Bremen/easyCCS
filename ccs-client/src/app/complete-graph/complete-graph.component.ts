@@ -1,15 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'app-complete-graph',
-  templateUrl: './complete-graph.component.html',
-  styleUrls: ['./complete-graph.component.css']
+  selector: "app-complete-graph",
+  templateUrl: "./complete-graph.component.html",
+  styleUrls: ["./complete-graph.component.scss"],
 })
 export class CompleteGraphComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

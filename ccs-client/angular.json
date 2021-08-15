@@ -62,6 +62,23 @@
                   "maximumError": "4kb"
                 }
               ]
+            },
+            "servelocal": {
+              "fileReplacements": [{
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.test.ts"
+                },
+                {
+                  "replace": "src/app/services/http.service.ts",
+                  "with": "src/app/services/http.service.test.ts"
+                }
+              ],
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "buildOptimizer": false,
+              "sourceMap": true,
+              "optimization": false,
+              "namedChunks": true
             }
           },
           "defaultConfiguration": ""
@@ -74,6 +91,9 @@
           "configurations": {
             "production": {
               "browserTarget": "ccs-client:build:production"
+            },
+            "servelocal": {
+              "browserTarget": "ccs-client:build:servelocal"
             }
           }
         },

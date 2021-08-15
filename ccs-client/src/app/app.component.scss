@@ -16,7 +16,7 @@
   right: 0;
   width: 100%;
   height: 46px;
-  background-color: adjust-color(mat.get-color-from-palette(variables.$accent-palette, "darker", $opacity: 0.3));
+  background-color: adjust-color(mat.get-color-from-palette(variables.$accent-palette, "lighter", $opacity: 1));
   color: mat.get-color-from-palette(variables.$primary-palette, "darker");
 }
 

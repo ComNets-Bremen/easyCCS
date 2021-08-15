@@ -1,15 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'app-skill-dependency',
-  templateUrl: './skill-dependency.component.html',
-  styleUrls: ['./skill-dependency.component.css']
+  selector: "app-skill-dependency",
+  templateUrl: "./skill-dependency.component.html",
+  styleUrls: ["./skill-dependency.component.scss"],
 })
 export class SkillDependencyComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

@@ -13,7 +13,11 @@ export class MyErrorHandler implements ErrorHandler {
     if (!error) {
       return;
     }
-    this.toolService.openSnackBar(error, "Ok", ESnackbarTypes.Error);
+    this.toolService.openSnackBar(
+      error,
+      $localize`@@Ok:Ok`,
+      ESnackbarTypes.Error
+    );
   }
 
   public handleHttpError(

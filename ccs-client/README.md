@@ -44,6 +44,12 @@ variables.scss
 
 ## additional info
 httpInterceptor
+readme
+http.test.
+angular.json
+i18n-placeholder => additional attributes
+authguard
+routing
 
 ## TODOS
 move header stuff in interceptor
