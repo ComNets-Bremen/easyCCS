@@ -2,16 +2,20 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { CookieService } from "ngx-cookie-service";
 import { Observable } from "rxjs";
+import { BaseHttpService } from "../baseService/BaseHttpService";
 
 @Injectable({
   providedIn: "root",
 })
-export class HttpService {
+export class HttpService extends BaseHttpService {
   public token = "";
-  public readonly tokenName = "ccsSession";
-  private readonly baseApi = "rest/";
-  private readonly end = "/";
-  constructor(private http: HttpClient, private cookieService: CookieService) {}
+
+  constructor(
+    protected http: HttpClient,
+    protected cookieService: CookieService
+  ) {
+    super(http, cookieService);
+  }
 
   // CONTENT
 
@@ -30,20 +34,37 @@ export class HttpService {
     return this.deleteAuthRequest(url);
   }
 
+  // SKILLS
+
+  public getSkillAll(): Observable<any> {
+    const url = this.baseApi + "skill" + this.end;
+    return this.getAuthRequest(url);
+  }
+
+  public getSkill(id: number): Observable<any> {
+    const url = this.baseApi + `skill/${id}` + this.end;
+    return this.getAuthRequest(url);
+  }
+
+  public deleteCSkill(id: number): Observable<any> {
+    const url = this.baseApi + "skill/" + id + this.end;
+    return this.deleteAuthRequest(url);
+  }
+
   // default http requests
-  private postRequest(nodeUrl: string, body: any): Observable<any> {
+  protected postRequest(nodeUrl: string, body: any): Observable<any> {
     const headers = new HttpHeaders(); // .set("django_language", cookie);
     return this.http.post(nodeUrl, body, {
       headers,
     });
   }
 
-  private getRequest(nodeUrl: string): Observable<any> {
+  protected getRequest(nodeUrl: string): Observable<any> {
     const headers = new HttpHeaders(); // .set("django_language", cookie);
     return this.http.get(nodeUrl, { headers });
   }
 
-  private postAuthRequest(nodeUrl: string, body: any): Observable<any> {
+  protected postAuthRequest(nodeUrl: string, body: any): Observable<any> {
     const headers = new HttpHeaders().set(
       "Authorization",
       `Bearer ${this.token}`
@@ -53,7 +74,7 @@ export class HttpService {
     });
   }
 
-  private getAuthRequest(nodeUrl: string): Observable<any> {
+  protected getAuthRequest(nodeUrl: string): Observable<any> {
     const headers = new HttpHeaders().set(
       "Authorization",
       `Bearer ${this.token}`
@@ -63,7 +84,7 @@ export class HttpService {
     });
   }
 
-  private putAuthRequest(nodeUrl: string, body: any): Observable<any> {
+  protected putAuthRequest(nodeUrl: string, body: any): Observable<any> {
     const headers = new HttpHeaders().set(
       "Authorization",
       `Bearer ${this.token}`
@@ -73,7 +94,7 @@ export class HttpService {
     });
   }
 
-  private deleteAuthRequest(nodeUrl: string): Observable<any> {
+  protected deleteAuthRequest(nodeUrl: string): Observable<any> {
     const headers = new HttpHeaders().set(
       "Authorization",
       `Bearer ${this.token}`

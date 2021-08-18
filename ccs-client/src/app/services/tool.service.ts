@@ -17,6 +17,8 @@ export class ToolService {
     this.snackBar.open(text, btnText, {
       duration: 3000,
       panelClass: cssClass,
+      horizontalPosition: "end",
+      verticalPosition: "bottom",
     });
   }
 

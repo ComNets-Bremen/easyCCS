@@ -13,6 +13,14 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
+      "i18n": {
+        "sourceLocale": "en",
+        "locales": {
+          "de": {
+            "translation": "src/i18n/messages.de.xlf"
+          }
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -79,6 +87,13 @@
               "sourceMap": true,
               "optimization": false,
               "namedChunks": true
+            },
+            "de": {
+              "aot": true,
+              "outputPath": "dist/ccs-client-de",
+              "i18nFile": "src/i18n/messages.de.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "de"
             }
           },
           "defaultConfiguration": ""
@@ -94,6 +109,9 @@
             },
             "servelocal": {
               "browserTarget": "ccs-client:build:servelocal"
+            },
+            "de": {
+              "browserTarget": "ccs-client:build:de"
             }
           }
         },
@@ -143,6 +161,21 @@
           "configurations": {
             "production": {
               "devServerTarget": "ccs-client:serve:production"
+            }
+          }
+        },
+        "xliffmerge": {
+          "builder": "@ngx-i18nsupport/tooling:xliffmerge",
+          "options": {
+            "xliffmergeOptions": {
+              "i18nFormat": "xlf",
+              "srcDir": "src/i18n",
+              "genDir": "src/i18n",
+              "defaultLanguage": "en",
+              "languages": [
+                "en",
+                "de"
+              ]
             }
           }
         }

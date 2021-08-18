@@ -15,7 +15,7 @@ export class MyErrorHandler implements ErrorHandler {
     }
     this.toolService.openSnackBar(
       error,
-      $localize`@@Ok:Ok`,
+      $localize`:@@Ok:Ok`,
       ESnackbarTypes.Error
     );
   }

@@ -50,6 +50,7 @@ angular.json
 i18n-placeholder => additional attributes
 authguard
 routing
+https://github.com/martinroob/ngx-i18nsupport/wiki/Tutorial-for-using-xliffmerge-with-angular-cli
 
 ## TODOS
 move header stuff in interceptor

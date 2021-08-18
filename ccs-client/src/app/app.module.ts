@@ -18,6 +18,8 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatSortModule } from "@angular/material/sort";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatListModule } from "@angular/material/list";
+import { MatChipsModule } from "@angular/material/chips";
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
 
 // general packages
 import { CookieService } from "ngx-cookie-service";
@@ -74,6 +76,8 @@ import { EditContentComponent } from "./edit-content/edit-content.component";
     MatSortModule,
     MatExpansionModule,
     MatListModule,
+    MatChipsModule,
+    MatAutocompleteModule,
   ],
   providers: [
     UserService,

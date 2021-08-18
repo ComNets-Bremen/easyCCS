@@ -1,5 +1,7 @@
 import { Content } from "../classes/content";
 import { DocFile } from "../classes/docFile";
+import { Module } from "../classes/module";
+import { Skill } from "../classes/skill";
 
 export class ContentTestData {
   public static contents: Content[];
@@ -7,22 +9,34 @@ export class ContentTestData {
   public static create(): void {
     const contents: Content[] = [];
     for (let i = 0; i < 20; i++) {
-      const element = new Content();
-      element.id = i + 1;
-      element.content_name = `Content${i}`;
-      element.content_workload = i * 10;
+      const content = new Content();
+      content.id = i + 1;
+      content.content_name = `Content${i}`;
+      content.content_workload = i * 10;
+      content.required_skills = [];
+      content.new_skills = [];
+      for (let j = 0; j < 3; j++) {
+        const skill = SkillTestData.getbyId(j + i);
+        const newSkill = SkillTestData.getbyId(j + i + 2);
+        if (skill) {
+          content.required_skills.push(skill);
+        }
+        if (newSkill) {
+          content.new_skills.push(newSkill);
+        }
+      }
       if (i % 2 !== 0) {
-        element.url_content = [];
-        element.url_content.push(`url_${i}`);
+        content.url_content = [];
+        content.url_content.push(`url_${i}`);
       }
       if (i % 3 !== 0) {
-        element.binary_content = [];
+        content.binary_content = [];
         const docFile = new DocFile();
         docFile.id = i + 1;
         docFile.name = `docfile${i}`;
-        element.binary_content.push(docFile);
+        content.binary_content.push(docFile);
       }
-      contents.push(element);
+      contents.push(content);
     }
 
     this.contents = contents;
@@ -35,5 +49,52 @@ export class ContentTestData {
       }
     }
     return null;
+  }
+}
+
+export class SkillTestData {
+  public static skills: Skill[];
+
+  public static create(): void {
+    this.skills = [];
+    for (let j = 0; j < 100; j++) {
+      const reqSkill = new Skill();
+      reqSkill.id = j + 1;
+      reqSkill.skill_name = `ReqSkill${j}`;
+      reqSkill.description = `ReqSkill${j} description`;
+      this.skills.push(reqSkill);
+    }
+  }
+
+  public static getbyId(id: number): Skill | null {
+    for (const skill of this.skills) {
+      if (skill.id === id) {
+        return skill;
+      }
+    }
+    return null;
+  }
+}
+
+export class ModuleTestData {
+  public static modules: Module[];
+
+  public static create(): void {
+    this.modules = [];
+    for (let j = 0; j < 10; j++) {
+      const module = new Module();
+      module.id = j + 1;
+      module.module_name = `Module${j}`;
+      module.module_description = `Module${j} description`;
+      module.module_content_modules = [];
+      for (let i = 0; i < 3; i++) {
+        const content = ContentTestData.getbyId(j + i);
+        if (content) {
+          module.module_content_modules.push(content);
+        }
+      }
+
+      this.modules.push(module);
+    }
   }
 }

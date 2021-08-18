@@ -32,7 +32,7 @@
             i18n-placeholder="Description"
             formControlName="desc"
           />
-          <mat-icon matSuffix>hail</mat-icon>
+          <mat-icon matSuffix>description</mat-icon>
           <mat-hint i18n>Enter description</mat-hint>
           <mat-error
             *ngIf="
@@ -45,12 +45,49 @@
         </mat-form-field>
       </p>
       <p>
-        <mat-accordion multi>
+        <mat-form-field appearance="fill">
+          <mat-label i18n>Required skills</mat-label>
+          <mat-chip-list #chipList aria-label="Required skills">
+            <mat-chip
+              *ngFor="let reqSkill of content.required_skills"
+              [selectable]="selectable"
+              [removable]="removable"
+              (removed)="remove(reqSkill)"
+            >
+              {{ reqSkill.skill_name }}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input
+              placeholder="Add skill..."
+              i18n-placeholder="Add skill..."
+              #reqSkillInput
+              formControlName="reqSkills"
+              [matAutocomplete]="auto"
+              [matChipInputFor]="chipList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="add($event)"
+            />
+          </mat-chip-list>
+          <mat-autocomplete
+            #auto="matAutocomplete"
+            (optionSelected)="selectedReqSkill($event)"
+          >
+            <mat-option
+              *ngFor="let reqSkill of filteredReqSkills | async"
+              [value]="reqSkill"
+            >
+              {{ reqSkill.skill_name }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <!-- <mat-accordion multi>
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title i18n> Required skills </mat-panel-title>
-              <mat-panel-description i18n>
-                Click to see all
+              <mat-panel-description>
+                <span *ngFor="let reqSkill of content.required_skills">{{
+                  reqSkill.skill_name
+                }}</span>
               </mat-panel-description>
             </mat-expansion-panel-header>
             <mat-list role="list">
@@ -61,47 +98,50 @@
               >
             </mat-list>
           </mat-expansion-panel>
-        </mat-accordion>
+        </mat-accordion> -->
       </p>
       <p>
         <mat-accordion multi>
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title i18n> New skills </mat-panel-title>
-              <mat-panel-description i18n>
-                Click to see all
+              <mat-panel-description>
+                <span *ngFor="let newSkill of content.new_skills">{{
+                  newSkill.skill_name
+                }}</span>
               </mat-panel-description>
             </mat-expansion-panel-header>
             <mat-list role="list">
               <mat-list-item
                 role="listitem"
-                *ngFor="let reqSkill of content.new_skills"
-                >{{ reqSkill.skill_name }}</mat-list-item
+                *ngFor="let newSkill of content.new_skills"
+                >{{ newSkill.skill_name }}</mat-list-item
               >
             </mat-list>
           </mat-expansion-panel>
         </mat-accordion>
       </p>
-
-      <button
-        mat-raised-button
-        type="submit"
-        [disabled]="!editForm.valid"
-        color="primary"
-        class="pull-right"
-        i18n
-      >
-        Speichern
-      </button>
-      <button
-        mat-raised-button
-        (click)="goBack()"
-        color="accent"
-        class="pull-right right-margin"
-        i18n
-      >
-        Zurück
-      </button>
+      <p class="button-row">
+        <button
+          mat-raised-button
+          type="submit"
+          [disabled]="!editForm.valid"
+          color="primary"
+          class="pull-right"
+          i18n
+        >
+          Save
+        </button>
+        <button
+          mat-raised-button
+          (click)="goBack()"
+          color="accent"
+          class="pull-right right-margin"
+          i18n
+        >
+          Cancel
+        </button>
+      </p>
       <div class="clear-all"></div>
     </form>
   </div>
