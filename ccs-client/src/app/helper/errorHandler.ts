@@ -18,6 +18,7 @@ export class MyErrorHandler implements ErrorHandler {
       $localize`:@@Ok:Ok`,
       ESnackbarTypes.Error
     );
+    console.error(error);
   }
 
   public handleHttpError(

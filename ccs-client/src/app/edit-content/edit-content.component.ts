@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import {
   FormBuilder,
   FormControl,
@@ -7,7 +7,7 @@ import {
 } from "@angular/forms";
 import { ActivatedRoute, ParamMap, Router } from "@angular/router";
 import { Observable } from "rxjs";
-import { Content } from "../classes/content";
+import { Content, UploadContent } from "../classes/content";
 import { Skill } from "../classes/skill";
 import { ESnackbarTypes } from "../enums/snackbarTypes";
 import { HttpService } from "../services/http.service";
@@ -16,6 +16,12 @@ import { map, startWith } from "rxjs/operators";
 import { MatChipInputEvent } from "@angular/material/chips";
 import { COMMA, ENTER } from "@angular/cdk/keycodes";
 import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
+import { WikidataObject } from "../classes/wikiDataObj";
+import { ContentService } from "../services/content.service";
+import { WikiDataObjService } from "../services/wiki-data-obj.service";
+import { SkillService } from "../skill.service";
+import { flushMicrotasks } from "@angular/core/testing";
+import { DocFile } from "../classes/docFile";
 
 @Component({
   selector: "app-edit-content",
@@ -30,37 +36,31 @@ export class EditContentComponent implements OnInit {
   public removable = true;
   public reqSkillCtrl!: FormControl;
   public newSkillCtrl!: FormControl;
-  public filteredReqSkills: Observable<Skill[]>;
-  public filteredNewSkills: Observable<Skill[]>;
+  public wikiDataObjCtrl!: FormControl;
+  public filteredReqSkills!: Observable<Skill[]>;
+  public filteredNewSkills!: Observable<Skill[]>;
+  public filteredWikiData!: Observable<WikidataObject[]>;
   public separatorKeysCodes: number[] = [ENTER, COMMA];
 
   private allSkills: Skill[];
+  private allWikiObj: WikidataObject[];
 
   constructor(
     private route: ActivatedRoute,
     private toolService: ToolService,
     private httpService: HttpService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private wikiService: WikiDataObjService,
+    private skillService: SkillService
   ) {
     this.allSkills = [];
-    this.reqSkillCtrl = new FormControl("", Validators.required);
-    this.newSkillCtrl = new FormControl("", Validators.required);
-    this.httpService.getSkillAll().subscribe((skills: Skill[]) => {
-      if (skills) {
-        this.allSkills = skills;
-      }
-    });
-    this.filteredReqSkills = this.reqSkillCtrl.valueChanges.pipe(
-      startWith(null),
-      map((value) => (typeof value === "string" ? value : value?.skill_name)),
-      map((name) => (name ? this.filter(name) : this.allSkills.slice()))
-    );
-    this.filteredNewSkills = this.newSkillCtrl.valueChanges.pipe(
-      startWith(null),
-      map((value) => (typeof value === "string" ? value : value?.skill_name)),
-      map((name) => (name ? this.filter(name) : this.allSkills.slice()))
-    );
+    this.allWikiObj = [];
+    this.reqSkillCtrl = new FormControl("");
+    this.newSkillCtrl = new FormControl("");
+    this.wikiDataObjCtrl = new FormControl("");
+
+    this.initAll();
   }
 
   ngOnInit(): void {
@@ -94,14 +94,17 @@ export class EditContentComponent implements OnInit {
       }
     });
     this.editForm = this.fb.group({
-      name: new FormControl("", Validators.required),
-      desc: new FormControl("", Validators.required),
+      name: new FormControl(this.content.content_name, Validators.required),
+      desc: new FormControl(
+        this.content.content_description,
+        Validators.required
+      ),
       reqSkills: this.reqSkillCtrl,
-      outSkills: this.newSkillCtrl,
-      wikidata: new FormControl(0, [Validators.min(0), Validators.max(10000)]),
-      workload: new FormControl("", Validators.required),
-      binaryContent: new FormControl("", Validators.required),
-      urlContent: new FormControl("", Validators.required),
+      newSkills: this.newSkillCtrl,
+      wikidata: this.wikiDataObjCtrl,
+      workload: new FormControl(0),
+      binaryContent: new FormControl(""),
+      urlContent: new FormControl(""),
     });
   }
 
@@ -109,8 +112,18 @@ export class EditContentComponent implements OnInit {
     this.router.navigate(["/content"]);
   }
 
-  public editContent(content: Content): void {
-    // TODO
+  public editContent(): void {
+    this.content.content_name = this.editForm.get("name")?.value;
+    this.content.content_description = this.editForm.get("desc")?.value;
+    this.content.content_workload = this.editForm.get("workload")?.value;
+    this.httpService.saveContent(this.content).subscribe(() => {
+      this.toolService.openSnackBar(
+        $localize`:@@Saved:Data saved successfully`,
+        $localize`:@@Ok:Ok`,
+        ESnackbarTypes.Info
+      );
+      this.initAll();
+    });
   }
 
   public selectedReqSkill(event: MatAutocompleteSelectedEvent): void {
@@ -130,16 +143,40 @@ export class EditContentComponent implements OnInit {
         }
       }
     }
-
     this.reqSkillCtrl.setValue(null);
   }
 
-  public add(event: MatChipInputEvent): void {
+  public selectedNewSkill(event: MatAutocompleteSelectedEvent): void {
+    const value = event.option.viewValue;
+    if (value) {
+      for (const skill of this.allSkills) {
+        if (skill.skill_name === value) {
+          if (!this.content.new_skills.includes(skill)) {
+            this.content.new_skills.push(skill);
+          } else {
+            this.toolService.openSnackBar(
+              $localize`:@@SkillAlreadyExist:Skill does already exist`,
+              $localize`:@@Ok:Ok`,
+              ESnackbarTypes.Info
+            );
+          }
+        }
+      }
+    }
+    this.newSkillCtrl.setValue(null);
+  }
+
+  public addReqSkill(event: MatChipInputEvent): void {
     event?.chipInput?.clear();
     this.reqSkillCtrl.setValue(null);
   }
 
-  public remove(skill: Skill): void {
+  public addNewSkill(event: MatChipInputEvent): void {
+    event?.chipInput?.clear();
+    this.newSkillCtrl.setValue(null);
+  }
+
+  public removeReqSkill(skill: Skill): void {
     const index = this.content.required_skills.indexOf(skill);
 
     if (index >= 0) {
@@ -147,31 +184,152 @@ export class EditContentComponent implements OnInit {
     }
   }
 
-  private filter(value: string): Skill[] {
-    if (!value) {
-      return this.allSkills;
+  public removeNewSkill(skill: Skill): void {
+    const index = this.content.new_skills.indexOf(skill);
+
+    if (index >= 0) {
+      this.content.new_skills.splice(index, 1);
     }
-    const filterValue = value.toLowerCase();
-    // we use for loop instead of "Array.filter()" option to keep code more readable
-    const skills: Skill[] = [];
-    for (const skill of this.allSkills) {
-      if (skill.skill_name.toLowerCase().includes(filterValue)) {
-        skills.push(skill);
-        continue;
-      }
-      for (const wikiobj of skill.skill_keywords) {
-        if (wikiobj.wikidata_name.toLocaleLowerCase().includes(filterValue)) {
-          skills.push(skill);
-          continue;
-        }
-        for (const keyword of wikiobj.wikidata_related_fields) {
-          if (keyword.toLocaleLowerCase().includes(filterValue)) {
-            skills.push(skill);
-            continue;
+  }
+
+  private filterSkills(value: string): Skill[] {
+    return this.skillService.filterSkills(value, this.allSkills);
+  }
+
+  public selectedWikiDataObj(event: MatAutocompleteSelectedEvent): void {
+    const value = event.option.viewValue;
+    if (value) {
+      for (const wikiObj of this.allWikiObj) {
+        if (wikiObj.wikidata_name === value) {
+          if (!this.content.content_keywords.includes(wikiObj)) {
+            this.content.content_keywords.push(wikiObj);
+          } else {
+            this.toolService.openSnackBar(
+              $localize`:@@WikidataObjAlreadyExist:Wikidata Object does already exist`,
+              $localize`:@@Ok:Ok`,
+              ESnackbarTypes.Info
+            );
           }
         }
       }
     }
-    return skills;
+    this.newSkillCtrl.setValue(null);
+  }
+
+  public addWikidataObj(event: MatChipInputEvent): void {
+    event?.chipInput?.clear();
+    this.wikiDataObjCtrl.setValue(null);
+  }
+
+  public removeWikiDataObj(wikiObj: WikidataObject): void {
+    const index = this.content.content_keywords.indexOf(wikiObj);
+
+    if (index >= 0) {
+      this.content.content_keywords.splice(index, 1);
+    }
+  }
+
+  public addUrl(): void {
+    const url = this.editForm.get("urlContent")?.value;
+    for (const element of this.content.url_content) {
+      if (element === url) {
+        this.toolService.openSnackBar(
+          $localize`:@@UrlAlreadyExist:Url has already been added`,
+          $localize`:@@Ok:Ok`,
+          ESnackbarTypes.Info
+        );
+        return;
+      }
+    }
+    this.content.url_content.push(url);
+    this.editForm.get("urlContent")?.reset();
+  }
+
+  public removeUrl(url: string): void {
+    for (let index = 0; index < this.content.url_content.length; index++) {
+      const element = this.content.url_content[index];
+      if (element === url) {
+        this.content.url_content.splice(index, 1);
+      }
+    }
+  }
+
+  public removeBinaryContent(docFile: DocFile): void {
+    this.httpService
+      .removeBinaryContent(this.content.id, docFile)
+      .subscribe(() => {
+        this.toolService.openSnackBar(
+          $localize`:@@Saved:Data saved successfully`,
+          $localize`:@@Ok:Ok`,
+          ESnackbarTypes.Info
+        );
+        this.initAll();
+      });
+  }
+
+  public upload(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    const files = target.files;
+    if (!files) {
+      return;
+    }
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      const file = files?.item(i);
+      if (!file) {
+        return;
+      }
+      formData.append("file", file);
+      const uploadContent = new UploadContent(this.content.id, formData);
+      this.httpService.uploadContent(uploadContent).subscribe(() => {
+        this.toolService.openSnackBar(
+          $localize`:@@Saved:Data saved successfully`,
+          $localize`:@@Ok:Ok`,
+          ESnackbarTypes.Info
+        );
+      });
+      // TODO handle multiple uploads and then refresh!!
+      this.initAll();
+    }
+  }
+
+  private filterWikiDataObjs(value: string): WikidataObject[] {
+    return this.wikiService.filterWikiDataObjs(value, this.allWikiObj);
+  }
+
+  private initAll(): void {
+    this.httpService.getSkillAll().subscribe((skills: Skill[]) => {
+      if (skills) {
+        this.allSkills = skills;
+      }
+    });
+
+    this.httpService
+      .getWikidataAll()
+      .subscribe((wikiObjs: WikidataObject[]) => {
+        if (wikiObjs) {
+          this.allWikiObj = wikiObjs;
+        }
+      });
+
+    this.filteredReqSkills = this.reqSkillCtrl.valueChanges.pipe(
+      startWith(null),
+      map((value) => (typeof value === "string" ? value : value?.skill_name)),
+      map((name) => (name ? this.filterSkills(name) : this.allSkills.slice()))
+    );
+
+    this.filteredNewSkills = this.newSkillCtrl.valueChanges.pipe(
+      startWith(null),
+      map((value) => (typeof value === "string" ? value : value?.skill_name)),
+      map((name) => (name ? this.filterSkills(name) : this.allSkills.slice()))
+    );
+
+    this.filteredWikiData = this.wikiDataObjCtrl.valueChanges.pipe(
+      startWith(null),
+      map((value) => (typeof value === "string" ? value : value?.skill_name)),
+      map((name) =>
+        name ? this.filterWikiDataObjs(name) : this.allWikiObj.slice()
+      )
+    );
   }
 }

@@ -18,3 +18,7 @@ export class Content {
   public added_by!: BaseUser;
   public is_public = false;
 }
+
+export class UploadContent {
+  constructor(public contentId: number, public formData: FormData) {}
+}

@@ -1,7 +1,8 @@
-import { Content } from "../classes/content";
+import { Content, UploadContent } from "../classes/content";
 import { DocFile } from "../classes/docFile";
-import { Module } from "../classes/module";
+import { ContentModule } from "../classes/contentModule";
 import { Skill } from "../classes/skill";
+import { WikidataObject } from "../classes/wikiDataObj";
 
 export class ContentTestData {
   public static contents: Content[];
@@ -12,6 +13,7 @@ export class ContentTestData {
       const content = new Content();
       content.id = i + 1;
       content.content_name = `Content${i}`;
+      content.content_description = `Content${i} description as a long text`;
       content.content_workload = i * 10;
       content.required_skills = [];
       content.new_skills = [];
@@ -50,6 +52,60 @@ export class ContentTestData {
     }
     return null;
   }
+
+  public static update(content: Content): any {
+    if (content.id) {
+      for (let con of this.contents) {
+        if (con.id === content.id) {
+          con = content;
+          return;
+        }
+      }
+    }
+    this.contents.push(content);
+  }
+
+  public static delete(id: number): any {
+    if (id) {
+      for (let i = 0; i < this.contents.length; i++) {
+        const element = this.contents[i];
+        if (element.id === id) {
+          this.contents.splice(i, 1);
+          return;
+        }
+      }
+    }
+  }
+
+  public static upload(uploadContent: UploadContent): any {
+    if (uploadContent.contentId) {
+      for (const element of this.contents) {
+        if (element.id === uploadContent.contentId) {
+          const docFile = new DocFile();
+          docFile.id = element.binary_content.length;
+          const file = uploadContent.formData.get("file") as File;
+          docFile.name = file.name;
+          element.binary_content.push(docFile);
+          return;
+        }
+      }
+    }
+  }
+
+  public static deleteBinaryContent(contentId: number, docFile: DocFile): any {
+    if (docFile && contentId) {
+      for (const element of this.contents) {
+        if (element.id === contentId) {
+          element.binary_content.forEach((binEle, index) => {
+            if (binEle.id === docFile.id) {
+              element.binary_content.splice(index, 1);
+              return;
+            }
+          });
+        }
+      }
+    }
+  }
 }
 
 export class SkillTestData {
@@ -74,15 +130,39 @@ export class SkillTestData {
     }
     return null;
   }
+
+  public static update(skill: Skill): any {
+    if (skill.id) {
+      for (let ski of this.skills) {
+        if (ski.id === skill.id) {
+          ski = skill;
+          return;
+        }
+      }
+    }
+    this.skills.push(skill);
+  }
+
+  public static delete(id: number): any {
+    if (id) {
+      for (let i = 0; i < this.skills.length; i++) {
+        const element = this.skills[i];
+        if (element.id === id) {
+          this.skills.splice(i, 1);
+          return;
+        }
+      }
+    }
+  }
 }
 
 export class ModuleTestData {
-  public static modules: Module[];
+  public static modules: ContentModule[];
 
   public static create(): void {
     this.modules = [];
     for (let j = 0; j < 10; j++) {
-      const module = new Module();
+      const module = new ContentModule();
       module.id = j + 1;
       module.module_name = `Module${j}`;
       module.module_description = `Module${j} description`;
@@ -95,6 +175,90 @@ export class ModuleTestData {
       }
 
       this.modules.push(module);
+    }
+  }
+
+  public static getbyId(id: number): ContentModule | null {
+    for (const module of this.modules) {
+      if (module.id === id) {
+        return module;
+      }
+    }
+    return null;
+  }
+
+  public static update(cMod: ContentModule): any {
+    if (cMod.id) {
+      for (let module of this.modules) {
+        if (module.id === cMod.id) {
+          module = cMod;
+          return;
+        }
+      }
+    }
+    this.modules.push(cMod);
+  }
+
+  public static delete(id: number): any {
+    if (id) {
+      for (let i = 0; i < this.modules.length; i++) {
+        const element = this.modules[i];
+        if (element.id === id) {
+          this.modules.splice(i, 1);
+          return;
+        }
+      }
+    }
+  }
+}
+
+export class WikiDataTestData {
+  public static wikidataObjs: WikidataObject[];
+
+  public static create(): void {
+    this.wikidataObjs = [];
+    for (let j = 0; j < 10; j++) {
+      const wikiObj = new WikidataObject();
+      wikiObj.wikidata_id = j + 1;
+      wikiObj.wikidata_name = `WikiObj${j}`;
+      for (let i = 0; i < 5; i++) {
+        wikiObj.wikidata_related_fields.push(`Field${i}`);
+        wikiObj.wikidata_related_fields_raw.push(`RawField${i}`);
+      }
+      this.wikidataObjs.push(wikiObj);
+    }
+  }
+
+  public static getbyId(id: number): WikidataObject | null {
+    for (const wikiObj of this.wikidataObjs) {
+      if (wikiObj.wikidata_id === id) {
+        return wikiObj;
+      }
+    }
+    return null;
+  }
+
+  public static update(wikiObj: WikidataObject): any {
+    if (wikiObj.wikidata_id) {
+      for (let ski of this.wikidataObjs) {
+        if (ski.wikidata_id === wikiObj.wikidata_id) {
+          ski = wikiObj;
+          return;
+        }
+      }
+    }
+    this.wikidataObjs.push(wikiObj);
+  }
+
+  public static delete(id: number): any {
+    if (id) {
+      for (let i = 0; i < this.wikidataObjs.length; i++) {
+        const element = this.wikidataObjs[i];
+        if (element.wikidata_id === id) {
+          this.wikidataObjs.splice(i, 1);
+          return;
+        }
+      }
     }
   }
 }

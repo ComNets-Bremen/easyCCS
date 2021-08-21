@@ -3,6 +3,10 @@ import { Injectable } from "@angular/core";
 import { CookieService } from "ngx-cookie-service";
 import { Observable } from "rxjs";
 import { BaseHttpService } from "../baseService/BaseHttpService";
+import { Content, UploadContent } from "../classes/content";
+import { ContentModule } from "../classes/contentModule";
+import { DocFile } from "../classes/docFile";
+import { Skill } from "../classes/skill";
 
 @Injectable({
   providedIn: "root",
@@ -30,8 +34,36 @@ export class HttpService extends BaseHttpService {
   }
 
   public deleteContent(id: number): Observable<any> {
-    const url = this.baseApi + "content/" + id + this.end;
+    const url = this.baseApi + `content/${id}` + this.end;
     return this.deleteAuthRequest(url);
+  }
+
+  public saveContent(content: Content): Observable<any> {
+    const url = this.baseApi + `content/${content.id}` + this.end;
+    const body = content;
+    return this.putAuthRequest(url, body);
+  }
+
+  public createContent(content: Content): Observable<any> {
+    const url = this.baseApi + `content` + this.end;
+    const body = content;
+    return this.postAuthRequest(url, body);
+  }
+
+  public uploadContent(uploadContent: UploadContent): Observable<any> {
+    const url = this.baseApi + `uploadcontent` + this.end;
+    const body = uploadContent;
+    return this.postAuthRequest(url, body);
+  }
+
+  public removeBinaryContent(
+    contentId: number,
+    docFile: DocFile
+  ): Observable<any> {
+    // TODO TBD
+    const url = this.baseApi + `deleteBinaryContent` + this.end;
+    const body = docFile;
+    return this.postAuthRequest(url, body);
   }
 
   // SKILLS
@@ -46,9 +78,61 @@ export class HttpService extends BaseHttpService {
     return this.getAuthRequest(url);
   }
 
-  public deleteCSkill(id: number): Observable<any> {
-    const url = this.baseApi + "skill/" + id + this.end;
+  public deleteSkill(id: number): Observable<any> {
+    const url = this.baseApi + `skill/${id}` + this.end;
     return this.deleteAuthRequest(url);
+  }
+
+  public saveSkill(skill: Skill): Observable<any> {
+    const url = this.baseApi + `skill/${skill.id}` + this.end;
+    const body = skill;
+    return this.putAuthRequest(url, body);
+  }
+
+  public createSkill(skill: Skill): Observable<any> {
+    const url = this.baseApi + `skill` + this.end;
+    const body = skill;
+    return this.postAuthRequest(url, body);
+  }
+
+  // MODULE
+  public getModuleAll(): Observable<any> {
+    const url = this.baseApi + "module" + this.end;
+    return this.getAuthRequest(url);
+  }
+
+  public getModule(id: number): Observable<any> {
+    const url = this.baseApi + `module/${id}` + this.end;
+    return this.deleteAuthRequest(url);
+  }
+
+  public deleteModule(id: number): Observable<any> {
+    const url = this.baseApi + `module/${id}` + this.end;
+    return this.deleteAuthRequest(url);
+  }
+
+  public saveModule(module: ContentModule): Observable<any> {
+    const url = this.baseApi + `module/${module.id}` + this.end;
+    const body = module;
+    return this.putAuthRequest(url, body);
+  }
+
+  public createModule(module: ContentModule): Observable<any> {
+    const url = this.baseApi + `module` + this.end;
+    const body = module;
+    return this.postAuthRequest(url, body);
+  }
+
+  // WIKIDATA OBJECTS
+
+  public getWikidataAll(): Observable<any> {
+    const url = this.baseApi + "wikidata" + this.end;
+    return this.getAuthRequest(url);
+  }
+
+  public getWikiData(id: number): Observable<any> {
+    const url = this.baseApi + `wikidata/${id}` + this.end;
+    return this.getAuthRequest(url);
   }
 
   // default http requests

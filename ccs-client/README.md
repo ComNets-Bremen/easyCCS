@@ -53,6 +53,9 @@ routing
 https://github.com/martinroob/ngx-i18nsupport/wiki/Tutorial-for-using-xliffmerge-with-angular-cli
 
 ## TODOS
+url validation necessary?
+binary content => general or content bound?
+add uploadcontent => api
 move header stuff in interceptor
 [angular interceptor](https://angular.io/guide/http#intercepting-requests-and-responses)
 
