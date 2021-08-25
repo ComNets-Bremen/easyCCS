@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>{{ header1 }}</h2>
+<mat-dialog-content class="mat-typography">
+  <p>{{ text1 }}</p>
+  <h3 *ngIf="header2">{{ header2 }}</h3>
+  <p *ngIf="text2">{{ text2 }}</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close color="accent">
+    {{ buttonDeny }}
+  </button>
+  <button
+    mat-raised-button
+    [mat-dialog-close]="true"
+    cdkFocusInitial
+    color="primary"
+  >
+    {{ buttonConfirm }}
+  </button>
+</mat-dialog-actions>

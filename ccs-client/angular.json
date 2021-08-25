@@ -8,6 +8,9 @@
       "schematics": {
         "@schematics/angular:application": {
           "strict": true
+        },
+        "@schematics/angular:component": {
+          "style": "scss"
         }
       },
       "root": "",
@@ -90,10 +93,7 @@
             },
             "de": {
               "aot": true,
-              "outputPath": "dist/ccs-client-de",
-              "i18nFile": "src/i18n/messages.de.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "de"
+              "outputPath": "dist/ccs-client-de"
             }
           },
           "defaultConfiguration": ""

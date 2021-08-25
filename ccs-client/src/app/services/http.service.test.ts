@@ -42,8 +42,7 @@ export class HttpService extends BaseHttpService {
   }
 
   public deleteContent(id: number): Observable<any> {
-    const url = this.baseApi + "content/" + id + this.end;
-    return this.deleteAuthRequest(url);
+    return of(ContentTestData.delete(id));
   }
 
   public createContent(content: Content): Observable<any> {
@@ -76,33 +75,32 @@ export class HttpService extends BaseHttpService {
   }
 
   public deleteSkill(id: number): Observable<any> {
-    const url = this.baseApi + "skill/" + id + this.end;
-    return this.deleteAuthRequest(url);
+    return of(SkillTestData.delete(id));
   }
 
   public saveSkill(skill: Skill): Observable<any> {
-    throw new Error("Method not implemented.");
+    return of(SkillTestData.update(skill));
   }
   public createSkill(skill: Skill): Observable<any> {
-    throw new Error("Method not implemented.");
+    return of(SkillTestData.update(skill));
   }
 
   // MODULE
 
   public getModuleAll(): Observable<any> {
-    throw new Error("Method not implemented.");
+    return of(ModuleTestData.modules);
   }
   public getModule(id: number): Observable<any> {
-    throw new Error("Method not implemented.");
+    return of(ModuleTestData.getbyId(id));
   }
   public deleteModule(id: number): Observable<any> {
-    throw new Error("Method not implemented.");
+    return of(ModuleTestData.delete(id));
   }
   public saveModule(module: ContentModule): Observable<any> {
-    throw new Error("Method not implemented.");
+    return of(ModuleTestData.update(module));
   }
   public createModule(module: ContentModule): Observable<any> {
-    throw new Error("Method not implemented.");
+    return of(ModuleTestData.update(module));
   }
 
   // WIKI DATA OBJECTS

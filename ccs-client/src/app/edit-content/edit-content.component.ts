@@ -213,7 +213,7 @@ export class EditContentComponent implements OnInit {
         }
       }
     }
-    this.newSkillCtrl.setValue(null);
+    this.wikiDataObjCtrl.setValue(null);
   }
 
   public addWikidataObj(event: MatChipInputEvent): void {

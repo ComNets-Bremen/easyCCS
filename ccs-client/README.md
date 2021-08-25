@@ -55,6 +55,7 @@ https://github.com/martinroob/ngx-i18nsupport/wiki/Tutorial-for-using-xliffmerge
 ## TODOS
 url validation necessary?
 binary content => general or content bound?
+download material/Url => zip?
 add uploadcontent => api
 move header stuff in interceptor
 [angular interceptor](https://angular.io/guide/http#intercepting-requests-and-responses)

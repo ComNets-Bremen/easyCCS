@@ -20,6 +20,7 @@ import { MatExpansionModule } from "@angular/material/expansion";
 import { MatListModule } from "@angular/material/list";
 import { MatChipsModule } from "@angular/material/chips";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { MatDialogModule } from "@angular/material/dialog";
 
 // general packages
 import { CookieService } from "ngx-cookie-service";
@@ -41,7 +42,9 @@ import { PrivacyComponent } from "./privacy/privacy.component";
 import { ErrorInterceptorService } from "./services/error-interceptor.service";
 import { MyErrorModule, MyErrorHandler } from "./helper/errorHandler";
 import { EditContentComponent } from "./edit-content/edit-content.component";
-
+import { BaseDialogComponent } from "./base-dialog/base-dialog.component";
+import { EditSkillComponent } from "./edit-skill/edit-skill.component";
+import { EditModuleComponent } from './edit-module/edit-module.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,6 +59,9 @@ import { EditContentComponent } from "./edit-content/edit-content.component";
     ImprintComponent,
     PrivacyComponent,
     EditContentComponent,
+    BaseDialogComponent,
+    EditSkillComponent,
+    EditModuleComponent,
   ],
   imports: [
     BrowserModule,
@@ -78,6 +84,7 @@ import { EditContentComponent } from "./edit-content/edit-content.component";
     MatListModule,
     MatChipsModule,
     MatAutocompleteModule,
+    MatDialogModule,
   ],
   providers: [
     UserService,

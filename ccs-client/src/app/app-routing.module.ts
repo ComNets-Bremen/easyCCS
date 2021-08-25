@@ -3,6 +3,8 @@ import { RouterModule, Routes } from "@angular/router";
 import { CompleteGraphComponent } from "./complete-graph/complete-graph.component";
 import { ContentComponent } from "./content/content.component";
 import { EditContentComponent } from "./edit-content/edit-content.component";
+import { EditModuleComponent } from "./edit-module/edit-module.component";
+import { EditSkillComponent } from "./edit-skill/edit-skill.component";
 import { ImprintComponent } from "./imprint/imprint.component";
 import { LoginComponent } from "./login/login.component";
 import { ModuleComponent } from "./module/module.component";
@@ -20,6 +22,8 @@ const routes: Routes = [
   { path: "skilldependency", component: SkillDependencyComponent },
   { path: "content", component: ContentComponent },
   { path: "editcontent/:id", component: EditContentComponent },
+  { path: "editskill/:id", component: EditSkillComponent },
+  { path: "editmodule/:id", component: EditModuleComponent },
   { path: "skill", component: SkillComponent },
   { path: "module", component: ModuleComponent },
   { path: "imprint", component: ImprintComponent },

@@ -5,6 +5,10 @@ import { HttpService } from "../services/http.service";
 import { Sort } from "@angular/material/sort";
 import { ToolService } from "../services/tool.service";
 import { Router } from "@angular/router";
+import { MatDialog } from "@angular/material/dialog";
+import { ConfirmDialogData } from "../classes/confirmDialogData";
+import { BaseDialogComponent } from "../base-dialog/base-dialog.component";
+import { ESnackbarTypes } from "../enums/snackbarTypes";
 
 @Component({
   selector: "app-content",
@@ -25,7 +29,8 @@ export class ContentComponent implements OnInit {
   constructor(
     private httpService: HttpService,
     private toolService: ToolService,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -48,8 +53,27 @@ export class ContentComponent implements OnInit {
   }
 
   public deleteContent(id: number): void {
-    this.httpService.deleteContent(id).subscribe(() => {
-      this.getContent();
+    const dialogData = new ConfirmDialogData(
+      $localize`:@@DeleteContent:Delete Content?`,
+      $localize`:@@AreYouSure:Are your sure to delete selected data?`,
+      $localize`:@@Cancel:Cancel`,
+      $localize`:@@Delete:Delete`
+    );
+    const dialogRef = this.dialog.open(BaseDialogComponent, {
+      data: dialogData,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.httpService.deleteContent(id).subscribe(() => {
+          this.toolService.openSnackBar(
+            $localize`:@@Saved:Data saved successfully`,
+            $localize`:@@Ok:Ok`,
+            ESnackbarTypes.Info
+          );
+          this.getContent();
+        });
+      }
     });
   }
 

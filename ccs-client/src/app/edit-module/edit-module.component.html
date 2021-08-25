@@ -1,0 +1,109 @@
+<mat-card>
+  <mat-card-title i18n>Edit module</mat-card-title>
+  <div class="base-form">
+    <form [formGroup]="editForm" (ngSubmit)="editModule()">
+      <p>
+        <mat-form-field appearance="standard">
+          <mat-label i18n>Name</mat-label>
+          <input
+            matInput
+            placeholder="Name"
+            i18n-placeholder="Name"
+            formControlName="name"
+          />
+          <mat-icon matSuffix>title</mat-icon>
+          <mat-hint i18n>Enter name</mat-hint>
+          <mat-error
+            *ngIf="
+              !editForm.controls['name'].valid &&
+              editForm.controls['name'].dirty
+            "
+            i18n
+            >Name must not be empty
+          </mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="standard">
+          <mat-label i18n>Description</mat-label>
+          <textarea
+            matInput
+            placeholder="Description"
+            i18n-placeholder="Description"
+            formControlName="desc"
+          ></textarea>
+          <mat-icon matSuffix>description</mat-icon>
+          <mat-hint i18n>Enter description</mat-hint>
+          <mat-error
+            *ngIf="
+              !editForm.controls['desc'].valid &&
+              editForm.controls['desc'].dirty
+            "
+            i18n
+            >Description must not be empty</mat-error
+          >
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="fill">
+          <mat-label i18n>Module content modules</mat-label>
+          <mat-chip-list #chipListContent aria-label="Content modules">
+            <mat-chip
+              *ngFor="let content of module.module_content_modules"
+              [selectable]="selectable"
+              [removable]="removable"
+              (removed)="removeContent(content)"
+            >
+              {{ content.content_name }}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input
+              placeholder="Add content..."
+              i18n-placeholder="Add content..."
+              #newSkillInput
+              formControlName="content"
+              [matAutocomplete]="autoWiki"
+              [matChipInputFor]="chipListContent"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="addContent($event)"
+            />
+          </mat-chip-list>
+          <mat-autocomplete
+            #autoWiki="matAutocomplete"
+            (optionSelected)="selectedContent($event)"
+          >
+            <mat-option
+              *ngFor="let newContent of filteredContent | async"
+              [value]="newContent"
+            >
+              {{ newContent.content_name }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </p>
+      <p class="button-row">
+        <button
+          mat-raised-button
+          type="submit"
+          [disabled]="!editForm.valid"
+          color="primary"
+          class="pull-right"
+          i18n
+        >
+          Save
+        </button>
+        <button
+          type="button"
+          mat-raised-button
+          (click)="goBack()"
+          color="accent"
+          class="pull-right right-margin"
+          i18n
+        >
+          Back to list
+        </button>
+      </p>
+      <div class="clear-all"></div>
+    </form>
+  </div>
+</mat-card>
