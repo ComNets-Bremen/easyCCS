@@ -53,7 +53,7 @@ routing
 https://github.com/martinroob/ngx-i18nsupport/wiki/Tutorial-for-using-xliffmerge-with-angular-cli
 
 ## TODOS
-url validation necessary?
+url (material for content) validation necessary?
 binary content => general or content bound?
 download material/Url => zip?
 add uploadcontent => api
