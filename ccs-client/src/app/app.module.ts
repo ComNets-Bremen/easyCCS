@@ -44,7 +44,8 @@ import { MyErrorModule, MyErrorHandler } from "./helper/errorHandler";
 import { EditContentComponent } from "./edit-content/edit-content.component";
 import { BaseDialogComponent } from "./base-dialog/base-dialog.component";
 import { EditSkillComponent } from "./edit-skill/edit-skill.component";
-import { EditModuleComponent } from './edit-module/edit-module.component';
+import { EditModuleComponent } from "./edit-module/edit-module.component";
+
 @NgModule({
   declarations: [
     AppComponent,
