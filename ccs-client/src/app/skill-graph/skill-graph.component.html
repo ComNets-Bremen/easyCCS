@@ -1,1 +1,108 @@
-<p>skill-graph works!</p>
+<mat-card>
+  <mat-card-title i18n>SkillGraph</mat-card-title>
+  <div class="base-form">
+    <form [formGroup]="graphForm" (ngSubmit)="submit()">
+      <h3 i18n>Select skills</h3>
+      <p>
+        <mat-form-field appearance="fill">
+          <mat-label i18n>Required skills</mat-label>
+          <mat-chip-list #chipListReq aria-label="Required skills">
+            <mat-chip
+              *ngFor="let reqSkill of requiredSkills"
+              [selectable]="selectable"
+              [removable]="removable"
+              (removed)="removeReqSkill(reqSkill)"
+            >
+              {{ reqSkill.skill_name }}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input
+              placeholder="Add skill..."
+              i18n-placeholder="Add skill..."
+              #reqSkillInput
+              formControlName="reqSkills"
+              [matAutocomplete]="autoReq"
+              [matChipInputFor]="chipListReq"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="addReqSkill($event)"
+            />
+          </mat-chip-list>
+          <mat-autocomplete
+            #autoReq="matAutocomplete"
+            (optionSelected)="selectedReqSkill($event)"
+          >
+            <mat-option
+              *ngFor="let reqSkill of filteredReqSkills | async"
+              [value]="reqSkill"
+            >
+              {{ reqSkill.skill_name }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="fill">
+          <mat-label i18n>New skills</mat-label>
+          <mat-chip-list #chipListNew aria-label="New skills">
+            <mat-chip
+              *ngFor="let newSkill of newSkills"
+              [selectable]="selectable"
+              [removable]="removable"
+              (removed)="removeNewSkill(newSkill)"
+            >
+              {{ newSkill.skill_name }}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input
+              placeholder="Add skill..."
+              i18n-placeholder="Add skill..."
+              #newSkillInput
+              formControlName="newSkills"
+              [matAutocomplete]="autoNew"
+              [matChipInputFor]="chipListNew"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="addNewSkill($event)"
+            />
+          </mat-chip-list>
+          <mat-autocomplete
+            #autoNew="matAutocomplete"
+            (optionSelected)="selectedNewSkill($event)"
+          >
+            <mat-option
+              *ngFor="let newSkill of filteredNewSkills | async"
+              [value]="newSkill"
+            >
+              {{ newSkill.skill_name }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field appearance="standard">
+          <mat-label i18n>Title</mat-label>
+          <input
+            matInput
+            placeholder="Title"
+            i18n-placeholder="Title"
+            formControlName="title"
+            type="text"
+          />
+        </mat-form-field>
+      </p>
+
+      <p class="button-row">
+        <button
+          mat-raised-button
+          type="submit"
+          color="primary"
+          class="pull-right"
+          i18n
+        >
+          Submit
+        </button>
+      </p>
+      <div class="clear-all"></div>
+    </form>
+  </div>
+</mat-card>

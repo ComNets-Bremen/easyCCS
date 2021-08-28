@@ -181,3 +181,34 @@ export class GraphData {
     ],
   };
 }
+
+export class SkillGraphData {
+  static levels = [
+    [
+      {
+        id: 19,
+        name: "Zahlen bis 100",
+        parents: [],
+      },
+      {
+        id: 20,
+        name: "Addition ohne Übertrag",
+        parents: [],
+      },
+    ],
+    [
+      {
+        id: 21,
+        name: "Subtraktion ohne Übertrag",
+        parents: [20],
+      },
+    ],
+    [
+      {
+        id: 22,
+        name: "Addition mit Übertrag",
+        parents: [21, 20, 19],
+      },
+    ],
+  ];
+}

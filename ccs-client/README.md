@@ -55,6 +55,7 @@ https://github.com/martinroob/ngx-i18nsupport/wiki/Tutorial-for-using-xliffmerge
 ## TODOS
 url (material for content) validation necessary?
 binary content => general or content bound?
+d3js import => https://stackoverflow.com/questions/38335087/correct-way-to-import-d3-js-into-an-angular-2-application
 download material/Url => zip?
 add uploadcontent => api
 move header stuff in interceptor

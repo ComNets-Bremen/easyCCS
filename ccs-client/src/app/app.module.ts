@@ -45,6 +45,7 @@ import { EditContentComponent } from "./edit-content/edit-content.component";
 import { BaseDialogComponent } from "./base-dialog/base-dialog.component";
 import { EditSkillComponent } from "./edit-skill/edit-skill.component";
 import { EditModuleComponent } from "./edit-module/edit-module.component";
+import { SkillGraphTemplateComponent } from "./skill-graph-template/skill-graph-template.component";
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { EditModuleComponent } from "./edit-module/edit-module.component";
     BaseDialogComponent,
     EditSkillComponent,
     EditModuleComponent,
+    SkillGraphTemplateComponent,
   ],
   imports: [
     BrowserModule,
