@@ -1,4 +1,10 @@
-<mat-card>
+<app-skill-graph-template
+  *ngIf="showGraph"
+  [reqSkills]="requiredSkills"
+  [newSkills]="newSkills"
+  [title]="graphForm.get('title')?.value"
+></app-skill-graph-template>
+<mat-card *ngIf="!showGraph">
   <mat-card-title i18n>SkillGraph</mat-card-title>
   <div class="base-form">
     <form [formGroup]="graphForm" (ngSubmit)="submit()">

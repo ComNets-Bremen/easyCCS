@@ -21,6 +21,7 @@ import { SkillService } from "../skill.service";
 })
 export class SkillGraphComponent implements OnInit {
   private id = 0;
+  public showGraph = false;
   public graphForm!: FormGroup;
   public selectable = true;
   public removable = true;
@@ -36,12 +37,10 @@ export class SkillGraphComponent implements OnInit {
   private allSkills: Skill[] = [];
 
   constructor(
-    private route: ActivatedRoute,
     private toolService: ToolService,
     private httpService: HttpService,
     private fb: FormBuilder,
     private router: Router,
-    private wikiService: WikiDataObjService,
     private skillService: SkillService
   ) {
     this.reqSkillCtrl = new FormControl("");
@@ -148,5 +147,7 @@ export class SkillGraphComponent implements OnInit {
     );
   }
 
-  public submit(): void {}
+  public submit(): void {
+    this.showGraph = true;
+  }
 }

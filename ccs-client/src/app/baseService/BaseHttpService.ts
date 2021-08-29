@@ -66,6 +66,15 @@ export abstract class BaseHttpService {
 
   public abstract getWikiData(id: number): Observable<any>;
 
+  // GRAPH
+
+  public abstract getLevels(
+    reqSkills: number[],
+    newSkills: number[]
+  ): Observable<any>;
+
+  public abstract getCompleteGraphData(): Observable<any>;
+
   // default http requests
   protected abstract postRequest(nodeUrl: string, body: any): Observable<any>;
 

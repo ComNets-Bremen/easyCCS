@@ -1,0 +1,1 @@
+<svg #svg width="100%" [attr.height]="layout.height"></svg>

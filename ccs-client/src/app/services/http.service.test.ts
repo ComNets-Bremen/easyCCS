@@ -13,6 +13,7 @@ import { Content, UploadContent } from "../classes/content";
 import { ContentModule } from "../classes/contentModule";
 import { Skill } from "../classes/skill";
 import { DocFile } from "../classes/docFile";
+import { SkillGraphDataDemo, GraphDataDemo } from "../test/graph";
 
 @Injectable({
   providedIn: "root",
@@ -111,6 +112,15 @@ export class HttpService extends BaseHttpService {
 
   public getWikiData(id: number): Observable<any> {
     return of(WikiDataTestData.getbyId(id));
+  }
+
+  // GRAPH
+
+  public getLevels(reqSkills: number[], newSkills: number[]): Observable<any> {
+    return of(SkillGraphDataDemo.levels);
+  }
+  public getCompleteGraphData(): Observable<any> {
+    return of(GraphDataDemo.demo);
   }
 
   // default http requests

@@ -1,4 +1,4 @@
-export class GraphData {
+export class GraphDataDemo {
   static demo = {
     nodes: [
       {
@@ -182,7 +182,7 @@ export class GraphData {
   };
 }
 
-export class SkillGraphData {
+export class SkillGraphDataDemo {
   static levels = [
     [
       {

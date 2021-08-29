@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import * as d3 from "../helper/d3jsImport";
-import { GraphData } from "../test/graph";
+import { GraphDataDemo } from "../test/graph";
 
 @Component({
   selector: "app-complete-graph",
@@ -58,7 +58,7 @@ export class CompleteGraphComponent implements OnInit {
       .force("charge", d3.forceManyBody())
       .force("center", d3.forceCenter(this.width / 2, this.height / 2));
 
-    this.update(GraphData.demo.links, GraphData.demo.nodes);
+    this.update(GraphDataDemo.demo.links, GraphDataDemo.demo.nodes);
     // TODO handle with httpservice
     // d3.json("{% url 'getGraphJson' %}", (error: any, graph: any) => {
     //     if (error) throw error;

@@ -135,6 +135,18 @@ export class HttpService extends BaseHttpService {
     return this.getAuthRequest(url);
   }
 
+  // GRAPH
+
+  public getLevels(reqSkills: number[], newSkills: number[]): Observable<any> {
+    const url = this.baseApi + "levels" + this.end;
+    const body = { reqSkills, newSkills };
+    return this.postAuthRequest(url, body);
+  }
+  public getCompleteGraphData(): Observable<any> {
+    const url = this.baseApi + "completegraph" + this.end;
+    return this.getAuthRequest(url);
+  }
+
   // default http requests
   protected postRequest(nodeUrl: string, body: any): Observable<any> {
     const headers = new HttpHeaders(); // .set("django_language", cookie);
