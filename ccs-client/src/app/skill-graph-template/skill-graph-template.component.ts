@@ -6,7 +6,7 @@ import {
   OnInit,
   ViewChild,
 } from "@angular/core";
-import { Bundle, Level, Link, Node } from "../classes/graphData";
+import { BaseNode, Link, Node } from "../classes/graphData";
 import { Skill } from "../classes/skill";
 import * as d3 from "../helper/d3jsImport";
 import { HttpService } from "../services/http.service";
@@ -25,11 +25,11 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
   public layout: any;
   private color = d3.scaleOrdinal(d3.schemeDark2);
   private svgNS = "http://www.w3.org/2000/svg";
-  private levels: [][] = [];
+  private levels: Array<Array<BaseNode>> = [];
   private nodes: Node[] = [];
-  private nodes_index: { [id: number]: Node } = {};
-
-  private bundles: Bundle[] = [];
+  private nodes_index: Map<number | string, Node> = new Map();
+  // helper to prevent mixed array/oject array like in original code
+  private level_bundles: Map<number, Node[]> = new Map();
   private links: Link[] = [];
 
   constructor(private httpService: HttpService) {}
@@ -52,10 +52,6 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
   }
 
   private initGraph(): void {
-    // layout
-    this.createBaseLayout();
-    this.createGraph();
-
     // precompute level depth
     this.preComputeLevelDepth();
 
@@ -65,7 +61,140 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
     // reverse pointer from parent to bundles
     this.setBundlePointer();
 
+    // layout
+    setTimeout(() => {
+      this.createBaseLayout();
+      this.createGraph();
+    }, 10);
+
     // return {levels, nodes, nodes_index, links, bundles, layout}
+  }
+
+  private preComputeLevelDepth(): void {
+    this.levels.forEach((l: BaseNode[], j: number) =>
+      l.forEach((n: BaseNode) => (n.level = j))
+    );
+
+    // this.nodes = this.levels.((a: Node[], x: Node[]) => a.concat(x), []);
+    const baseNodes = this.levels.flat();
+    for (const node of baseNodes) {
+      const newNode = new Node();
+      newNode.parents = [];
+      newNode.name = node.name;
+      newNode.level = node.level;
+      newNode.id = node.id;
+      this.nodes_index.set(node.id, newNode);
+      this.nodes.push(newNode);
+    }
+
+    // objectification
+    this.nodes.forEach((n: Node) => {
+      for (const baseNode of baseNodes) {
+        if (baseNode.id === n.id) {
+          for (const parentId of baseNode.parents) {
+            const parent = this.nodes_index.get(parentId);
+            if (parent) {
+              n.parents.push(parent);
+            }
+          }
+        }
+      }
+    });
+  }
+
+  private precomputeBundles(): void {
+    this.level_bundles = new Map();
+    this.levels.forEach((l: BaseNode[], j: number) => {
+      const index = new Map<string, Node>();
+      l.forEach((n: BaseNode, i: number) => {
+        if (n.parents.length === 0) {
+          return;
+        }
+        const node = this.nodes_index.get(n.id);
+        if (!node) {
+          return;
+        }
+        const id = node.parents
+          .map((d: Node) => d.id)
+          .sort()
+          .join("--");
+        const bNode: Node | undefined = index.get(id);
+        if (bNode) {
+          bNode.parents = bNode.parents.concat(node.parents);
+        } else {
+          const newNode = new Node();
+          newNode.id = id;
+          newNode.id = node.name;
+          newNode.parents = node.parents.slice();
+          newNode.level = j;
+          index.set(id, newNode);
+        }
+        const bNodeNew = index.get(id);
+        if (bNodeNew) {
+          node.bundle = bNodeNew;
+        }
+      });
+      const nodeList: Node[] = [];
+      index.forEach((nodes) => {
+        nodeList.push(nodes);
+      });
+      if (nodeList && nodeList.length > 0) {
+        this.level_bundles.set(j, nodeList);
+        this.level_bundles.get(j)?.forEach((b: Node, t: number) => (b.i = t));
+      }
+    });
+
+    this.nodes.forEach((node: Node) => {
+      node.parents.forEach((pNode: Node) => {
+        const link = new Link();
+        link.source = node;
+        link.bundle = node.bundle;
+        link.target = pNode;
+        this.links.push(link);
+      });
+    });
+  }
+
+  private setBundlePointer(): void {
+    const bundles: Node[] = [];
+    for (const [key, value] of this.level_bundles) {
+      Array.prototype.push.apply(bundles, value);
+    }
+    bundles.forEach((bundle) =>
+      bundle.parents.forEach((node: Node) => {
+        if (!node.bundles_index) {
+          node.bundles_index = new Map();
+        }
+        if (!(bundle.id in node.bundles_index)) {
+          node.bundles_index.set(bundle.id, []);
+        }
+        node.bundles_index.get(bundle.id)?.push(bundle);
+      })
+    );
+
+    this.nodes.forEach((node: Node) => {
+      if (node.bundles_index !== undefined) {
+        for (const k in node.bundles_index) {
+          if (k) {
+            const ele = node.bundles_index.get(k);
+            if (ele) {
+              Array.prototype.push.apply(node.bundles, ele);
+            }
+          }
+        }
+      } else {
+        node.bundles_index = new Map();
+        node.bundles = [];
+      }
+      node.bundles.forEach((b: Node, j: number) => (b.i = j));
+    });
+
+    this.links.forEach((link: Link) => {
+      if (link.bundle.links === undefined) {
+        link.bundle.links = [];
+      }
+      link.bundle.links.push(link);
+    });
   }
 
   private createBaseLayout(): void {
@@ -84,8 +213,12 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
 
     let x_offset = padding;
     let y_offset = padding;
-    this.levels.forEach((l: Level[]) => {
-      x_offset += l.bundles.length * bundle_width;
+    this.levels.forEach((l: BaseNode[], t: number) => {
+      let bundles = this.level_bundles.get(t);
+      if (!bundles) {
+        bundles = [];
+      }
+      x_offset += bundles.length * bundle_width;
       y_offset += level_y_padding;
       l.forEach((n: any, j: any) => {
         n.x = n.level * node_width + x_offset;
@@ -96,12 +229,19 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
     });
 
     let i = 0;
-    this.levels.forEach((level: Level[]) => {
-      level.bundles.forEach((bundle: Bundle) => {
+    this.levels.forEach((level: BaseNode[], index: number) => {
+      let bundles = this.level_bundles.get(index);
+      let bundlesLength = 0;
+      if (!bundles) {
+        bundles = [];
+      } else {
+        bundlesLength = bundles.length;
+      }
+      bundles.forEach((bundle: Node) => {
         bundle.x =
           bundle.parents[0].x +
           node_width +
-          (level.bundles.length - 1 - bundle.i) * bundle_width;
+          (bundlesLength - 1 - bundle.i) * bundle_width;
         bundle.y = i * node_height;
       });
       i += level.length;
@@ -109,9 +249,17 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
 
     this.links.forEach((link: Link) => {
       link.xt = link.target.x;
+      let iCounter = 0;
+      let index = 0;
+      link.target.bundles_index.forEach((nodes, key) => {
+        if (key === link.bundle.id) {
+          index = iCounter;
+        }
+        iCounter++;
+      });
       link.yt =
         link.target.y +
-        link.target.bundles_index[link.bundle.id].i * metro_d -
+        index * metro_d -
         (link.target.bundles.length * metro_d) / 2 +
         metro_d / 2;
       link.xb = link.bundle.x;
@@ -121,23 +269,39 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
 
     // compress vertical space
     let y_negative_offset = 0;
-    this.levels.forEach((level: Level[]) => {
-      const min1 =
-        d3.min(level.bundles, (bundle: Bundle) => {
-          return d3.min(bundle.links, (link: any) => {
-            return link.ys - c - (link.yt + c);
-          });
-        }) || "0";
-      const offset = parseInt(min1?.toString(), 10);
-      y_negative_offset += -min_family_height + offset;
-      // level.forEach((n: any) => (n.y -= y_negative_offset));
+    this.levels.forEach((nodes: BaseNode[], index: number) => {
+      const bundles = this.level_bundles.get(index);
+      if (bundles) {
+        const min1 =
+          d3.min(bundles, (bundle: Node) => {
+            return d3.min(bundle.links, (link: Link) => {
+              return link.ys - c - (link.yt + c);
+            });
+          }) || "0";
+        const offset = parseInt(min1?.toString(), 10);
+        y_negative_offset += -min_family_height + offset;
+        nodes.forEach((n: BaseNode) => {
+          const node = this.nodes_index.get(n.id);
+          if (node) {
+            node.y -= y_negative_offset;
+          }
+        });
+      }
     });
 
     // very ugly, I know
     this.links.forEach((link: Link) => {
+      let iCounter = 0;
+      let index = 0;
+      link.target.bundles_index.forEach((nodes, key) => {
+        if (key === link.bundle.id) {
+          index = iCounter;
+        }
+        iCounter++;
+      });
       link.yt =
         link.target.y +
-        link.target.bundles_index[link.bundle.id].i * metro_d -
+        index * metro_d -
         (link.target.bundles.length * metro_d) / 2 +
         metro_d / 2;
       link.ys = link.source.y;
@@ -159,100 +323,13 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
     };
   }
 
-  private setBundlePointer(): void {
-    this.bundles.forEach((bundle: Bundle) =>
-      bundle.parents.forEach((node: Node) => {
-        if (node.bundles_index === undefined) {
-          node.bundles_index = {};
-        }
-        if (!(bundle.id in node.bundles_index)) {
-          node.bundles_index[bundle.id] = [];
-        }
-        node.bundles_index[bundle.id].push(bundle);
-      })
-    );
-
-    this.nodes.forEach((node: Node) => {
-      if (node.bundles_index !== undefined) {
-        for (const k in node.bundles_index) {
-          if (node.bundles_index[k]) {
-            node.bundles.push.apply(node.bundles_index[k]);
-          }
-        }
-      } else {
-        node.bundles_index = {};
-        node.bundles = [];
-      }
-      node.bundles.forEach((b: any, j: any) => (b.i = j));
-    });
-
-    this.links.forEach((link: Link) => {
-      if (link.bundle.links === undefined) {
-        link.bundle.links = [];
-      }
-      link.bundle.links.push(link);
-    });
-  }
-
-  private precomputeBundles(): void {
-    this.levels.forEach((l: any, j: any) => {
-      const index: any = {};
-      l.forEach((n: any) => {
-        if (n.parents.length === 0) {
-          return;
-        }
-
-        const id = n.parents
-          .map((d: any) => d.id)
-          .sort()
-          .join("--");
-        if (id in index) {
-          index[id].parents = index[id].parents.concat(n.parents);
-        } else {
-          index[id] = { id, parents: n.parents.slice(), level: j };
-        }
-        n.bundle = index[id];
-      });
-      l.bundles = Object.keys(index).map((k) => index[k]);
-      l.bundles.forEach((b: any, t: any) => (b.i = t));
-    });
-
-    this.nodes.forEach((node: Node) => {
-      node.parents.forEach((pNode: Node) => {
-        const link = new Link();
-        link.source = node;
-        link.bundle = node.bundle;
-        link.target = pNode;
-        this.links.push(link);
-      });
-    });
-
-    this.bundles = this.levels.reduce(
-      (a: Node, x: Node) => a.concat(x.bundles),
-      []
-    );
-  }
-
-  private preComputeLevelDepth(): void {
-    this.levels.forEach((l: [], j: number) =>
-      l.forEach((n: Node) => (n.level = j))
-    );
-
-    this.nodes = this.levels.reduce((a: Node[], x: Node[]) => a.concat(x), []);
-    this.nodes_index = {};
-    this.nodes.forEach((d: Node) => (this.nodes_index[d.id] = d));
-
-    // objectification
-    this.nodes.forEach((d: Node) => {
-      d.parents = (d.parents === undefined ? [] : d.parents).map(
-        (p: Node) => this.nodes_index[p]
-      );
-    });
-  }
-
   private createGraph(): void {
-    this.bundles.map((bundle: Bundle) => {
-      const d = bundle.links
+    const bundles: Node[] = [];
+    this.level_bundles.forEach((nodes) => {
+      Array.prototype.push.apply(bundles, nodes);
+    });
+    bundles.map((node: Node) => {
+      const d = node.links
         .map(
           (l: Link) => `
             M${l.xt} ${l.yt}
@@ -272,7 +349,7 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
 
       const path_2 = document.createElementNS(this.svgNS, "path");
       path_2.setAttributeNS(null, "class", "link");
-      path_2.setAttributeNS(null, "stroke", this.color(bundle.id.toString()));
+      path_2.setAttributeNS(null, "stroke", this.color(node.id.toString()));
       path_2.setAttributeNS(null, "stroke-width", "2");
       path_2.setAttributeNS(null, "d", d);
 
