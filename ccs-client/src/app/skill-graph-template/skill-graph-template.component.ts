@@ -36,7 +36,7 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.layout = {};
-    this.layout.height = 0;
+    this.layout.height = 500;
   }
 
   ngAfterViewInit(): void {
@@ -208,6 +208,7 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
     const min_family_height = 16;
 
     this.nodes.forEach(
+      // TODO check bundles
       (n: Node) => (n.height = (Math.max(1, n.bundles.length) - 1) * metro_d)
     );
 
@@ -220,11 +221,13 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
       }
       x_offset += bundles.length * bundle_width;
       y_offset += level_y_padding;
-      l.forEach((n: any, j: any) => {
-        n.x = n.level * node_width + x_offset;
-        n.y = node_height + y_offset + n.height / 2;
-
-        y_offset += node_height + n.height;
+      l.forEach((n: BaseNode, j: number) => {
+        const node = this.nodes_index.get(n.id);
+        if (node) {
+          node.x = n.level * node_width + x_offset;
+          node.y = node_height + y_offset + node.height / 2;
+          y_offset += node_height + node.height;
+        }
       });
     });
 
@@ -377,13 +380,13 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
       line_2.setAttributeNS(null, "y2", (n.y + n.height / 2).toString());
 
       const text_1 = document.createElementNS(this.svgNS, "text");
+      text_1.setAttributeNS(null, "class", "whiteText");
       text_1.setAttributeNS(null, "x", (n.x + 4).toString());
       text_1.setAttributeNS(null, "y", (n.y - n.height / 2 - 4).toString());
-      text_1.setAttributeNS(null, "stroke", "white");
-      text_1.setAttributeNS(null, "stroke-width", "2");
       text_1.appendChild(document.createTextNode(n.name));
 
       const text_2 = document.createElementNS(this.svgNS, "text");
+      text_2.setAttributeNS(null, "class", "blackText");
       text_2.setAttributeNS(null, "x", (n.x + 4).toString());
       text_2.setAttributeNS(null, "y", (n.y - n.height / 2 - 4).toString());
       text_2.appendChild(document.createTextNode(n.name));
