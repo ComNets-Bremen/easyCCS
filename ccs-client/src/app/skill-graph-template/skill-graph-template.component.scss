@@ -1,16 +1,32 @@
-text {
-  font-family: sans-serif;
+svg {
+  vertical-align: middle;
+  overflow: hidden;
+}
+
+::ng-deep text {
+  // font-family: sans-serif;
   font-size: 10px;
 }
 
-.svgMain {
-  color: white;
+::ng-deep .blackText {
+  stroke: black;
+  stroke-width: 0.8;
 }
 
-.node {
+::ng-deep .whiteText {
+  stroke: white;
+  stroke-width: 1.5;
+}
+
+.svgMain {
+  padding: 5px;
+  fill: none;
+}
+
+::ng-deep .node {
   stroke-linecap: round;
 }
 
-.link {
+::ng-deep .link {
   fill: none;
 }

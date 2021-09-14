@@ -186,29 +186,59 @@ export class SkillGraphDataDemo {
   static levels = [
     [
       {
-        id: 19,
-        name: "Zahlen bis 100",
+        id: 18,
+        name: "Zahlen bis 10",
         parents: [],
       },
+    ],
+    [
       {
         id: 20,
         name: "Addition ohne Übertrag",
-        parents: [],
+        parents: [18],
       },
     ],
     [
       {
         id: 21,
         name: "Subtraktion ohne Übertrag",
-        parents: [20],
+        parents: [20, 18],
       },
     ],
     [
       {
         id: 22,
         name: "Addition mit Übertrag",
-        parents: [21, 20, 19],
+        parents: [21, 20],
       },
     ],
   ];
+
+  //   [
+  //     {
+  //       id: 19,
+  //       name: "Zahlen bis 100",
+  //       parents: [],
+  //     },
+  //     {
+  //       id: 20,
+  //       name: "Addition ohne Übertrag",
+  //       parents: [],
+  //     },
+  //   ],
+  //   [
+  //     {
+  //       id: 21,
+  //       name: "Subtraktion ohne Übertrag",
+  //       parents: [20],
+  //     },
+  //   ],
+  //   [
+  //     {
+  //       id: 22,
+  //       name: "Addition mit Übertrag",
+  //       parents: [21, 20, 19],
+  //     },
+  //   ],
+  // ];
 }

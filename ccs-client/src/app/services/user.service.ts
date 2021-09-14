@@ -1,7 +1,10 @@
 import { Injectable, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
 import { BaseUser } from "../classes/baseUser";
+import { ESnackbarTypes } from "../enums/snackbarTypes";
 import { HttpService } from "./http.service";
+import { ToolService } from "./tool.service";
 
 @Injectable({
   providedIn: "root",
@@ -11,7 +14,9 @@ export class UserService {
 
   constructor(
     private cookieService: CookieService,
-    private httpService: HttpService
+    private httpService: HttpService,
+    private router: Router,
+    private toolService: ToolService
   ) {
     const token = this.cookieService.get(this.httpService.tokenName);
     if (token) {
@@ -26,6 +31,12 @@ export class UserService {
     this.loggedIn = true;
     this.httpService.token = "newsessiontoken";
     this.cookieService.set(this.httpService.tokenName, this.httpService.token);
+    this.router.navigate(["/start"]);
+    this.toolService.openSnackBar(
+      $localize`:@@LoginSuccessfull:Login successfull`,
+      $localize`:@@Ok:Ok`,
+      ESnackbarTypes.Info
+    );
   }
 
   public logout(): void {
