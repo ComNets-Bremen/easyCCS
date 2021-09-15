@@ -3,9 +3,11 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
 import { MatChipInputEvent } from "@angular/material/chips";
+import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { startWith, map } from "rxjs/operators";
+import { Content } from "../classes/content";
 import { Skill } from "../classes/skill";
 import { WikidataObject } from "../classes/wikiDataObj";
 import { ESnackbarTypes } from "../enums/snackbarTypes";
@@ -33,6 +35,13 @@ export class SkillGraphComponent implements OnInit {
   public separatorKeysCodes: number[] = [ENTER, COMMA];
   public requiredSkills: Skill[] = [];
   public newSkills: Skill[] = [];
+  public displayedColumns: string[] = [
+    "content_name",
+    "content_workload",
+    "required_skills",
+    "new_skills",
+  ];
+  public dataSource!: MatTableDataSource<Content>;
 
   private allSkills: Skill[] = [];
 
@@ -149,5 +158,16 @@ export class SkillGraphComponent implements OnInit {
 
   public submit(): void {
     this.showGraph = true;
+    this.getGraphContent(this.requiredSkills, this.newSkills);
+  }
+
+  private getGraphContent(reqSkills: Skill[], newSkills: Skill[]): void {
+    const reqSkillsIds = reqSkills.map((r) => r.id);
+    const newSkillsIds = newSkills.map((n) => n.id);
+    this.httpService
+      .getSkillGraphContent(reqSkillsIds, newSkillsIds)
+      .subscribe((contents: Content[]) => {
+        this.dataSource = new MatTableDataSource(contents);
+      });
   }
 }

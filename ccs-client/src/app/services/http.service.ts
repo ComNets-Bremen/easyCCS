@@ -33,6 +33,31 @@ export class HttpService extends BaseHttpService {
     return this.getAuthRequest(url);
   }
 
+  public getSkillGraphContent(
+    reqSkillIds: number[],
+    knownSkillIds: number[]
+  ): Observable<any> {
+    let reqIds = "";
+    let knownIds = "";
+    for (let i = 0; i < reqSkillIds.length; i++) {
+      reqIds += reqSkillIds[i];
+      if (i !== reqSkillIds.length - 1) {
+        reqIds += ",";
+      }
+    }
+    for (let i = 0; i < knownSkillIds.length; i++) {
+      knownIds += knownSkillIds[i];
+      if (i !== knownSkillIds.length - 1) {
+        knownIds += ",";
+      }
+    }
+    const url =
+      this.baseApi +
+      `content/required_skills?id=${reqIds}&known_skills?id=${knownIds}` +
+      this.end;
+    return this.getAuthRequest(url);
+  }
+
   public deleteContent(id: number): Observable<any> {
     const url = this.baseApi + `content/${id}` + this.end;
     return this.deleteAuthRequest(url);

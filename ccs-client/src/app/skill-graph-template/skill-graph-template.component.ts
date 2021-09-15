@@ -174,14 +174,14 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
 
     this.nodes.forEach((node: Node) => {
       if (node.bundles_index !== undefined) {
-        for (const k in node.bundles_index) {
+        node.bundles_index.forEach((val: Node[], k: string | number) => {
           if (k) {
-            const ele = node.bundles_index.get(k);
+            const ele = val;
             if (ele) {
               Array.prototype.push.apply(node.bundles, ele);
             }
           }
-        }
+        });
       } else {
         node.bundles_index = new Map();
         node.bundles = [];
@@ -208,7 +208,6 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
     const min_family_height = 16;
 
     this.nodes.forEach(
-      // TODO check bundles
       (n: Node) => (n.height = (Math.max(1, n.bundles.length) - 1) * metro_d)
     );
 

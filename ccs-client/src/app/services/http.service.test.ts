@@ -42,6 +42,12 @@ export class HttpService extends BaseHttpService {
     return of(ContentTestData.getbyId(id));
   }
 
+  public getSkillGraphContent(
+    reqSkillIds: number[],
+    newSkillIds: number[]
+  ): Observable<any> {
+    return of([]);
+  }
   public deleteContent(id: number): Observable<any> {
     return of(ContentTestData.delete(id));
   }

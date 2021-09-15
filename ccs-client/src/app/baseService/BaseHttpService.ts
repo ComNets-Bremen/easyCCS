@@ -23,6 +23,11 @@ export abstract class BaseHttpService {
 
   public abstract getContent(id: number): Observable<any>;
 
+  public abstract getSkillGraphContent(
+    reqSkillIds: number[],
+    newSkillIds: number[]
+  ): Observable<any>;
+
   public abstract deleteContent(id: number): Observable<any>;
 
   public abstract saveContent(content: Content): Observable<any>;
