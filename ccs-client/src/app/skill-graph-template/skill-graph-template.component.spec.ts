@@ -1,16 +1,15 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { SkillGraphTemplateComponent } from './skill-graph-template.component';
+import { SkillGraphTemplateComponent } from "./skill-graph-template.component";
 
-describe('SkillGraphTemplateComponent', () => {
+describe("SkillGraphTemplateComponent", () => {
   let component: SkillGraphTemplateComponent;
   let fixture: ComponentFixture<SkillGraphTemplateComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SkillGraphTemplateComponent ]
-    })
-    .compileComponents();
+      declarations: [SkillGraphTemplateComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('SkillGraphTemplateComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

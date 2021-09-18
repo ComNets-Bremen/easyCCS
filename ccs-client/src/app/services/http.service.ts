@@ -3,6 +3,10 @@ import { Injectable } from "@angular/core";
 import { CookieService } from "ngx-cookie-service";
 import { Observable } from "rxjs";
 import { BaseHttpService } from "../baseService/BaseHttpService";
+import {
+  BaseGraphConfiguration,
+  GraphConfiguration,
+} from "../classes/configuration";
 import { Content, UploadContent } from "../classes/content";
 import { ContentModule } from "../classes/contentModule";
 import { DocFile } from "../classes/docFile";
@@ -170,6 +174,22 @@ export class HttpService extends BaseHttpService {
   public getCompleteGraphData(): Observable<any> {
     const url = this.baseApi + "completegraph" + this.end;
     return this.getAuthRequest(url);
+  }
+
+  public getAllConfigurations(): Observable<any> {
+    const url = this.baseApi + "graphconfig" + this.end;
+    return this.getAuthRequest(url);
+  }
+
+  public loadConfig(loadConfig: BaseGraphConfiguration): Observable<any> {
+    const url = this.baseApi + `graphconfig/${loadConfig.id}` + this.end;
+    return this.getAuthRequest(url);
+  }
+
+  public saveConfiguration(config: GraphConfiguration): Observable<any> {
+    const url = this.baseApi + `graphconfig` + this.end;
+    const body = config;
+    return this.postAuthRequest(url, body);
   }
 
   // default http requests

@@ -54,31 +54,19 @@ export class EditSkillComponent implements OnInit {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get("id");
     if (!id) {
-      this.toolService.openSnackBar(
-        $localize`:@@InvalidSkillId:Invalid id - can't find skill to edit!`,
-        $localize`:@@Ok:Ok`,
-        ESnackbarTypes.Error
-      );
+      this.showInvalidIdError();
       return;
     }
     this.id = parseInt(id, 10);
     if (!this.id || isNaN(this.id)) {
-      this.toolService.openSnackBar(
-        $localize`:@@InvalidSkillId:Invalid id - can't find skill to edit!`,
-        $localize`:@@Ok:Ok`,
-        ESnackbarTypes.Error
-      );
+      this.showInvalidIdError();
       return;
     }
     this.httpService.getSkill(this.id).subscribe((skill: Skill) => {
       if (skill) {
         this.skill = skill;
       } else {
-        this.toolService.openSnackBar(
-          $localize`:@@InvalidSkillId:Invalid id - can't find skill to edit!`,
-          $localize`:@@Ok:Ok`,
-          ESnackbarTypes.Error
-        );
+        this.showInvalidIdError();
       }
     });
     this.editForm = this.fb.group({
@@ -139,6 +127,14 @@ export class EditSkillComponent implements OnInit {
   }
   private filterWikiDataObjs(value: string): WikidataObject[] {
     return this.wikiService.filterWikiDataObjs(value, this.allWikiObj);
+  }
+
+  private showInvalidIdError(): void {
+    this.toolService.openSnackBar(
+      $localize`:@@InvalidSkillId:Invalid id - can't find skill to edit!`,
+      $localize`:@@Ok:Ok`,
+      ESnackbarTypes.Error
+    );
   }
 
   private initAll(): void {

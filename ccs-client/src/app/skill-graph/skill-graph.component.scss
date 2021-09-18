@@ -1,1 +1,33 @@
+table {
+  width: 100%;
+}
 
+.text-algo {
+  color: green;
+}
+
+.text-default {
+  color: gray;
+}
+
+.critical-header {
+  color: red;
+}
+
+.alarm-icon {
+  vertical-align: -6px;
+  color: red;
+}
+
+.mat-card {
+  margin-bottom: 15px;
+}
+
+.top-row {
+  float: left;
+  width: 50%;
+}
+
+.button-row-top button {
+  float: right;
+}

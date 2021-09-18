@@ -5,6 +5,10 @@ import { Skill } from "./classes/skill";
   providedIn: "root",
 })
 export class SkillService {
+  public requiredSkills: Skill[] = [];
+  public newSkills: Skill[] = [];
+  public title = "";
+
   constructor() {}
 
   public filterSkills(value: string, allSkills: Skill[]): Skill[] {
@@ -33,5 +37,21 @@ export class SkillService {
       }
     }
     return skills;
+  }
+
+  public setTempValues(
+    requiredSkills: Skill[],
+    newSkills: Skill[],
+    value: string
+  ): void {
+    this.requiredSkills = requiredSkills;
+    this.newSkills = newSkills;
+    this.title = value;
+  }
+
+  public clearTempValues(): void {
+    this.requiredSkills = [];
+    this.newSkills = [];
+    this.title = "";
   }
 }

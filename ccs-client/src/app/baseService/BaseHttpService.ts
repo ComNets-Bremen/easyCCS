@@ -1,6 +1,10 @@
 import { HttpClient } from "@angular/common/http";
 import { CookieService } from "ngx-cookie-service";
 import { Observable } from "rxjs";
+import {
+  BaseGraphConfiguration as BaseGraphConfiguration,
+  GraphConfiguration,
+} from "../classes/configuration";
 import { Content, UploadContent } from "../classes/content";
 import { ContentModule } from "../classes/contentModule";
 import { DocFile } from "../classes/docFile";
@@ -79,6 +83,16 @@ export abstract class BaseHttpService {
   ): Observable<any>;
 
   public abstract getCompleteGraphData(): Observable<any>;
+
+  public abstract getAllConfigurations(): Observable<any>;
+
+  public abstract loadConfig(
+    loadConfig: BaseGraphConfiguration
+  ): Observable<any>;
+
+  public abstract saveConfiguration(
+    config: GraphConfiguration
+  ): Observable<any>;
 
   // default http requests
   protected abstract postRequest(nodeUrl: string, body: any): Observable<any>;

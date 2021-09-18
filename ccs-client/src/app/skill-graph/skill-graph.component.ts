@@ -7,7 +7,11 @@ import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { startWith, map } from "rxjs/operators";
-import { Content } from "../classes/content";
+import {
+  BaseGraphConfiguration,
+  GraphConfiguration,
+} from "../classes/configuration";
+import { Content, SkillContent } from "../classes/content";
 import { Skill } from "../classes/skill";
 import { WikidataObject } from "../classes/wikiDataObj";
 import { ESnackbarTypes } from "../enums/snackbarTypes";
@@ -24,11 +28,13 @@ import { SkillService } from "../skill.service";
 export class SkillGraphComponent implements OnInit {
   private id = 0;
   public showGraph = false;
+  public loadGraphForm!: FormGroup;
   public graphForm!: FormGroup;
   public selectable = true;
   public removable = true;
   public reqSkillCtrl!: FormControl;
   public newSkillCtrl!: FormControl;
+  public loadConfigCtrl!: FormControl;
   public filteredReqSkills!: Observable<Skill[]>;
   public filteredNewSkills!: Observable<Skill[]>;
   public filteredWikiData!: Observable<WikidataObject[]>;
@@ -42,6 +48,9 @@ export class SkillGraphComponent implements OnInit {
     "new_skills",
   ];
   public dataSource!: MatTableDataSource<Content>;
+  public skillContent: SkillContent;
+  public totalWorkload = 0;
+  public allConfigs: BaseGraphConfiguration[] = [];
 
   private allSkills: Skill[] = [];
 
@@ -54,16 +63,15 @@ export class SkillGraphComponent implements OnInit {
   ) {
     this.reqSkillCtrl = new FormControl("");
     this.newSkillCtrl = new FormControl("");
-
+    this.skillContent = new SkillContent();
     this.initAll();
   }
 
   ngOnInit(): void {
-    this.graphForm = this.fb.group({
-      title: new FormControl(""),
-      reqSkills: this.reqSkillCtrl,
-      newSkills: this.newSkillCtrl,
-    });
+    if (this.checkServiceValues()) {
+      this.initGraph();
+      this.initLoadGraph();
+    }
   }
 
   public selectedReqSkill(event: MatAutocompleteSelectedEvent): void {
@@ -137,6 +145,12 @@ export class SkillGraphComponent implements OnInit {
   }
 
   private initAll(): void {
+    this.httpService
+      .getAllConfigurations()
+      .subscribe((titles: BaseGraphConfiguration[]) => {
+        this.allConfigs = titles;
+      });
+
     this.httpService.getSkillAll().subscribe((skills: Skill[]) => {
       if (skills) {
         this.allSkills = skills;
@@ -158,7 +172,76 @@ export class SkillGraphComponent implements OnInit {
 
   public submit(): void {
     this.showGraph = true;
+    this.skillService.setTempValues(
+      this.requiredSkills,
+      this.newSkills,
+      this.graphForm.get("title")?.value
+    );
     this.getGraphContent(this.requiredSkills, this.newSkills);
+  }
+
+  public saveConfig(): void {
+    const config = new GraphConfiguration();
+    config.title = this.graphForm.get("title")?.value;
+    config.required_skills = this.requiredSkills.map((r) => r.id);
+    config.known_skills = this.newSkills.map((n) => n.id);
+    if (config.title) {
+      this.httpService.saveConfiguration(config).subscribe(() => {
+        this.toolService.openSnackBar(
+          $localize`:@@Saved:Data saved successfully`,
+          $localize`:@@Ok:Ok`,
+          ESnackbarTypes.Info
+        );
+      });
+    }
+  }
+
+  public getTextClass(id: number): string {
+    let style = "text-default";
+    if (this.skillContent.knownSkills.indexOf(id) !== -1) {
+      style = "text-algo";
+    }
+    return style;
+  }
+
+  public isCriticalSkill(id: number): boolean {
+    const cSkillIds = this.skillContent.criticalSkills.map((c) => c.id);
+    return cSkillIds.indexOf(id) !== -1;
+  }
+
+  public loadConfig(): void {
+    const loadConfig = this.loadGraphForm.get("loadConfig")?.value;
+    this.httpService
+      .loadConfig(loadConfig)
+      .subscribe((config: GraphConfiguration) => {
+        if (!config) {
+          return;
+        }
+        this.initGraph();
+        for (const skill of this.allSkills) {
+          if (config.required_skills.indexOf(skill.id) !== -1) {
+            this.requiredSkills.push(skill);
+          }
+          if (config.known_skills.indexOf(skill.id) !== -1) {
+            this.newSkills.push(skill);
+          }
+          this.graphForm.get("title")?.setValue(config.title);
+        }
+      });
+  }
+
+  private initGraph(): void {
+    this.graphForm = this.fb.group({
+      title: new FormControl(""),
+      reqSkills: this.reqSkillCtrl,
+      newSkills: this.newSkillCtrl,
+    });
+  }
+
+  private initLoadGraph(): void {
+    this.loadGraphForm = this.fb.group({
+      loadConfig: this.loadConfigCtrl,
+    });
   }
 
   private getGraphContent(reqSkills: Skill[], newSkills: Skill[]): void {
@@ -166,8 +249,31 @@ export class SkillGraphComponent implements OnInit {
     const newSkillsIds = newSkills.map((n) => n.id);
     this.httpService
       .getSkillGraphContent(reqSkillsIds, newSkillsIds)
-      .subscribe((contents: Content[]) => {
-        this.dataSource = new MatTableDataSource(contents);
+      .subscribe((skillContent: SkillContent) => {
+        for (const content of skillContent.contents) {
+          this.totalWorkload += content.content_workload;
+        }
+        this.skillContent = skillContent;
+        this.dataSource = new MatTableDataSource(skillContent.contents);
       });
+  }
+
+  private checkServiceValues(): boolean {
+    if (
+      this.skillService.requiredSkills.length > 0 ||
+      this.skillService.newSkills.length > 0 ||
+      this.skillService.title
+    ) {
+      this.initGraph();
+      this.initLoadGraph();
+      this.requiredSkills = this.skillService.requiredSkills;
+      this.newSkills = this.skillService.newSkills;
+      this.graphForm.get("title")?.setValue(this.skillService.title);
+      this.showGraph = true;
+      this.getGraphContent(this.requiredSkills, this.newSkills);
+      this.skillService.clearTempValues();
+      return false;
+    }
+    return true;
   }
 }

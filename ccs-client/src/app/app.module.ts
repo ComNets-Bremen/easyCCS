@@ -21,6 +21,7 @@ import { MatListModule } from "@angular/material/list";
 import { MatChipsModule } from "@angular/material/chips";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatDialogModule } from "@angular/material/dialog";
+import { MatSelectModule } from "@angular/material/select";
 
 // general packages
 import { CookieService } from "ngx-cookie-service";
@@ -46,6 +47,7 @@ import { BaseDialogComponent } from "./base-dialog/base-dialog.component";
 import { EditSkillComponent } from "./edit-skill/edit-skill.component";
 import { EditModuleComponent } from "./edit-module/edit-module.component";
 import { SkillGraphTemplateComponent } from "./skill-graph-template/skill-graph-template.component";
+import { SkillDetailComponent } from "./skill-detail/skill-detail.component";
 
 @NgModule({
   declarations: [
@@ -65,6 +67,7 @@ import { SkillGraphTemplateComponent } from "./skill-graph-template/skill-graph-
     EditSkillComponent,
     EditModuleComponent,
     SkillGraphTemplateComponent,
+    SkillDetailComponent,
   ],
   imports: [
     BrowserModule,
@@ -88,6 +91,7 @@ import { SkillGraphTemplateComponent } from "./skill-graph-template/skill-graph-
     MatChipsModule,
     MatAutocompleteModule,
     MatDialogModule,
+    MatSelectModule,
   ],
   providers: [
     UserService,

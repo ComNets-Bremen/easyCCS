@@ -13,7 +13,15 @@ import { Content, UploadContent } from "../classes/content";
 import { ContentModule } from "../classes/contentModule";
 import { Skill } from "../classes/skill";
 import { DocFile } from "../classes/docFile";
-import { SkillGraphDataDemo, GraphDataDemo } from "../test/graph";
+import {
+  SkillGraphDataDemo,
+  GraphDataDemo,
+  GraphStoredConfiguration,
+} from "../test/graph";
+import {
+  BaseGraphConfiguration,
+  GraphConfiguration,
+} from "../classes/configuration";
 
 @Injectable({
   providedIn: "root",
@@ -30,6 +38,7 @@ export class HttpService extends BaseHttpService {
     ContentTestData.create();
     ModuleTestData.create();
     WikiDataTestData.create();
+    GraphStoredConfiguration.create();
   }
 
   // CONTENT
@@ -46,7 +55,7 @@ export class HttpService extends BaseHttpService {
     reqSkillIds: number[],
     newSkillIds: number[]
   ): Observable<any> {
-    return of([]);
+    return of(ContentTestData.getSkillGraphContent(reqSkillIds, newSkillIds));
   }
   public deleteContent(id: number): Observable<any> {
     return of(ContentTestData.delete(id));
@@ -127,6 +136,18 @@ export class HttpService extends BaseHttpService {
   }
   public getCompleteGraphData(): Observable<any> {
     return of(GraphDataDemo.demo);
+  }
+
+  public getAllConfigurations(): Observable<any> {
+    return of(GraphStoredConfiguration.titles);
+  }
+
+  public loadConfig(loadConfig: BaseGraphConfiguration): Observable<any> {
+    return of(GraphStoredConfiguration.demo(loadConfig));
+  }
+
+  public saveConfiguration(config: GraphConfiguration): Observable<any> {
+    return of(true);
   }
 
   // default http requests

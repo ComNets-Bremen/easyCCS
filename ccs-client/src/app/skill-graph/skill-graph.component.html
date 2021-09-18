@@ -1,12 +1,37 @@
+<div class="top-row">
+  <h1 i18n>SkillGraph</h1>
+</div>
+<div class="button-row-top top-row" *ngIf="showGraph">
+  <button
+    mat-raised-button
+    type="button"
+    color="accent"
+    class="pull-right"
+    (click)="showGraph = !showGraph"
+    i18n
+  >
+    Back
+  </button>
+  <!-- <button
+    mat-raised-button
+    type="button"
+    color="primary"
+    (click)="saveConfig()"
+    class="pull-right"
+    i18n
+  >
+    Save
+  </button> -->
+</div>
+<div class="clear-all"></div>
 <mat-card *ngIf="showGraph">
-  <mat-card-title i18n>SkillGraph</mat-card-title>
-  <h3>
-    <span i18n>Resulting graph for target skills</span
+  <mat-card-title
+    ><span i18n>Resulting graph for target skills</span
     ><i *ngFor="let rSkill of requiredSkills; let i = index"
       >{{ rSkill.skill_name }}
       <span *ngIf="i != requiredSkills.length - 1">, </span></i
-    >
-  </h3>
+    ></mat-card-title
+  >
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <!-- Name Column -->
     <ng-container matColumnDef="content_name">
@@ -21,11 +46,17 @@
     </ng-container>
 
     <!-- Req Skills Column -->
-    <ng-container matColumnDef="req_skills">
+    <ng-container matColumnDef="required_skills">
       <th mat-header-cell *matHeaderCellDef i18n>Required Skills</th>
       <td mat-cell *matCellDef="let element">
         <ul>
-          <li *ngFor="let reqSkill of element.required_skills">
+          <li
+            *ngFor="let reqSkill of element.required_skills"
+            [ngClass]="getTextClass(reqSkill.id)"
+          >
+            <mat-icon *ngIf="isCriticalSkill(reqSkill.id)" class="alarm-icon"
+              >report</mat-icon
+            >
             {{ reqSkill.skill_name }}
           </li>
         </ul>
@@ -38,7 +69,9 @@
       <td mat-cell *matCellDef="let element">
         <ul>
           <li *ngFor="let newSkill of element.new_skills">
-            {{ newSkill.skill_name }}
+            <a [routerLink]="['/skill', newSkill.id]">{{
+              newSkill.skill_name
+            }}</a>
           </li>
         </ul>
       </td>
@@ -52,6 +85,22 @@
       <td class="mat-cell" colspan="4" i18n>No data found</td>
     </tr>
   </table>
+  <ul>
+    <li class="text-default" i18n>Skill marked as known by user</li>
+    <li class="text-algo" i18n>Skill found by algorithm</li>
+    <li i18n>
+      <mat-icon class="alarm-icon">report</mat-icon> No content found for the
+      given skill
+    </li>
+  </ul>
+  <h2 i18n class="critical-header">Critical skills found</h2>
+  <ul>
+    <li *ngFor="let skill of skillContent.criticalSkills">
+      {{ skill.skill_name }}
+    </li>
+  </ul>
+  <h2 i18n>Total workload: {{ totalWorkload }} minutes</h2>
+
   <app-skill-graph-template
     [reqSkills]="requiredSkills"
     [newSkills]="newSkills"
@@ -59,10 +108,9 @@
   ></app-skill-graph-template>
 </mat-card>
 <mat-card *ngIf="!showGraph">
-  <mat-card-title i18n [hidden]="showGraph">SkillGraph</mat-card-title>
+  <mat-card-title i18n>Select skills</mat-card-title>
   <div class="base-form">
     <form [formGroup]="graphForm" (ngSubmit)="submit()">
-      <h3 i18n>Select skills</h3>
       <p>
         <mat-form-field appearance="fill">
           <mat-label i18n>Required skills</mat-label>
@@ -159,7 +207,50 @@
           class="pull-right"
           i18n
         >
-          Submit
+          Show Result
+        </button>
+        <button
+          mat-raised-button
+          type="button"
+          color="primary"
+          class="pull-right"
+          (click)="saveConfig()"
+          i18n
+        >
+          Save
+        </button>
+      </p>
+      <div class="clear-all"></div>
+    </form>
+  </div>
+</mat-card>
+
+<mat-card *ngIf="!showGraph">
+  <mat-card-title i18n>Load Graph</mat-card-title>
+  <div class="base-form">
+    <form [formGroup]="loadGraphForm" (ngSubmit)="loadConfig()">
+      <p>
+        <mat-form-field appearance="fill">
+          <mat-label>Select Title</mat-label>
+          <mat-select formControlName="loadConfig">
+            <mat-option *ngFor="let config of allConfigs" [value]="config">{{
+              config.title
+            }}</mat-option>
+          </mat-select>
+          <mat-hint align="end" i18n
+            >Select title to load graph configuration</mat-hint
+          >
+        </mat-form-field>
+      </p>
+      <p class="button-row">
+        <button
+          mat-raised-button
+          type="submit"
+          color="primary"
+          class="pull-right"
+          i18n
+        >
+          Load
         </button>
       </p>
       <div class="clear-all"></div>

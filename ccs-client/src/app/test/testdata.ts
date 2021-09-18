@@ -1,4 +1,4 @@
-import { Content, UploadContent } from "../classes/content";
+import { Content, SkillContent, UploadContent } from "../classes/content";
 import { DocFile } from "../classes/docFile";
 import { ContentModule } from "../classes/contentModule";
 import { Skill } from "../classes/skill";
@@ -51,6 +51,41 @@ export class ContentTestData {
       }
     }
     return null;
+  }
+
+  static getSkillGraphContent(
+    reqSkillIds: number[],
+    newSkillIds: number[]
+  ): SkillContent {
+    const contents = [];
+    for (const content of this.contents) {
+      const cReSkillIds = content.required_skills.map((r) => r.id);
+      const cnewSkillIds = content.new_skills.map((r) => r.id);
+      for (const id of reqSkillIds) {
+        if (cReSkillIds.indexOf(id) > -1) {
+          if (contents.indexOf(content) === -1) {
+            contents.push(content);
+          }
+        }
+      }
+      for (const id of newSkillIds) {
+        if (cnewSkillIds.indexOf(id) > -1) {
+          if (contents.indexOf(content) === -1) {
+            contents.push(content);
+          }
+        }
+      }
+    }
+
+    const skillC = new SkillContent();
+    skillC.contents = contents;
+    skillC.knownSkills = newSkillIds;
+    const skill = SkillTestData.getbyId(reqSkillIds[reqSkillIds.length - 1]);
+    if (skill) {
+      skillC.criticalSkills.push(skill);
+    }
+
+    return skillC;
   }
 
   public static update(content: Content): any {

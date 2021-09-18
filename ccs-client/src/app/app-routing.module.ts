@@ -10,6 +10,7 @@ import { LoginComponent } from "./login/login.component";
 import { ModuleComponent } from "./module/module.component";
 import { PrivacyComponent } from "./privacy/privacy.component";
 import { SkillDependencyComponent } from "./skill-dependency/skill-dependency.component";
+import { SkillDetailComponent } from "./skill-detail/skill-detail.component";
 import { SkillGraphComponent } from "./skill-graph/skill-graph.component";
 import { SkillComponent } from "./skill/skill.component";
 import { StartComponent } from "./start/start.component";
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: "content", component: ContentComponent },
   { path: "editcontent/:id", component: EditContentComponent },
   { path: "editskill/:id", component: EditSkillComponent },
+  { path: "skill/:id", component: SkillDetailComponent },
   { path: "editmodule/:id", component: EditModuleComponent },
   { path: "skill", component: SkillComponent },
   { path: "module", component: ModuleComponent },

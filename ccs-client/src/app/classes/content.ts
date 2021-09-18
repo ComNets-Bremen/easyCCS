@@ -22,3 +22,9 @@ export class Content {
 export class UploadContent {
   constructor(public contentId: number, public formData: FormData) {}
 }
+
+export class SkillContent {
+  public contents: Content[] = [];
+  public knownSkills: number[] = [];
+  public criticalSkills: Skill[] = [];
+}

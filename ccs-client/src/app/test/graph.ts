@@ -1,3 +1,11 @@
+import { of } from "rxjs";
+import {
+  BaseGraphConfiguration,
+  GraphConfiguration,
+} from "../classes/configuration";
+import { Skill } from "../classes/skill";
+import { SkillTestData } from "./testdata";
+
 export class GraphDataDemo {
   static demo = {
     nodes: [
@@ -241,4 +249,45 @@ export class SkillGraphDataDemo {
   //     },
   //   ],
   // ];
+}
+
+export class GraphStoredConfiguration {
+  public static titles: BaseGraphConfiguration[] = [];
+  public static configs: GraphConfiguration[] = [];
+
+  public static create(): void {
+    for (let index = 0; index < 10; index++) {
+      const config = new BaseGraphConfiguration();
+      config.id = index;
+      config.title = `TitleToLoad${index}`;
+      this.titles.push(config);
+
+      const resultConfig = new GraphConfiguration();
+      resultConfig.title = config.title;
+      if (index < 3) {
+        const skill = SkillTestData.getbyId(index)?.id;
+        if (skill) {
+          resultConfig.required_skills.push(skill);
+        }
+      }
+      if (index >= 3 && index < 7) {
+        const skill = SkillTestData.getbyId(index)?.id;
+        if (skill) {
+          resultConfig.known_skills.push(skill);
+        }
+      }
+      this.configs.push(resultConfig);
+    }
+  }
+
+  public static demo(
+    loadConfig: BaseGraphConfiguration
+  ): GraphConfiguration | null {
+    for (const title of this.configs) {
+      if (loadConfig.title === title.title) {
+        return title;
+      }
+    }
+    return null;
+  }
 }
