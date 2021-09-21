@@ -15,13 +15,14 @@ import { Skill } from "../classes/skill";
 import { DocFile } from "../classes/docFile";
 import {
   SkillGraphDataDemo,
-  GraphDataDemo,
   GraphStoredConfiguration,
+  GraphDataDemo,
 } from "../test/graph";
 import {
   BaseGraphConfiguration,
   GraphConfiguration,
 } from "../classes/configuration";
+import { ContactFormData } from "../classes/contactFormData";
 
 @Injectable({
   providedIn: "root",
@@ -41,6 +42,18 @@ export class HttpService extends BaseHttpService {
     GraphStoredConfiguration.create();
   }
 
+  // AUTHENTICATION AND USER STUFF
+
+  public login(user: string, password: string): Observable<any> {
+    return of(true);
+  }
+  public logout(): Observable<any> {
+    return of(true);
+  }
+  public contact(formData: ContactFormData): Observable<any> {
+    return of(true);
+  }
+
   // CONTENT
 
   public getContentAll(): Observable<any> {
@@ -51,12 +64,6 @@ export class HttpService extends BaseHttpService {
     return of(ContentTestData.getbyId(id));
   }
 
-  public getSkillGraphContent(
-    reqSkillIds: number[],
-    newSkillIds: number[]
-  ): Observable<any> {
-    return of(ContentTestData.getSkillGraphContent(reqSkillIds, newSkillIds));
-  }
   public deleteContent(id: number): Observable<any> {
     return of(ContentTestData.delete(id));
   }
@@ -131,11 +138,19 @@ export class HttpService extends BaseHttpService {
 
   // GRAPH
 
+  public getCompleteGraphData(): Observable<any> {
+    return of(GraphDataDemo.demo);
+  }
+
   public getLevels(reqSkills: number[], newSkills: number[]): Observable<any> {
     return of(SkillGraphDataDemo.levels);
   }
-  public getCompleteGraphData(): Observable<any> {
-    return of(GraphDataDemo.demo);
+
+  public getSkillGraphContent(
+    reqSkillIds: number[],
+    newSkillIds: number[]
+  ): Observable<any> {
+    return of(ContentTestData.getSkillGraphContent(reqSkillIds, newSkillIds));
   }
 
   public getAllConfigurations(): Observable<any> {
@@ -147,6 +162,10 @@ export class HttpService extends BaseHttpService {
   }
 
   public saveConfiguration(config: GraphConfiguration): Observable<any> {
+    return of(true);
+  }
+
+  public deleteConfiguration(configId: number): Observable<any> {
     return of(true);
   }
 

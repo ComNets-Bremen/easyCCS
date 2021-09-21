@@ -1,9 +1,7 @@
-import { of } from "rxjs";
 import {
   BaseGraphConfiguration,
   GraphConfiguration,
 } from "../classes/configuration";
-import { Skill } from "../classes/skill";
 import { SkillTestData } from "./testdata";
 
 export class GraphDataDemo {

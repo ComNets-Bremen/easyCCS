@@ -5,6 +5,7 @@ import {
   BaseGraphConfiguration as BaseGraphConfiguration,
   GraphConfiguration,
 } from "../classes/configuration";
+import { ContactFormData } from "../classes/contactFormData";
 import { Content, UploadContent } from "../classes/content";
 import { ContentModule } from "../classes/contentModule";
 import { DocFile } from "../classes/docFile";
@@ -21,16 +22,19 @@ export abstract class BaseHttpService {
     protected cookieService: CookieService
   ) {}
 
+  // AUTHENTICATION AND USER STUFF
+
+  public abstract login(user: string, password: string): Observable<any>;
+
+  public abstract logout(): Observable<any>;
+
+  public abstract contact(formData: ContactFormData): Observable<any>;
+
   // CONTENT
 
   public abstract getContentAll(): Observable<any>;
 
   public abstract getContent(id: number): Observable<any>;
-
-  public abstract getSkillGraphContent(
-    reqSkillIds: number[],
-    newSkillIds: number[]
-  ): Observable<any>;
 
   public abstract deleteContent(id: number): Observable<any>;
 
@@ -77,12 +81,17 @@ export abstract class BaseHttpService {
 
   // GRAPH
 
+  public abstract getCompleteGraphData(): Observable<any>;
+
   public abstract getLevels(
     reqSkills: number[],
     newSkills: number[]
   ): Observable<any>;
 
-  public abstract getCompleteGraphData(): Observable<any>;
+  public abstract getSkillGraphContent(
+    reqSkillIds: number[],
+    newSkillIds: number[]
+  ): Observable<any>;
 
   public abstract getAllConfigurations(): Observable<any>;
 
@@ -93,6 +102,8 @@ export abstract class BaseHttpService {
   public abstract saveConfiguration(
     config: GraphConfiguration
   ): Observable<any>;
+
+  public abstract deleteConfiguration(configId: number): Observable<any>;
 
   // default http requests
   protected abstract postRequest(nodeUrl: string, body: any): Observable<any>;

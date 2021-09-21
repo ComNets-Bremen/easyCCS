@@ -1,5 +1,3 @@
-import { Identifiers } from "@angular/compiler";
-
 export class Node {
   public id: string | number = 0;
   public name = "";

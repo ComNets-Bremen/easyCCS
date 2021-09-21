@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
+import { SkillGraphData } from "../classes/graphData";
 import * as d3 from "../helper/d3jsImport";
+import { HttpService } from "../services/http.service";
 import { GraphDataDemo } from "../test/graph";
 
 @Component({
@@ -18,7 +20,7 @@ export class CompleteGraphComponent implements OnInit {
   private edgelabels: any;
   private colors = d3.scaleOrdinal(d3.schemeCategory10);
 
-  constructor() {}
+  constructor(private httpService: HttpService) {}
 
   ngOnInit(): void {
     this.svg = d3.select("svg");
@@ -58,12 +60,11 @@ export class CompleteGraphComponent implements OnInit {
       .force("charge", d3.forceManyBody())
       .force("center", d3.forceCenter(this.width / 2, this.height / 2));
 
-    this.update(GraphDataDemo.demo.links, GraphDataDemo.demo.nodes);
-    // TODO handle with httpservice
-    // d3.json("{% url 'getGraphJson' %}", (error: any, graph: any) => {
-    //     if (error) throw error;
-    //     this.update(graph.links, graph.nodes);
-    // })
+    this.httpService
+      .getCompleteGraphData()
+      .subscribe((completeGraphData: SkillGraphData) => {
+        this.update(completeGraphData.links, completeGraphData.nodes);
+      });
   }
 
   private update(links: any, nodes: any): void {

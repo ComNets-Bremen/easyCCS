@@ -7,6 +7,7 @@ import {
   BaseGraphConfiguration,
   GraphConfiguration,
 } from "../classes/configuration";
+import { ContactFormData } from "../classes/contactFormData";
 import { Content, UploadContent } from "../classes/content";
 import { ContentModule } from "../classes/contentModule";
 import { DocFile } from "../classes/docFile";
@@ -25,6 +26,24 @@ export class HttpService extends BaseHttpService {
     super(http, cookieService);
   }
 
+  // AUTHENTICATION AND USER STUFF
+
+  public login(user: string, password: string): Observable<any> {
+    const url = this.baseApi + `login` + this.end;
+    const body = { username: user, password };
+    return this.postAuthRequest(url, body);
+  }
+  public logout(): Observable<any> {
+    const url = this.baseApi + "logout" + this.end;
+    return this.getAuthRequest(url);
+  }
+
+  public contact(formData: ContactFormData): Observable<any> {
+    const url = this.baseApi + `contact` + this.end;
+    const body = formData;
+    return this.postAuthRequest(url, body);
+  }
+
   // CONTENT
 
   public getContentAll(): Observable<any> {
@@ -34,31 +53,6 @@ export class HttpService extends BaseHttpService {
 
   public getContent(id: number): Observable<any> {
     const url = this.baseApi + `content/${id}` + this.end;
-    return this.getAuthRequest(url);
-  }
-
-  public getSkillGraphContent(
-    reqSkillIds: number[],
-    knownSkillIds: number[]
-  ): Observable<any> {
-    let reqIds = "";
-    let knownIds = "";
-    for (let i = 0; i < reqSkillIds.length; i++) {
-      reqIds += reqSkillIds[i];
-      if (i !== reqSkillIds.length - 1) {
-        reqIds += ",";
-      }
-    }
-    for (let i = 0; i < knownSkillIds.length; i++) {
-      knownIds += knownSkillIds[i];
-      if (i !== knownSkillIds.length - 1) {
-        knownIds += ",";
-      }
-    }
-    const url =
-      this.baseApi +
-      `content/required_skills?id=${reqIds}&known_skills?id=${knownIds}` +
-      this.end;
     return this.getAuthRequest(url);
   }
 
@@ -166,30 +160,80 @@ export class HttpService extends BaseHttpService {
 
   // GRAPH
 
-  public getLevels(reqSkills: number[], newSkills: number[]): Observable<any> {
-    const url = this.baseApi + "levels" + this.end;
-    const body = { reqSkills, newSkills };
-    return this.postAuthRequest(url, body);
-  }
   public getCompleteGraphData(): Observable<any> {
     const url = this.baseApi + "completegraph" + this.end;
     return this.getAuthRequest(url);
   }
 
+  public getLevels(
+    reqSkillIds: number[],
+    knownSkillIds: number[]
+  ): Observable<any> {
+    let reqIds = "";
+    let knownIds = "";
+    for (let i = 0; i < reqSkillIds.length; i++) {
+      reqIds += reqSkillIds[i];
+      if (i !== reqSkillIds.length - 1) {
+        reqIds += ",";
+      }
+    }
+    for (let i = 0; i < knownSkillIds.length; i++) {
+      knownIds += knownSkillIds[i];
+      if (i !== knownSkillIds.length - 1) {
+        knownIds += ",";
+      }
+    }
+    const url =
+      this.baseApi +
+      `skillgraph/required_skills?id=${reqIds}&known_skills?id=${knownIds}` +
+      this.end;
+    return this.getAuthRequest(url);
+  }
+
+  public getSkillGraphContent(
+    reqSkillIds: number[],
+    knownSkillIds: number[]
+  ): Observable<any> {
+    let reqIds = "";
+    let knownIds = "";
+    for (let i = 0; i < reqSkillIds.length; i++) {
+      reqIds += reqSkillIds[i];
+      if (i !== reqSkillIds.length - 1) {
+        reqIds += ",";
+      }
+    }
+    for (let i = 0; i < knownSkillIds.length; i++) {
+      knownIds += knownSkillIds[i];
+      if (i !== knownSkillIds.length - 1) {
+        knownIds += ",";
+      }
+    }
+    const url =
+      this.baseApi +
+      `skillGraphContent/required_skills?id=${reqIds}&known_skills?id=${knownIds}` +
+      this.end;
+    return this.getAuthRequest(url);
+  }
+
   public getAllConfigurations(): Observable<any> {
-    const url = this.baseApi + "graphconfig" + this.end;
+    const url = this.baseApi + "skillgraph" + this.end;
     return this.getAuthRequest(url);
   }
 
   public loadConfig(loadConfig: BaseGraphConfiguration): Observable<any> {
-    const url = this.baseApi + `graphconfig/${loadConfig.id}` + this.end;
+    const url = this.baseApi + `skillgraph/${loadConfig.id}` + this.end;
     return this.getAuthRequest(url);
   }
 
   public saveConfiguration(config: GraphConfiguration): Observable<any> {
-    const url = this.baseApi + `graphconfig` + this.end;
+    const url = this.baseApi + `skillgraph` + this.end;
     const body = config;
     return this.postAuthRequest(url, body);
+  }
+
+  public deleteConfiguration(configId: number): Observable<any> {
+    const url = this.baseApi + `skillgraph/${configId}` + this.end;
+    return this.deleteAuthRequest(url);
   }
 
   // default http requests
