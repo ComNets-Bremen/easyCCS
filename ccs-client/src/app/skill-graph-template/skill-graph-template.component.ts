@@ -6,7 +6,7 @@ import {
   OnInit,
   ViewChild,
 } from "@angular/core";
-import { BaseNode, Link, Node } from "../classes/graphData";
+import { BaseNode, MyLink, MyNode } from "../classes/graphData";
 import { Skill } from "../classes/skill";
 import * as d3 from "../helper/d3jsImport";
 import { HttpService } from "../services/http.service";
@@ -26,11 +26,11 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
   private color = d3.scaleOrdinal(d3.schemeDark2);
   private svgNS = "http://www.w3.org/2000/svg";
   private levels: Array<Array<BaseNode>> = [];
-  private nodes: Node[] = [];
-  private nodes_index: Map<number | string, Node> = new Map();
+  private nodes: MyNode[] = [];
+  private nodes_index: Map<number | string, MyNode> = new Map();
   // helper to prevent mixed array/oject array like in original code
-  private level_bundles: Map<number, Node[]> = new Map();
-  private links: Link[] = [];
+  private level_bundles: Map<number, MyNode[]> = new Map();
+  private links: MyLink[] = [];
 
   constructor(private httpService: HttpService) {}
 
@@ -78,7 +78,7 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
     // this.nodes = this.levels.((a: Node[], x: Node[]) => a.concat(x), []);
     const baseNodes = this.levels.flat();
     for (const node of baseNodes) {
-      const newNode = new Node();
+      const newNode = new MyNode();
       newNode.parents = [];
       newNode.name = node.name;
       newNode.level = node.level;
@@ -88,7 +88,7 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
     }
 
     // objectification
-    this.nodes.forEach((n: Node) => {
+    this.nodes.forEach((n: MyNode) => {
       for (const baseNode of baseNodes) {
         if (baseNode.id === n.id) {
           for (const parentId of baseNode.parents) {
@@ -105,7 +105,7 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
   private precomputeBundles(): void {
     this.level_bundles = new Map();
     this.levels.forEach((l: BaseNode[], j: number) => {
-      const index = new Map<string, Node>();
+      const index = new Map<string, MyNode>();
       l.forEach((n: BaseNode, i: number) => {
         if (n.parents.length === 0) {
           return;
@@ -115,14 +115,14 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
           return;
         }
         const id = node.parents
-          .map((d: Node) => d.id)
+          .map((d: MyNode) => d.id)
           .sort()
           .join("--");
-        const bNode: Node | undefined = index.get(id);
+        const bNode: MyNode | undefined = index.get(id);
         if (bNode) {
           bNode.parents = bNode.parents.concat(node.parents);
         } else {
-          const newNode = new Node();
+          const newNode = new MyNode();
           newNode.id = id;
           newNode.id = node.name;
           newNode.parents = node.parents.slice();
@@ -134,19 +134,19 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
           node.bundle = bNodeNew;
         }
       });
-      const nodeList: Node[] = [];
+      const nodeList: MyNode[] = [];
       index.forEach((nodes) => {
         nodeList.push(nodes);
       });
       if (nodeList && nodeList.length > 0) {
         this.level_bundles.set(j, nodeList);
-        this.level_bundles.get(j)?.forEach((b: Node, t: number) => (b.i = t));
+        this.level_bundles.get(j)?.forEach((b: MyNode, t: number) => (b.i = t));
       }
     });
 
-    this.nodes.forEach((node: Node) => {
-      node.parents.forEach((pNode: Node) => {
-        const link = new Link();
+    this.nodes.forEach((node: MyNode) => {
+      node.parents.forEach((pNode: MyNode) => {
+        const link = new MyLink();
         link.source = node;
         link.bundle = node.bundle;
         link.target = pNode;
@@ -156,12 +156,12 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
   }
 
   private setBundlePointer(): void {
-    const bundles: Node[] = [];
+    const bundles: MyNode[] = [];
     for (const [key, value] of this.level_bundles) {
       Array.prototype.push.apply(bundles, value);
     }
     bundles.forEach((bundle) =>
-      bundle.parents.forEach((node: Node) => {
+      bundle.parents.forEach((node: MyNode) => {
         if (!node.bundles_index) {
           node.bundles_index = new Map();
         }
@@ -172,9 +172,9 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
       })
     );
 
-    this.nodes.forEach((node: Node) => {
+    this.nodes.forEach((node: MyNode) => {
       if (node.bundles_index !== undefined) {
-        node.bundles_index.forEach((val: Node[], k: string | number) => {
+        node.bundles_index.forEach((val: MyNode[], k: string | number) => {
           if (k) {
             const ele = val;
             if (ele) {
@@ -186,10 +186,10 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
         node.bundles_index = new Map();
         node.bundles = [];
       }
-      node.bundles.forEach((b: Node, j: number) => (b.i = j));
+      node.bundles.forEach((b: MyNode, j: number) => (b.i = j));
     });
 
-    this.links.forEach((link: Link) => {
+    this.links.forEach((link: MyLink) => {
       if (link.bundle.links === undefined) {
         link.bundle.links = [];
       }
@@ -208,7 +208,7 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
     const min_family_height = 16;
 
     this.nodes.forEach(
-      (n: Node) => (n.height = (Math.max(1, n.bundles.length) - 1) * metro_d)
+      (n: MyNode) => (n.height = (Math.max(1, n.bundles.length) - 1) * metro_d)
     );
 
     let x_offset = padding;
@@ -239,7 +239,7 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
       } else {
         bundlesLength = bundles.length;
       }
-      bundles.forEach((bundle: Node) => {
+      bundles.forEach((bundle: MyNode) => {
         bundle.x =
           bundle.parents[0].x +
           node_width +
@@ -249,7 +249,7 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
       i += level.length;
     });
 
-    this.links.forEach((link: Link) => {
+    this.links.forEach((link: MyLink) => {
       link.xt = link.target.x;
       let iCounter = 0;
       let index = 0;
@@ -275,8 +275,8 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
       const bundles = this.level_bundles.get(index);
       if (bundles) {
         const min1 =
-          d3.min(bundles, (bundle: Node) => {
-            return d3.min(bundle.links, (link: Link) => {
+          d3.min(bundles, (bundle: MyNode) => {
+            return d3.min(bundle.links, (link: MyLink) => {
               return link.ys - c - (link.yt + c);
             });
           }) || "0";
@@ -292,7 +292,7 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
     });
 
     // very ugly, I know
-    this.links.forEach((link: Link) => {
+    this.links.forEach((link: MyLink) => {
       let iCounter = 0;
       let index = 0;
       link.target.bundles_index.forEach((nodes, key) => {
@@ -312,7 +312,7 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
       link.c2 = c;
     });
 
-    let max = d3.max(this.nodes, (node: Node) => node.y);
+    let max = d3.max(this.nodes, (node: MyNode) => node.y);
     // check possible null
     max = max ? max : 0;
     this.layout = {
@@ -326,14 +326,14 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
   }
 
   private createGraph(): void {
-    const bundles: Node[] = [];
+    const bundles: MyNode[] = [];
     this.level_bundles.forEach((nodes) => {
       Array.prototype.push.apply(bundles, nodes);
     });
-    bundles.map((node: Node) => {
+    bundles.map((node: MyNode) => {
       const d = node.links
         .map(
-          (l: Link) => `
+          (l: MyLink) => `
             M${l.xt} ${l.yt}
             L${l.xb - l.c1} ${l.yt}
             A${l.c1} ${l.c1} 90 0 1 ${l.xb} ${l.yt + l.c1}
@@ -359,7 +359,7 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
       this.svg.nativeElement.appendChild(path_2);
     });
 
-    this.nodes.map((n: Node) => {
+    this.nodes.map((n: MyNode) => {
       const line_1 = document.createElementNS(this.svgNS, "line");
       line_1.setAttributeNS(null, "class", "node");
       line_1.setAttributeNS(null, "stroke", "black");

@@ -5,6 +5,52 @@ import {
 import { SkillTestData } from "./testdata";
 
 export class GraphDataDemo {
+  // static demo = {
+  //   nodes: [
+  //     {
+  //       id: 5,
+  //       name: "teachs word",
+  //       label: "",
+  //     },
+  //     {
+  //       id: 4,
+  //       name: "Final",
+  //       label: "",
+  //     },
+  //     {
+  //       id: 3,
+  //       name: "Need Word, give excel",
+  //       label: "",
+  //     },
+  //     {
+  //       id: 2,
+  //       name: "Needs Word, gives final",
+  //       label: "",
+  //     },
+  //   ],
+  //   links: [
+  //     {
+  //       source: 5,
+  //       target: 4,
+  //       type: "Word Learning",
+  //     },
+  //     {
+  //       source: 3,
+  //       target: 4,
+  //       type: "Excel learning",
+  //     },
+  //     {
+  //       source: 5,
+  //       target: 3,
+  //       type: "Word Learning",
+  //     },
+  //     {
+  //       source: 5,
+  //       target: 2,
+  //       type: "Word Learning",
+  //     },
+  //   ],
+  // };
   static demo = {
     nodes: [
       {

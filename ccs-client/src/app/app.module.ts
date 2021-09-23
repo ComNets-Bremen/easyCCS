@@ -48,6 +48,8 @@ import { EditSkillComponent } from "./edit-skill/edit-skill.component";
 import { EditModuleComponent } from "./edit-module/edit-module.component";
 import { SkillGraphTemplateComponent } from "./skill-graph-template/skill-graph-template.component";
 import { SkillDetailComponent } from "./skill-detail/skill-detail.component";
+import { CompleteGraphTemplateComponent } from './complete-graph-template/complete-graph-template.component';
+import { ContactComponent } from './contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +70,8 @@ import { SkillDetailComponent } from "./skill-detail/skill-detail.component";
     EditModuleComponent,
     SkillGraphTemplateComponent,
     SkillDetailComponent,
+    CompleteGraphTemplateComponent,
+    ContactComponent,
   ],
   imports: [
     BrowserModule,

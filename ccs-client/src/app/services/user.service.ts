@@ -29,18 +29,40 @@ export class UserService {
 
   public logIn(user: BaseUser): void {
     this.loggedIn = true;
-    this.httpService.token = "newsessiontoken";
-    this.cookieService.set(this.httpService.tokenName, this.httpService.token);
-    this.router.navigate(["/start"]);
-    this.toolService.openSnackBar(
-      $localize`:@@LoginSuccessfull:Login successfull`,
-      $localize`:@@Ok:Ok`,
-      ESnackbarTypes.Info
+    this.httpService.login(user.username, user.password).subscribe(
+      (token: string) => {
+        this.toolService.openSnackBar(
+          $localize`:@@LoginSuccessfull:Login successfull`,
+          $localize`:@@Ok:Ok`,
+          ESnackbarTypes.Info
+        );
+        this.httpService.token = token;
+        this.router.navigate(["/start"]);
+        this.cookieService.set(
+          this.httpService.tokenName,
+          this.httpService.token
+        );
+      },
+      (err) => {
+        this.toolService.openSnackBar(
+          $localize`:@@LoginFailed:Login failed`,
+          $localize`:@@Ok:Ok`,
+          ESnackbarTypes.Error
+        );
+      }
     );
   }
 
   public logout(): void {
-    this.loggedIn = false;
-    this.httpService.token = "";
+    this.httpService.logout().subscribe(() => {
+      this.toolService.openSnackBar(
+        $localize`:@@LogoutSuccessfull:Logout successfull`,
+        $localize`:@@Ok:Ok`,
+        ESnackbarTypes.Info
+      );
+      this.loggedIn = false;
+      this.httpService.token = "";
+      this.cookieService.set(this.httpService.tokenName, "");
+    });
   }
 }

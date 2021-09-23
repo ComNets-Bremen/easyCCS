@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { CompleteGraphComponent } from "./complete-graph/complete-graph.component";
+import { ContactComponent } from "./contact/contact.component";
 import { ContentComponent } from "./content/content.component";
 import { EditContentComponent } from "./edit-content/edit-content.component";
 import { EditModuleComponent } from "./edit-module/edit-module.component";
@@ -30,6 +31,7 @@ const routes: Routes = [
   { path: "module", component: ModuleComponent },
   { path: "imprint", component: ImprintComponent },
   { path: "privacy", component: PrivacyComponent },
+  { path: "contact", component: ContactComponent },
   { path: "**", component: StartComponent },
 ];
 

@@ -45,7 +45,7 @@ export class HttpService extends BaseHttpService {
   // AUTHENTICATION AND USER STUFF
 
   public login(user: string, password: string): Observable<any> {
-    return of(true);
+    return of("newsessiontoken");
   }
   public logout(): Observable<any> {
     return of(true);

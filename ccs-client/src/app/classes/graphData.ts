@@ -1,15 +1,19 @@
-export class Node {
+import { SimulationLinkDatum, SimulationNodeDatum } from "d3-force";
+
+export class MyNode {
   public id: string | number = 0;
   public name = "";
   public label = "";
-  public parents: Node[] = [];
-  public bundle!: Node;
-  public bundles: Node[] = [];
-  public links: Link[] = [];
-  public bundles_index: Map<string | number, Node[]> = new Map();
+  public parents: MyNode[] = [];
+  public bundle!: MyNode;
+  public bundles: MyNode[] = [];
+  public links: MyLink[] = [];
+  public bundles_index: Map<string | number, MyNode[]> = new Map();
   public height = 0;
   public x = 0;
   public y = 0;
+  public fx: number | undefined = undefined;
+  public fy: number | undefined = undefined;
   public level = 0;
   public i = 0;
 }
@@ -21,11 +25,11 @@ export class BaseNode {
   public parents: number[] = [];
 }
 
-export class Link {
-  public source!: Node;
-  public target!: Node;
+export class MyLink {
+  public source!: MyNode;
+  public target!: MyNode;
   public type = "";
-  public bundle!: Node;
+  public bundle!: MyNode;
   public xt = 0;
   public yt = 0;
   public xb = 0;
@@ -35,22 +39,15 @@ export class Link {
   public c2 = 0;
 }
 
-// export class Level {
-//   public bundles: Bundle[] = [];
-//   public id = 0;
-//   public name = "";
-//   public parent: number[] = [];
-// }
-
 export class SkillGraphData {
-  public nodes: Node[] = [];
-  public links: Link[] = [];
+  public nodes: MyNode[] = [];
+  public links: MyLink[] = [];
 }
 
-// export class Bundle {
-//   public id = 0;
-//   public links: Link[] = [];
-//   public parents: Node[] = [];
-//   public i = 0;
-//   public x = 0;
-// }
+export class NodeDatum implements SimulationNodeDatum {}
+
+export class LinkDatum implements SimulationLinkDatum<NodeDatum> {
+  public source!: string | number | NodeDatum;
+  public target!: string | number | NodeDatum;
+  public index?: number | undefined;
+}
