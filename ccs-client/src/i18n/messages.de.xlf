@@ -6,91 +6,75 @@
         <source>User settings</source>
         <target state="final">Benutzereinstellungen</target>
         <note>Menu header</note>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">49</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">50</context></context-group></trans-unit>
       <trans-unit id="6640074243271091368" datatype="html">
         <source>Admin settings</source>
          <target state="final">Admin Einstellungen</target>
         <note>Menu header</note>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">52</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">53</context></context-group></trans-unit>
       <trans-unit id="3997685972764263308" datatype="html">
         <source>Manage Content</source>
          <target state="final">Content verwalten</target>        
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">61</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">62</context></context-group></trans-unit>
       <trans-unit id="5842885693528214215" datatype="html">
         <source>Manage Skills</source><target state="final">Skills verwalten</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">68</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">69</context></context-group></trans-unit>
       <trans-unit id="4120890902794387885" datatype="html">
         <source>Manage Modules</source><target state="final">Module verwalten</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">75</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">76</context></context-group></trans-unit>
       <trans-unit id="1566030247264640159" datatype="html">
         <source>Complete Graph</source><target state="final">Vollständiger Graph</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">84</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">85</context></context-group></trans-unit>
       <trans-unit id="5338246848136398367" datatype="html">
         <source>Selectable Skill Graph</source><target state="final">Konfigurierbarer Skillgraph</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">91</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">92</context></context-group></trans-unit>
       <trans-unit id="8337578454544436095" datatype="html">
         <source>Get Skill Dependencies</source><target state="final">Skillabhängigkeiten anzeigen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">98</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">99</context></context-group></trans-unit>
       <trans-unit id="5891707175321515013" datatype="html">
         <source>Imprint</source><target state="final">Impressum</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">106</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">107</context></context-group></trans-unit>
       <trans-unit id="8440128775129354214" datatype="html">
         <source>Privacy</source><target state="final">Datenschutz</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">107</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">108</context></context-group></trans-unit>
       <trans-unit id="3559534430003869533" datatype="html">
         <source>ComNets Bremen</source><target state="final">ComNets Bremen</target>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">109</context></context-group></trans-unit><trans-unit id="7313599138094264078" datatype="html">
+        <source>Visualization of Content Modules</source><target state="final">Visualisierung der Content Module</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">108</context>
+          <context context-type="sourcefile">src/app/complete-graph/complete-graph.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit><trans-unit id="50902072603839833" datatype="html">
+        <source> This graph shows the connection between the content blocks by the different skills.
+</source><target state="final"> Dieser Graph stellt die Verbindung zwischen den einzelnen Inhalten durch die unterschiedlichen Skills dar.
+</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/complete-graph/complete-graph.component.html</context>
+          <context context-type="linenumber">3,5</context>
+        </context-group>
+      </trans-unit><trans-unit id="4873285102003086889" datatype="html">
+        <source>Send us a message</source><target state="final">Senden Sie uns eine Nachricht</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/contact/contact.component.html</context>
+          <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8829497237648100098" datatype="html">
         <source>Filter</source><target state="final">Filter</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/content/content.component.html</context>
-          <context context-type="linenumber">7</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/content/content.component.html</context><context context-type="linenumber">7</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/module/module.component.html</context><context context-type="linenumber">7</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/skill/skill.component.html</context><context context-type="linenumber">7</context></context-group></trans-unit>
       <trans-unit id="3655387445788679074" datatype="html">
         <source> Content Title </source><target state="final"> Content Titel </target>
         <context-group purpose="location">
@@ -107,24 +91,101 @@
       </trans-unit>
       <trans-unit id="1679327805204432827" datatype="html">
         <source> Workload </source><target state="final"> Arbeitszeit </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/content/content.component.html</context>
-          <context context-type="linenumber">50,51</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/content/content.component.html</context><context context-type="linenumber">54</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/module/module.component.html</context><context context-type="linenumber">34</context></context-group></trans-unit>
       <trans-unit id="9216117865911519658" datatype="html">
         <source>Action</source><target state="final">Aktion</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/content/content.component.html</context>
-          <context context-type="linenumber">57</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/content/content.component.html</context><context context-type="linenumber">61</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/module/module.component.html</context><context context-type="linenumber">41</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/skill/skill.component.html</context><context context-type="linenumber">33</context></context-group></trans-unit>
       <trans-unit id="3678587636556283620" datatype="html">
         <source> No data matching the filter "<x id="INTERPOLATION" equiv-text="{{ input.value }}"/>" </source>
         <target state="final"> Es wurden keine passenden Daten zur Filterauswahl gefunden "<x id="INTERPOLATION" equiv-text="{{ input.value }}"/>" </target>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/content/content.component.html</context><context context-type="linenumber">88</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/module/module.component.html</context><context context-type="linenumber">67</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/skill/skill.component.html</context><context context-type="linenumber">59</context></context-group></trans-unit><trans-unit id="DeleteContent" datatype="html">
+        <source>Delete Content?</source><target state="final">Content löschen?</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/content/content.component.html</context>
-          <context context-type="linenumber">78,80</context>
+          <context context-type="sourcefile">src/app/content/content.component.ts</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit><trans-unit id="AreYouSure" datatype="html">
+        <source>Are your sure to delete selected data?</source><target state="final">Sind Sie sicher, dass sie die ausgewählten Daten löschen möchten?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/content/content.component.ts</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/module/module.component.ts</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill/skill.component.ts</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit><trans-unit id="Cancel" datatype="html">
+        <source>Cancel</source><target state="final">Abbrechen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/content/content.component.ts</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/module/module.component.ts</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill/skill.component.ts</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit><trans-unit id="Delete" datatype="html">
+        <source>Delete</source><target state="final">Löschen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/content/content.component.ts</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/module/module.component.ts</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill/skill.component.ts</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+      </trans-unit><trans-unit id="Saved" datatype="html">
+        <source>Data saved successfully</source><target state="final">Daten erfolgreich gelöscht</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/content/content.component.ts</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-content/edit-content.component.ts</context>
+          <context context-type="linenumber">121</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-content/edit-content.component.ts</context>
+          <context context-type="linenumber">262</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-content/edit-content.component.ts</context>
+          <context context-type="linenumber">286</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-module/edit-module.component.ts</context>
+          <context context-type="linenumber">102</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-skill/edit-skill.component.ts</context>
+          <context context-type="linenumber">88</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/module/module.component.ts</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-graph/skill-graph.component.ts</context>
+          <context context-type="linenumber">191</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill/skill.component.ts</context>
+          <context context-type="linenumber">65</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2771205002840550916" datatype="html">
@@ -136,86 +197,224 @@
       </trans-unit>
       <trans-unit id="8953033926734869941" datatype="html">
         <source>Name</source><target state="final">Name</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context>
-          <context context-type="linenumber">7</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context>
-          <context context-type="linenumber">10</context>
-        </context-group>
-      </trans-unit>
+        
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/contact/contact.component.html</context><context context-type="linenumber">7</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/contact/contact.component.html</context><context context-type="linenumber">10</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context><context context-type="linenumber">7</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context><context context-type="linenumber">10</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-module/edit-module.component.html</context><context context-type="linenumber">7</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-module/edit-module.component.html</context><context context-type="linenumber">10</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-skill/edit-skill.component.html</context><context context-type="linenumber">7</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-skill/edit-skill.component.html</context><context context-type="linenumber">10</context></context-group></trans-unit>
       <trans-unit id="6411448806393999934" datatype="html">
         <source>Enter name</source><target state="final">Name eingeben</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context>
-          <context context-type="linenumber">15</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/contact/contact.component.html</context><context context-type="linenumber">15</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context><context context-type="linenumber">15</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-module/edit-module.component.html</context><context context-type="linenumber">15</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-skill/edit-skill.component.html</context><context context-type="linenumber">15</context></context-group></trans-unit>
       <trans-unit id="4655426551967070440" datatype="html">
         <source>Name must not be empty </source><target state="final">Name darf nicht leer sein </target>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/contact/contact.component.html</context><context context-type="linenumber">22</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context><context context-type="linenumber">22</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-module/edit-module.component.html</context><context context-type="linenumber">22</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-skill/edit-skill.component.html</context><context context-type="linenumber">22</context></context-group></trans-unit><trans-unit id="4768749765465246664" datatype="html">
+        <source>Email</source><target state="final">Email</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context>
-          <context context-type="linenumber">22,23</context>
+          <context context-type="sourcefile">src/app/contact/contact.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/contact/contact.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit><trans-unit id="6253455406738800109" datatype="html">
+        <source>Enter valid email address</source><target state="dinal">Geben Sie eine gültige Email Adresse ein</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/contact/contact.component.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit><trans-unit id="2345593474543564405" datatype="html">
+        <source>Email must not be empty and be a valid address </source><target state="final">Email darf nicht leer sein und muss eine gültige Adresse sein </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/contact/contact.component.html</context>
+          <context context-type="linenumber">43,44</context>
+        </context-group>
+      </trans-unit><trans-unit id="9127604588498960753" datatype="html">
+        <source>Subject</source><target state="final">Betreff</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/contact/contact.component.html</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/contact/contact.component.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit><trans-unit id="3914121670748199931" datatype="html">
+        <source>Enter message subject</source><target state="final">Betreff eingeben</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/contact/contact.component.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit><trans-unit id="5359710557118783902" datatype="html">
+        <source>Subject must not be empty </source><target state="final">Betreff darf nicht leer sein </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/contact/contact.component.html</context>
+          <context context-type="linenumber">64,65</context>
+        </context-group>
+      </trans-unit><trans-unit id="1391056849737890767" datatype="html">
+        <source>Your message</source><target state="final">Ihre Nachricht</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/contact/contact.component.html</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+      </trans-unit><trans-unit id="8066608938393600549" datatype="html">
+        <source>Message</source><target state="final">Nachricht</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/contact/contact.component.html</context>
+          <context context-type="linenumber">73</context>
+        </context-group>
+        <note priority="1" from="description">Message</note>
+      </trans-unit><trans-unit id="5860849175393674513" datatype="html">
+        <source>Enter message</source><target state="final">Nachricht eingeben</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/contact/contact.component.html</context>
+          <context context-type="linenumber">79</context>
+        </context-group>
+      </trans-unit><trans-unit id="4351636804993898419" datatype="html">
+        <source>Message must not be empty </source><target state="final">nachricht darf nicht leer sein </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/contact/contact.component.html</context>
+          <context context-type="linenumber">86,87</context>
+        </context-group>
+      </trans-unit><trans-unit id="7563035552061651664" datatype="html">
+        <source> Send </source><target state="final"> Senden </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/contact/contact.component.html</context>
+          <context context-type="linenumber">99,100</context>
+        </context-group>
+      </trans-unit><trans-unit id="ContactMsgSent" datatype="html">
+        <source>Your message has been sent successfully</source><target state="final">nachricht wurde erfolgreich verschickt</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/contact/contact.component.ts</context>
+          <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4902817035128594900" datatype="html">
         <source>Description</source><target state="final">Beschreibung</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context>
-          <context context-type="linenumber">28</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
-      </trans-unit>
+        
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context><context context-type="linenumber">28</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context><context context-type="linenumber">31</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-module/edit-module.component.html</context><context context-type="linenumber">28</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-module/edit-module.component.html</context><context context-type="linenumber">31</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-skill/edit-skill.component.html</context><context context-type="linenumber">28</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-skill/edit-skill.component.html</context><context context-type="linenumber">31</context></context-group></trans-unit>
       <trans-unit id="5551874320378862200" datatype="html">
         <source>Enter description</source><target state="final">Beschreibung eingeben</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context>
-          <context context-type="linenumber">36</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context><context context-type="linenumber">36</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-module/edit-module.component.html</context><context context-type="linenumber">36</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-skill/edit-skill.component.html</context><context context-type="linenumber">36</context></context-group></trans-unit>
       <trans-unit id="4359548644031220313" datatype="html">
         <source>Description must not be empty</source><target state="final">Beschreibung darf nicht leer sein</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context>
-          <context context-type="linenumber">43</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context><context context-type="linenumber">43</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-module/edit-module.component.html</context><context context-type="linenumber">43</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-skill/edit-skill.component.html</context><context context-type="linenumber">43</context></context-group></trans-unit>
       <trans-unit id="5330492756246079877" datatype="html">
         <source>Required skills</source><target state="final">Benötigte Skills</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context>
-          <context context-type="linenumber">49</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context><context context-type="linenumber">49</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/skill-graph/skill-graph.component.html</context><context context-type="linenumber">116</context></context-group></trans-unit>
       <trans-unit id="8565807731918780735" datatype="html">
         <source>Add skill...</source><target state="final">Skill hinzufügen...</target>
+        
+        <note priority="1" from="description">Add skill...</note>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context><context context-type="linenumber">61</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context><context context-type="linenumber">98</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/skill-graph/skill-graph.component.html</context><context context-type="linenumber">128</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/skill-graph/skill-graph.component.html</context><context context-type="linenumber">165</context></context-group></trans-unit><trans-unit id="1645330120956875752" datatype="html">
+        <source>New skills</source><target state="final">Neue Skills</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-graph/skill-graph.component.html</context>
+          <context context-type="linenumber">153</context>
+        </context-group>
+      </trans-unit><trans-unit id="8610488833657419649" datatype="html">
+        <source>Wikidata Objects</source><target state="final">Wikidata Objects</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context>
+          <context context-type="linenumber">123</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-skill/edit-skill.component.html</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+      </trans-unit><trans-unit id="8907184512942971203" datatype="html">
+        <source>Add Wikidata Object...</source><target state="final">Wikidata Object hinzufügen...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context>
+          <context context-type="linenumber">135</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-skill/edit-skill.component.html</context>
           <context context-type="linenumber">61</context>
         </context-group>
-        <note priority="1" from="description">Add skill...</note>
+        <note priority="1" from="description">Add Wikidata Object...</note>
+      </trans-unit><trans-unit id="542429099608278532" datatype="html">
+        <source>Content workload</source><target state="final">Content Bearbeitungsszeit</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context>
+          <context context-type="linenumber">160</context>
+        </context-group>
+      </trans-unit><trans-unit id="3127646278831765507" datatype="html">
+        <source>Workload</source><target state="final">Bearbeitungsszeit</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context>
+          <context context-type="linenumber">163</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-graph/skill-graph.component.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+        <note priority="1" from="description">Workload</note>
+      </trans-unit><trans-unit id="5531237363767747080" datatype="html">
+        <source>Minutes</source><target state="final">Minuten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context>
+          <context context-type="linenumber">169</context>
+        </context-group>
+      </trans-unit><trans-unit id="5163070204157969949" datatype="html">
+        <source> Binary Content </source><target state="final"> Dateien </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context>
+          <context context-type="linenumber">177</context>
+        </context-group>
+      </trans-unit><trans-unit id="3561345871299791092" datatype="html">
+        <source> Click to collapse </source><target state="final"> Klicken um auszublenden  </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context>
+          <context context-type="linenumber">179,180</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context>
+          <context context-type="linenumber">221,222</context>
+        </context-group>
+      </trans-unit><trans-unit id="2913802698004359892" datatype="html">
+        <source> URL Content </source><target state="final"> URL Inhalte </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context>
+          <context context-type="linenumber">219</context>
+        </context-group>
+      </trans-unit><trans-unit id="2375260419993138758" datatype="html">
+        <source>URL</source><target state="final">URL</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context>
+          <context context-type="linenumber">226</context>
+        </context-group>
+      </trans-unit><trans-unit id="8605681714362001135" datatype="html">
+        <source> Add url </source><target state="final"> Url hinzufügen </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context>
+          <context context-type="linenumber">247,248</context>
+        </context-group>
       </trans-unit>
-      <trans-unit id="3802816980234459024" datatype="html">
-        <source> New skills </source><target state="final"> Neue Skills </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context>
-          <context context-type="linenumber">107</context>
-        </context-group>
-      </trans-unit><trans-unit id="3620188369327429839" datatype="html">
+      <trans-unit id="3620188369327429839" datatype="html">
         <source> Save </source><target state="final"> Speichern </target>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context><context context-type="linenumber">275</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-module/edit-module.component.html</context><context context-type="linenumber">93</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-skill/edit-skill.component.html</context><context context-type="linenumber">93</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/skill-graph/skill-graph.component.html</context><context context-type="linenumber">220</context></context-group></trans-unit><trans-unit id="622574226349593519" datatype="html">
+        <source> Back to list </source><target state="final"> Zurück zur Liste </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context>
-          <context context-type="linenumber">133,134</context>
+          <context context-type="linenumber">285,286</context>
         </context-group>
-      </trans-unit><trans-unit id="2330577642930707695" datatype="html">
-        <source> Cancel </source><target state="final"> Zurück </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/edit-content/edit-content.component.html</context>
-          <context context-type="linenumber">142,143</context>
+          <context context-type="sourcefile">src/app/edit-module/edit-module.component.html</context>
+          <context context-type="linenumber">103,104</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-skill/edit-skill.component.html</context>
+          <context context-type="linenumber">103,104</context>
         </context-group>
       </trans-unit><trans-unit id="InvalidContentId" datatype="html">
         <source>Invalid id - can't find content to edit!</source><target state="final">Ungültige Id - kein Content zum Bearbeiten gefunen!</target>
@@ -233,31 +432,86 @@
         </context-group>
       </trans-unit><trans-unit id="Ok" datatype="html">
         <source>Ok</source><target state="final">Ok</target>
+        
+        
+        
+        
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/contact/contact.component.ts</context><context context-type="linenumber">47</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/contact/contact.component.ts</context><context context-type="linenumber">55</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/content/content.component.ts</context><context context-type="linenumber">71</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-content/edit-content.component.ts</context><context context-type="linenumber">71</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-content/edit-content.component.ts</context><context context-type="linenumber">80</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-content/edit-content.component.ts</context><context context-type="linenumber">91</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-content/edit-content.component.ts</context><context context-type="linenumber">122</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-content/edit-content.component.ts</context><context context-type="linenumber">139</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-content/edit-content.component.ts</context><context context-type="linenumber">159</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-content/edit-content.component.ts</context><context context-type="linenumber">209</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-content/edit-content.component.ts</context><context context-type="linenumber">238</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-content/edit-content.component.ts</context><context context-type="linenumber">263</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-content/edit-content.component.ts</context><context context-type="linenumber">287</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-module/edit-module.component.ts</context><context context-type="linenumber">58</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-module/edit-module.component.ts</context><context context-type="linenumber">67</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-module/edit-module.component.ts</context><context context-type="linenumber">78</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-module/edit-module.component.ts</context><context context-type="linenumber">103</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-module/edit-module.component.ts</context><context context-type="linenumber">120</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-skill/edit-skill.component.ts</context><context context-type="linenumber">89</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-skill/edit-skill.component.ts</context><context context-type="linenumber">106</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-skill/edit-skill.component.ts</context><context context-type="linenumber">135</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/helper/errorHandler.ts</context><context context-type="linenumber">18</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/module/module.component.ts</context><context context-type="linenumber">73</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/services/user.service.ts</context><context context-type="linenumber">36</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/services/user.service.ts</context><context context-type="linenumber">49</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/services/user.service.ts</context><context context-type="linenumber">60</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/skill-detail/skill-detail.component.ts</context><context context-type="linenumber">70</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/skill-graph/skill-graph.component.ts</context><context context-type="linenumber">87</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/skill-graph/skill-graph.component.ts</context><context context-type="linenumber">107</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/skill-graph/skill-graph.component.ts</context><context context-type="linenumber">192</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/skill/skill.component.ts</context><context context-type="linenumber">66</context></context-group></trans-unit><trans-unit id="ContactMsgSentFailed" datatype="html">
+        <source>Your message could not be sent</source><target state="final">Ihre Nachricht konnte nicht gesendet werden</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/edit-content/edit-content.component.ts</context>
-          <context context-type="linenumber">71</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/edit-content/edit-content.component.ts</context>
-          <context context-type="linenumber">80</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/edit-content/edit-content.component.ts</context>
-          <context context-type="linenumber">91</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/edit-content/edit-content.component.ts</context>
-          <context context-type="linenumber">126</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/helper/errorHandler.ts</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="sourcefile">src/app/contact/contact.component.ts</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit><trans-unit id="SkillAlreadyExist" datatype="html">
         <source>Skill does already exist</source><target state="final">Skill existiert bereits</target>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/edit-content/edit-content.component.ts</context><context context-type="linenumber">138</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/edit-content/edit-content.component.ts</context><context context-type="linenumber">158</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/skill-graph/skill-graph.component.ts</context><context context-type="linenumber">86</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/skill-graph/skill-graph.component.ts</context><context context-type="linenumber">106</context></context-group></trans-unit><trans-unit id="WikidataObjAlreadyExist" datatype="html">
+        <source>Wikidata Object does already exist</source><target state="final">Wikidata Object existiert bereits</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/edit-content/edit-content.component.ts</context>
-          <context context-type="linenumber">125</context>
+          <context context-type="linenumber">208</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-skill/edit-skill.component.ts</context>
+          <context context-type="linenumber">105</context>
+        </context-group>
+      </trans-unit><trans-unit id="UrlAlreadyExist" datatype="html">
+        <source>Url has already been added</source><target state="final">Url hinzugefügt</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-content/edit-content.component.ts</context>
+          <context context-type="linenumber">237</context>
+        </context-group>
+      </trans-unit><trans-unit id="2158427625612346283" datatype="html">
+        <source>Edit module</source><target state="final">Modul bearbeiten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-module/edit-module.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit><trans-unit id="6386685095410090781" datatype="html">
+        <source>Module content modules</source><target state="final">Modul Content Module</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-module/edit-module.component.html</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+      </trans-unit><trans-unit id="721679782555111588" datatype="html">
+        <source>Add content...</source><target state="final">Content hinzufügen...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-module/edit-module.component.html</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+        <note priority="1" from="description">Add content...</note>
+      </trans-unit><trans-unit id="InvalidModuleId" datatype="html">
+        <source>Invalid id - can't find module to edit!</source><target state="final">Ungültige Id - Modul zum Bearbeiten nicht gefunden!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-module/edit-module.component.ts</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-module/edit-module.component.ts</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-module/edit-module.component.ts</context>
+          <context context-type="linenumber">77</context>
+        </context-group>
+      </trans-unit><trans-unit id="ContentAlreadyExist" datatype="html">
+        <source>Content does already exist</source><target state="final">Content existiert bereits</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-module/edit-module.component.ts</context>
+          <context context-type="linenumber">119</context>
+        </context-group>
+      </trans-unit><trans-unit id="7991816358643592080" datatype="html">
+        <source>Edit skill</source><target state="final">Skill bearbeiten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-skill/edit-skill.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit><trans-unit id="InvalidSkillId" datatype="html">
+        <source>Invalid id - can't find skill to edit!</source><target state="final">Ungültige Id - Skill zum Bearbeiten nicht gefunden!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-skill/edit-skill.component.ts</context>
+          <context context-type="linenumber">134</context>
         </context-group>
       </trans-unit>
       
@@ -323,6 +577,200 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/login/login.component.html</context>
           <context context-type="linenumber">49,50</context>
+        </context-group>
+      </trans-unit><trans-unit id="4927938713147933476" datatype="html">
+        <source> Module Title </source><target state="final"> Modul Titel </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/module/module.component.html</context>
+          <context context-type="linenumber">26,27</context>
+        </context-group>
+      </trans-unit><trans-unit id="DeleteModule" datatype="html">
+        <source>Delete module?</source><target state="final">Modul löschen?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/module/module.component.ts</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+      </trans-unit><trans-unit id="LoginSuccessfull" datatype="html">
+        <source>Login successfull</source><target state="final">Login erfolgreich</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/user.service.ts</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit><trans-unit id="LoginFailed" datatype="html">
+        <source>Login failed</source><target state="final">Login fehlgeschlagen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/user.service.ts</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit><trans-unit id="LogoutSuccessfull" datatype="html">
+        <source>Logout successfull</source><target state="final">Logout erfolgreich</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/user.service.ts</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+      </trans-unit><trans-unit id="3994175609808456883" datatype="html">
+        <source>Skill detail view</source><target state="final">Skill Details</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-detail/skill-detail.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit><trans-unit id="8853430631097476334" datatype="html">
+        <source>Skill name: <x id="INTERPOLATION" equiv-text="{{ skill.skill_name }}"/></source><target state="final">Skill Name: <x id="INTERPOLATION" equiv-text="{{ skill.skill_name }}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-detail/skill-detail.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit><trans-unit id="7090423536091982002" datatype="html">
+        <source>Skill id: <x id="INTERPOLATION" equiv-text="{{ skill.id }}"/></source><target state="final">Skill Id: <x id="INTERPOLATION" equiv-text="{{ skill.id }}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-detail/skill-detail.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit><trans-unit id="972407775719455170" datatype="html">
+        <source>Skill description: <x id="INTERPOLATION" equiv-text="{{ skill.description }}"/></source><target state="final">Skill Beschreibung: <x id="INTERPOLATION" equiv-text="{{ skill.description }}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-detail/skill-detail.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit><trans-unit id="6215318897525107370" datatype="html">
+        <source>WikiData Objects</source><target state="final">WikiData Objects</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-detail/skill-detail.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit><trans-unit id="8132424293432274889" datatype="html">
+        <source> Back </source><target state="final"> Zurück </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-detail/skill-detail.component.html</context>
+          <context context-type="linenumber">25,26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-graph/skill-graph.component.html</context>
+          <context context-type="linenumber">13,14</context>
+        </context-group>
+      </trans-unit><trans-unit id="InvalidSkillIdDetail" datatype="html">
+        <source>Invalid id - can't find skill!</source><target state="final">Ungültige Id - Skill nicht gefunden!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-detail/skill-detail.component.ts</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+      </trans-unit><trans-unit id="8355243591655086414" datatype="html">
+        <source>SkillGraph</source><target state="final">SkillGraph</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-graph/skill-graph.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit><trans-unit id="2410014430783920331" datatype="html">
+        <source>Resulting graph for target skills</source><target state="final">Graph für ausgwählte Skills</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-graph/skill-graph.component.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit><trans-unit id="4597889097509440956" datatype="html">
+        <source>Content Title</source><target state="final">Content Titel</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-graph/skill-graph.component.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit><trans-unit id="4420961558223195021" datatype="html">
+        <source>Required Skills</source><target state="final">Benötigte Skills</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-graph/skill-graph.component.html</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+      </trans-unit><trans-unit id="8126989670420375409" datatype="html">
+        <source>New Skills</source><target state="final">Neue Skills</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-graph/skill-graph.component.html</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+      </trans-unit><trans-unit id="6882901562096359676" datatype="html">
+        <source>No data found</source><target state="final">Keine Daten gefunden</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-graph/skill-graph.component.html</context>
+          <context context-type="linenumber">85</context>
+        </context-group>
+      </trans-unit><trans-unit id="3502331528246682614" datatype="html">
+        <source>Skill marked as known by user</source><target state="final">Vom Benutzer als bekannt markierter Skill</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-graph/skill-graph.component.html</context>
+          <context context-type="linenumber">89</context>
+        </context-group>
+      </trans-unit><trans-unit id="7696438556710142241" datatype="html">
+        <source>Skill found by algorithm</source><target state="final">Per Algorithmus gefundener Skill</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-graph/skill-graph.component.html</context>
+          <context context-type="linenumber">90</context>
+        </context-group>
+      </trans-unit><trans-unit id="2221417103881557366" datatype="html">
+        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;alarm-icon&quot;>"/>report<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon>"/> No content found for the given skill </source><target state="final"><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;alarm-icon&quot;>"/>report<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon>"/> Kein Conten gefunden für ausgewählte Skills </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-graph/skill-graph.component.html</context>
+          <context context-type="linenumber">92,94</context>
+        </context-group>
+      </trans-unit><trans-unit id="8120532491793672212" datatype="html">
+        <source>Critical skills found</source><target state="final">Kritische Skills gefunden</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-graph/skill-graph.component.html</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit><trans-unit id="7716879740688670022" datatype="html">
+        <source>Total workload: <x id="INTERPOLATION" equiv-text="{{ totalWorkload }}"/> minutes</source><target state="final">Komplette Bearbeitungsszeit: <x id="INTERPOLATION" equiv-text="{{ totalWorkload }}"/> Minuten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-graph/skill-graph.component.html</context>
+          <context context-type="linenumber">102</context>
+        </context-group>
+      </trans-unit><trans-unit id="372892119139451876" datatype="html">
+        <source>Select skills</source><target state="final">Skills auswählen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-graph/skill-graph.component.html</context>
+          <context context-type="linenumber">111</context>
+        </context-group>
+      </trans-unit><trans-unit id="5701618810648052610" datatype="html">
+        <source>Title</source><target state="final">Titel</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-graph/skill-graph.component.html</context>
+          <context context-type="linenumber">191</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-graph/skill-graph.component.html</context>
+          <context context-type="linenumber">194</context>
+        </context-group>
+      </trans-unit><trans-unit id="4074415376229112974" datatype="html">
+        <source> Show Result </source><target state="final"> Ergebnis anzeigen </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-graph/skill-graph.component.html</context>
+          <context context-type="linenumber">210,211</context>
+        </context-group>
+      </trans-unit><trans-unit id="8501359003285185786" datatype="html">
+        <source>Load Graph</source><target state="final">Graph laden</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-graph/skill-graph.component.html</context>
+          <context context-type="linenumber">229</context>
+        </context-group>
+      </trans-unit><trans-unit id="1785199593363629855" datatype="html">
+        <source>Select title to load graph configuration</source><target state="final">Name auswählen um Graph Konfiguration zu laden</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-graph/skill-graph.component.html</context>
+          <context context-type="linenumber">241</context>
+        </context-group>
+      </trans-unit><trans-unit id="1373156324893977078" datatype="html">
+        <source> Load </source><target state="final"> Laden </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-graph/skill-graph.component.html</context>
+          <context context-type="linenumber">253,254</context>
+        </context-group>
+      </trans-unit><trans-unit id="4660757315780738840" datatype="html">
+        <source> Skill Title </source><target state="final"> Skill Titel </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill/skill.component.html</context>
+          <context context-type="linenumber">26,27</context>
+        </context-group>
+      </trans-unit><trans-unit id="DeleteSkill" datatype="html">
+        <source>Delete Skill?</source><target state="final">Skill löschen?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill/skill.component.ts</context>
+          <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
     </body>

@@ -29,7 +29,7 @@ export class HttpService extends BaseHttpService {
   // AUTHENTICATION AND USER STUFF
 
   public login(user: string, password: string): Observable<any> {
-    const url = this.baseApi + `login` + this.end;
+    const url = this.baseApi + "login" + this.end;
     const body = { username: user, password };
     return this.postAuthRequest(url, body);
   }
@@ -39,7 +39,7 @@ export class HttpService extends BaseHttpService {
   }
 
   public contact(formData: ContactFormData): Observable<any> {
-    const url = this.baseApi + `contact` + this.end;
+    const url = this.baseApi + "contact" + this.end;
     const body = formData;
     return this.postAuthRequest(url, body);
   }
@@ -68,13 +68,13 @@ export class HttpService extends BaseHttpService {
   }
 
   public createContent(content: Content): Observable<any> {
-    const url = this.baseApi + `content` + this.end;
+    const url = this.baseApi + "content" + this.end;
     const body = content;
     return this.postAuthRequest(url, body);
   }
 
   public uploadContent(uploadContent: UploadContent): Observable<any> {
-    const url = this.baseApi + `uploadcontent` + this.end;
+    const url = this.baseApi + "uploadcontent" + this.end;
     const body = uploadContent;
     return this.postAuthRequest(url, body);
   }
@@ -84,7 +84,7 @@ export class HttpService extends BaseHttpService {
     docFile: DocFile
   ): Observable<any> {
     // TODO TBD
-    const url = this.baseApi + `deleteBinaryContent` + this.end;
+    const url = this.baseApi + "deleteBinaryContent" + this.end;
     const body = docFile;
     return this.postAuthRequest(url, body);
   }
@@ -113,7 +113,7 @@ export class HttpService extends BaseHttpService {
   }
 
   public createSkill(skill: Skill): Observable<any> {
-    const url = this.baseApi + `skill` + this.end;
+    const url = this.baseApi + "skill" + this.end;
     const body = skill;
     return this.postAuthRequest(url, body);
   }
@@ -141,7 +141,7 @@ export class HttpService extends BaseHttpService {
   }
 
   public createModule(module: ContentModule): Observable<any> {
-    const url = this.baseApi + `module` + this.end;
+    const url = this.baseApi + "module" + this.end;
     const body = module;
     return this.postAuthRequest(url, body);
   }
@@ -226,7 +226,7 @@ export class HttpService extends BaseHttpService {
   }
 
   public saveConfiguration(config: GraphConfiguration): Observable<any> {
-    const url = this.baseApi + `skillgraph` + this.end;
+    const url = this.baseApi + "skillgraph" + this.end;
     const body = config;
     return this.postAuthRequest(url, body);
   }
