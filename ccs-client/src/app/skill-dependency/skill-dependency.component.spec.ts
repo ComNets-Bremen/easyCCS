@@ -1,16 +1,15 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { SkillDependencyComponent } from './skill-dependency.component';
+import { SkillDependencyComponent } from "./skill-dependency.component";
 
-describe('SkillDependencyComponent', () => {
+describe("SkillDependencyComponent", () => {
   let component: SkillDependencyComponent;
   let fixture: ComponentFixture<SkillDependencyComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SkillDependencyComponent ]
-    })
-    .compileComponents();
+      declarations: [SkillDependencyComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('SkillDependencyComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

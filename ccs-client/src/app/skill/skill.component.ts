@@ -32,16 +32,6 @@ export class SkillComponent implements OnInit {
     this.getSkills();
   }
 
-  private getSkills(): void {
-    this.httpService.getSkillAll().subscribe((skills: Skill[]) => {
-      this.skills = skills;
-      this.skills.sort((a, b) =>
-        this.toolService.compare(a.skill_name, b.skill_name, true)
-      );
-      this.dataSource = new MatTableDataSource(skills);
-    });
-  }
-
   public applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -94,5 +84,15 @@ export class SkillComponent implements OnInit {
       }
     });
     this.dataSource.connect().next(this.skills);
+  }
+
+  private getSkills(): void {
+    this.httpService.getSkillAll().subscribe((skills: Skill[]) => {
+      this.skills = skills;
+      this.skills.sort((a, b) =>
+        this.toolService.compare(a.skill_name, b.skill_name, true)
+      );
+      this.dataSource = new MatTableDataSource(skills);
+    });
   }
 }

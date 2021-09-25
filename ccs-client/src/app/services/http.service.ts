@@ -118,6 +118,11 @@ export class HttpService extends BaseHttpService {
     return this.postAuthRequest(url, body);
   }
 
+  public getTree(id: number): Observable<any> {
+    const url = this.baseApi + `getTree/${id}` + this.end;
+    return this.getAuthRequest(url);
+  }
+
   // MODULE
   public getModuleAll(): Observable<any> {
     const url = this.baseApi + "module" + this.end;

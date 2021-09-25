@@ -6,6 +6,7 @@ import { WikidataObject } from "./wikiDataObj";
 export class Content {
   public id = -1;
   public content_name = "";
+  public level = 0;
   public content_description = "";
   public required_skills: Skill[] = [];
   public new_skills: Skill[] = [];

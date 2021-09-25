@@ -61,6 +61,8 @@ export abstract class BaseHttpService {
 
   public abstract createSkill(skill: Skill): Observable<any>;
 
+  public abstract getTree(id: number): Observable<any>;
+
   // MODULE
 
   public abstract getModuleAll(): Observable<any>;

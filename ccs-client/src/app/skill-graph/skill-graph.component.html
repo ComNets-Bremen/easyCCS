@@ -29,7 +29,7 @@
     ><span i18n>Resulting graph for target skills</span
     ><i *ngFor="let rSkill of requiredSkills; let i = index"
       >{{ rSkill.skill_name }}
-      <span *ngIf="i != requiredSkills.length - 1">, </span></i
+      <span *ngIf="i !== requiredSkills.length - 1">, </span></i
     ></mat-card-title
   >
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">

@@ -17,6 +17,7 @@ export class ContentTestData {
       content.content_workload = i * 10;
       content.required_skills = [];
       content.new_skills = [];
+      content.level = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
       for (let j = 0; j < 3; j++) {
         const skill = SkillTestData.getbyId(j + i);
         const newSkill = SkillTestData.getbyId(j + i + 2);
@@ -76,7 +77,6 @@ export class ContentTestData {
         }
       }
     }
-
     const skillC = new SkillContent();
     skillC.contents = contents;
     skillC.knownSkills = newSkillIds;
@@ -86,6 +86,14 @@ export class ContentTestData {
     }
 
     return skillC;
+  }
+
+  public static getSkillContent(id: number): any {
+    const contents = [];
+    for (const content of this.contents) {
+      contents.push(content);
+    }
+    return contents;
   }
 
   public static update(content: Content): any {

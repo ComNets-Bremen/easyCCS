@@ -26,7 +26,6 @@ import { SkillService } from "../skill.service";
   styleUrls: ["./skill-graph.component.scss"],
 })
 export class SkillGraphComponent implements OnInit {
-  private id = 0;
   public showGraph = false;
   public loadGraphForm!: FormGroup;
   public graphForm!: FormGroup;
@@ -134,40 +133,9 @@ export class SkillGraphComponent implements OnInit {
 
   public removeNewSkill(skill: Skill): void {
     const index = this.newSkills.indexOf(skill);
-
     if (index >= 0) {
       this.newSkills.splice(index, 1);
     }
-  }
-
-  private filterSkills(value: string): Skill[] {
-    return this.skillService.filterSkills(value, this.allSkills);
-  }
-
-  private initAll(): void {
-    this.httpService
-      .getAllConfigurations()
-      .subscribe((titles: BaseGraphConfiguration[]) => {
-        this.allConfigs = titles;
-      });
-
-    this.httpService.getSkillAll().subscribe((skills: Skill[]) => {
-      if (skills) {
-        this.allSkills = skills;
-      }
-    });
-
-    this.filteredReqSkills = this.reqSkillCtrl.valueChanges.pipe(
-      startWith(null),
-      map((value) => (typeof value === "string" ? value : value?.skill_name)),
-      map((name) => (name ? this.filterSkills(name) : this.allSkills.slice()))
-    );
-
-    this.filteredNewSkills = this.newSkillCtrl.valueChanges.pipe(
-      startWith(null),
-      map((value) => (typeof value === "string" ? value : value?.skill_name)),
-      map((name) => (name ? this.filterSkills(name) : this.allSkills.slice()))
-    );
   }
 
   public submit(): void {
@@ -228,6 +196,36 @@ export class SkillGraphComponent implements OnInit {
           this.graphForm.get("title")?.setValue(config.title);
         }
       });
+  }
+
+  private filterSkills(value: string): Skill[] {
+    return this.skillService.filterSkills(value, this.allSkills);
+  }
+
+  private initAll(): void {
+    this.httpService
+      .getAllConfigurations()
+      .subscribe((titles: BaseGraphConfiguration[]) => {
+        this.allConfigs = titles;
+      });
+
+    this.httpService.getSkillAll().subscribe((skills: Skill[]) => {
+      if (skills) {
+        this.allSkills = skills;
+      }
+    });
+
+    this.filteredReqSkills = this.reqSkillCtrl.valueChanges.pipe(
+      startWith(null),
+      map((value) => (typeof value === "string" ? value : value?.skill_name)),
+      map((name) => (name ? this.filterSkills(name) : this.allSkills.slice()))
+    );
+
+    this.filteredNewSkills = this.newSkillCtrl.valueChanges.pipe(
+      startWith(null),
+      map((value) => (typeof value === "string" ? value : value?.skill_name)),
+      map((name) => (name ? this.filterSkills(name) : this.allSkills.slice()))
+    );
   }
 
   private initGraph(): void {

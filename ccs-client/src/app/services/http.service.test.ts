@@ -104,8 +104,13 @@ export class HttpService extends BaseHttpService {
   public saveSkill(skill: Skill): Observable<any> {
     return of(SkillTestData.update(skill));
   }
+
   public createSkill(skill: Skill): Observable<any> {
     return of(SkillTestData.update(skill));
+  }
+
+  public getTree(id: number): Observable<any> {
+    return of(ContentTestData.getSkillContent(id));
   }
 
   // MODULE

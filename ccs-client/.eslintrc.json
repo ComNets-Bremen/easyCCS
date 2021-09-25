@@ -42,7 +42,9 @@
           {
             "allowTemplateLiterals": true
           }
-        ]
+        ],
+        "camelcase": "off",
+        "@typescript-eslint/naming-convention": "off"
       }
     },
     {
