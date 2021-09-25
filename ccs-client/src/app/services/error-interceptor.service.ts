@@ -44,7 +44,8 @@ export class ErrorInterceptorService implements HttpInterceptor {
   }
 
   public getDefaultOptions(): HttpHeaders {
-    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    const headers = new HttpHeaders().set("Content-Type", "application/json");
     return headers;
   }
 

@@ -10,6 +10,7 @@ import { ImprintComponent } from "./imprint/imprint.component";
 import { LoginComponent } from "./login/login.component";
 import { ModuleComponent } from "./module/module.component";
 import { PrivacyComponent } from "./privacy/privacy.component";
+import { CanActivateService } from "./services/can-activate.service";
 import { SkillDependencyComponent } from "./skill-dependency/skill-dependency.component";
 import { SkillDetailComponent } from "./skill-detail/skill-detail.component";
 import { SkillGraphComponent } from "./skill-graph/skill-graph.component";
@@ -19,16 +20,56 @@ import { StartComponent } from "./start/start.component";
 const routes: Routes = [
   { path: "start", component: StartComponent },
   { path: "login", component: LoginComponent },
-  { path: "completegraph", component: CompleteGraphComponent },
-  { path: "skillgraph", component: SkillGraphComponent },
-  { path: "skilldependency", component: SkillDependencyComponent },
-  { path: "content", component: ContentComponent },
-  { path: "editcontent/:id", component: EditContentComponent },
-  { path: "editskill/:id", component: EditSkillComponent },
-  { path: "skill/:id", component: SkillDetailComponent },
-  { path: "editmodule/:id", component: EditModuleComponent },
-  { path: "skill", component: SkillComponent },
-  { path: "module", component: ModuleComponent },
+  {
+    path: "completegraph",
+    component: CompleteGraphComponent,
+    canActivate: [CanActivateService],
+  },
+  {
+    path: "skillgraph",
+    component: SkillGraphComponent,
+    canActivate: [CanActivateService],
+  },
+  {
+    path: "skilldependency",
+    component: SkillDependencyComponent,
+    canActivate: [CanActivateService],
+  },
+  {
+    path: "content",
+    component: ContentComponent,
+    canActivate: [CanActivateService],
+  },
+  {
+    path: "editcontent/:id",
+    component: EditContentComponent,
+    canActivate: [CanActivateService],
+  },
+  {
+    path: "editskill/:id",
+    component: EditSkillComponent,
+    canActivate: [CanActivateService],
+  },
+  {
+    path: "skill/:id",
+    component: SkillDetailComponent,
+    canActivate: [CanActivateService],
+  },
+  {
+    path: "editmodule/:id",
+    component: EditModuleComponent,
+    canActivate: [CanActivateService],
+  },
+  {
+    path: "skill",
+    component: SkillComponent,
+    canActivate: [CanActivateService],
+  },
+  {
+    path: "module",
+    component: ModuleComponent,
+    canActivate: [CanActivateService],
+  },
   { path: "imprint", component: ImprintComponent },
   { path: "privacy", component: PrivacyComponent },
   { path: "contact", component: ContactComponent },

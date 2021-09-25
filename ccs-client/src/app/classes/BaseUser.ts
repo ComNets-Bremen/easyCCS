@@ -1,9 +1,9 @@
 export class BaseUser {
   public username!: string;
   public email!: string;
-  // tslint:disable-next-line: variable-name
+  // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public first_name!: string;
-  // tslint:disable-next-line: variable-name
+  // eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle, id-blacklist, id-match
   public last_name!: string;
   public password!: string;
 }

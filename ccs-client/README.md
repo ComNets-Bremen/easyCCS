@@ -9,6 +9,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+This will also generate a according test file. For components a template and a .scss file will be created as well.
 
 ## Build
 
@@ -26,39 +27,60 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
-## ANGULAR STEUP
-nom install, proxy.config, angular.json, scss styles, 
-task runner,
-vs code extensions
-Version 12, install nodejs 14.5 LTS
-angular material
-Angular cli
+## Angular Setup
+This project uses latest LTS version of Angular, which is Angular 12. To use this we need to install at least [NodeJs LTS 14.5](https://nodejs.org/en/download/).
 
+To run this project you need to install angular cli globally. Use this link: [Angular CLI](https://github.com/angular/angular-cli).
+Run `npm install` once after checkout. This will install all dependencies defined in package.json file.
+There are several npm scripts which run angular cli tasks (defined in package.json file):
+* `npm start` will run `ng serve` which provides a local web server and adds a file watcher
+* `npm start-local` will run `ng serve` as well, but additinally runs a local configuration (servelocal), which simulates API calls without a running webserver (replaces http.service.ts with http.service.test.ts)
+  * you can define configurations in angular.json file
+* `npm build` will run `ng build`
+* `npm build-prod` will run `ng build` but with production configuration, which includes mangling, file hashing etc. => this is the only build we use for production!
+* `extract-i18n` will extract all missing translations and help to migrate the existing language files. See below for detailed information about Angular i18n
+* There are some more tasks to run the angular scripts like test
+
+When you run `npm start` there is a local web server started, but to access the API calls to the running server which runs the interface we need to define a `proxy.conf.json` file and tell Angular how to handle API calls.
+In `src` folder there is the accoring proxy file, where we can define the API route (`/rest` in this case), the server url, if we want to use websockets, if it must be https and some other options. To include the proxy.conf.json in our task we've added `--proxy-config src/proxy.conf.json`to the npm script `npm start`. This will all http calls with route `/rest` to the according server address.
+
+## Development
+This project was created with [Visual Studio Code](https://code.visualstudio.com/);
+There are several VS Code extensions which support Angular development, as well as formatter (Prettier, Beautify) and a helper like ESLint. On first run VS Code will ask you to install recommended extensions.
+This project can also be run in other IDEs like WebStorm or any other solution you like.
 
 ## packages
-npm install ngx-cookie-service --save
-http-status-enum
+Some npm packages are used for this project (for full list see package.json file):
+* [Angular Material](https://material.angular.io/)
+* [ngx-cookie-service](https://github.com/stevermeister/ngx-cookie-service)
+* [d3js](https://d3js.org/) for graph handling
+* [http-status-enum](https://github.com/KyleNeedham/http-status-enum)
+* [ngx-i18nsupport](https://github.com/martinroob/ngx-i18nsupport)
 
 ## Styling
-variables.scss
+We configured Angular to use SCSS language to extend our normal CSS sheet. On build Angular will compile all scss file to one .css style sheet (defined in angular.json).
+As we use an Angular Material default theme, in angular.json we must include the theme style in out angular.json, too (`./node_modules/@angular/material/prebuilt-themes/indigo-pink.css`)
+We use a `variables.scss` to define global style variables, which we can use in every single .scss file.
+
+## i18n
+Translation is done with [Angular i18n](https://angular.io/guide/i18n-overview). This allows to translate every single string with the help of an XML filefor each language in `src/i18n` folder.
+NOTE: to translate HTML attributes like `placeholder` just prefix them with i18n like `i18n-placeholder` to translate this strings as well.
+[We use the package ngx-i18nsupport to keep our language files updated](https://github.com/martinroob/ngx-i18nsupport/wiki/Tutorial-for-using-xliffmerge-with-angular-cli).
 
 ## additional info
-httpInterceptor
-readme
-http.test.
-angular.json
-i18n-placeholder => additional attributes
-authguard
-routing
-https://github.com/martinroob/ngx-i18nsupport/wiki/Tutorial-for-using-xliffmerge-with-angular-cli
+For HTTP error handling we use a [HttpInterceptor](https://angular.io/api/common/http/HttpInterceptor) called `ErrorInterCeptorService`. 
+This service will check all HTTP calls and their responses. This allows to handle all HTTP errors and check outgoing calls for correct token using.
+Addtionally there is an CanActivateService which prevents not-logged-in users from accessing restricted routes defined in `app-routing.module.ts`. See [CanActivate](https://angular.io/api/router/CanActivate) for more details.
+
+* [d3js import in Typscript](https://stackoverflow.com/questions/38335087/correct-way-to-import-d3-js-into-an-angular-2-application) 
+  * see `d3jsimport.ts` file 
 
 ## TODOS
 url (material for content) validation necessary?
 binary content => general or content bound?
-d3js import => https://stackoverflow.com/questions/38335087/correct-way-to-import-d3-js-into-an-angular-2-application
 download material/Url => zip?
 add uploadcontent => api
-move header stuff in interceptor
-[angular interceptor](https://angular.io/guide/http#intercepting-requests-and-responses)
+
+
 
 

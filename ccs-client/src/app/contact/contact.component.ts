@@ -1,23 +1,13 @@
-import { ENTER, COMMA } from "@angular/cdk/keycodes";
 import { Component, OnInit } from "@angular/core";
 import {
   FormGroup,
   FormControl,
   FormBuilder,
   Validators,
-  NgForm,
+  FormGroupDirective,
 } from "@angular/forms";
-import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
-import { MatChipInputEvent } from "@angular/material/chips";
-import { ActivatedRoute, Router } from "@angular/router";
-import { map } from "d3";
-import { Observable } from "rxjs";
-import { startWith } from "rxjs/operators";
 import { ContactFormData } from "../classes/contactFormData";
-import { Content } from "../classes/content";
-import { ContentModule } from "../classes/contentModule";
 import { ESnackbarTypes } from "../enums/snackbarTypes";
-import { ContentService } from "../services/content.service";
 import { HttpService } from "../services/http.service";
 import { ToolService } from "../services/tool.service";
 
@@ -27,7 +17,6 @@ import { ToolService } from "../services/tool.service";
   styleUrls: ["./contact.component.scss"],
 })
 export class ContactComponent implements OnInit {
-  private id = 0;
   public contactForm!: FormGroup;
 
   constructor(
@@ -45,7 +34,7 @@ export class ContactComponent implements OnInit {
     });
   }
 
-  public sendMsg(): void {
+  public sendMsg(event: Event): void {
     const contactData = new ContactFormData();
     contactData.name = this.contactForm.get("name")?.value;
     contactData.email = this.contactForm.get("email")?.value;
@@ -58,7 +47,7 @@ export class ContactComponent implements OnInit {
           $localize`:@@Ok:Ok`,
           ESnackbarTypes.Info
         );
-        this.resetForm();
+        this.resetForm(event);
       },
       (err) => {
         this.toolService.openSnackBar(
@@ -70,10 +59,11 @@ export class ContactComponent implements OnInit {
     );
   }
 
-  private resetForm(): void {
-    this.contactForm.reset();
-    this.contactForm.markAsPristine();
-    this.contactForm.markAsUntouched();
-    this.contactForm.updateValueAndValidity();
+  private resetForm(event: Event): void {
+    // currenttargt can't be directly casted to Form - we need the directive to reset not the form itself
+    // https://github.com/angular/components/issues/4190
+    const form = event.currentTarget as unknown;
+    const formDirective = form as FormGroupDirective;
+    formDirective.reset();
   }
 }

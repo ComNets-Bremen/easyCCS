@@ -51,10 +51,12 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [{
-                "replace": "src/environments/environment.ts",
-                "with": "src/environments/environment.prod.ts"
-              }],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -62,7 +64,8 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [{
+              "budgets": [
+                {
                   "type": "initial",
                   "maximumWarning": "500kb",
                   "maximumError": "1mb"
@@ -75,7 +78,8 @@
               ]
             },
             "servelocal": {
-              "fileReplacements": [{
+              "fileReplacements": [
+                {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.test.ts"
                 },
@@ -140,15 +144,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
             ]
           }
         },
@@ -182,5 +182,8 @@
       }
     }
   },
-  "defaultProject": "ccs-client"
+  "defaultProject": "ccs-client",
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
+  }
 }

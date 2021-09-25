@@ -1,7 +1,7 @@
 <mat-card>
-  <mat-card-title i18n>Sned us a message</mat-card-title>
+  <mat-card-title i18n>Send us a message</mat-card-title>
   <div class="base-form">
-    <form [formGroup]="contactForm" (ngSubmit)="sendMsg()">
+    <form [formGroup]="contactForm" (ngSubmit)="sendMsg($event)">
       <p>
         <mat-form-field appearance="standard">
           <mat-label i18n>Name</mat-label>
