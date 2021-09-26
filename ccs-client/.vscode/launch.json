@@ -9,5 +9,11 @@
     "name": "Launch Chrome against localhost",
     "url": "http://localhost:4200",
     "webRoot": "${workspaceFolder}"
+  }, {
+    "type": "chrome",
+    "request": "launch",
+    "name": "Jasmine debugger",
+    "url": "http://localhost:9876",
+    "webRoot": "${workspaceFolder}"
   }]
 }

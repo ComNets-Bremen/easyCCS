@@ -37,16 +37,6 @@ export class ContentComponent implements OnInit {
     this.getContent();
   }
 
-  private getContent(): void {
-    this.httpService.getContentAll().subscribe((contents: Content[]) => {
-      this.contents = contents;
-      this.contents.sort((a, b) =>
-        this.toolService.compare(a.content_name, b.content_name, true)
-      );
-      this.dataSource = new MatTableDataSource(contents);
-    });
-  }
-
   public applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -109,5 +99,15 @@ export class ContentComponent implements OnInit {
       }
     });
     this.dataSource.connect().next(this.contents);
+  }
+
+  private getContent(): void {
+    this.httpService.getContentAll().subscribe((contents: Content[]) => {
+      this.contents = contents;
+      this.contents.sort((a, b) =>
+        this.toolService.compare(a.content_name, b.content_name, true)
+      );
+      this.dataSource = new MatTableDataSource(contents);
+    });
   }
 }
