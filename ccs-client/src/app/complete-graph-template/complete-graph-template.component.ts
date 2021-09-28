@@ -62,10 +62,11 @@ export class CompleteGraphTemplateComponent implements OnInit, AfterViewInit {
         "link",
         d3
           .forceLink()
-          .id((d: any) => {
-            // keep any to prevent compiler errors
-            return d.id;
-          })
+          .id(
+            (d: any) =>
+              // keep any to prevent compiler errors
+              d.id
+          )
           .distance(100)
           .strength(1)
       )
@@ -88,9 +89,7 @@ export class CompleteGraphTemplateComponent implements OnInit, AfterViewInit {
       .attr("class", "link")
       .attr("marker-end", "url(#arrowhead)");
 
-    this.link.append("title").text((d: MyLink) => {
-      return d.type;
-    });
+    this.link.append("title").text((d: MyLink) => d.type);
 
     this.edgepaths = this.svg
       .selectAll(".edgepath")
@@ -100,9 +99,7 @@ export class CompleteGraphTemplateComponent implements OnInit, AfterViewInit {
       .attr("class", "edgepath")
       .attr("fill-opacity", 0)
       .attr("stroke-opacity", 0)
-      .attr("id", (d: MyLink, i: number) => {
-        return "edgepath" + i;
-      })
+      .attr("id", (d: MyLink, i: number) => "edgepath" + i)
       .style("pointer-events", "none");
 
     this.edgelabels = this.svg
@@ -112,23 +109,17 @@ export class CompleteGraphTemplateComponent implements OnInit, AfterViewInit {
       .append("text")
       .style("pointer-events", "none")
       .attr("class", "edgelabel")
-      .attr("id", (d: MyLink, i: number) => {
-        return "edgelabel" + i;
-      })
+      .attr("id", (d: MyLink, i: number) => "edgelabel" + i)
       .attr("font-size", 10)
       .attr("fill", "#aaa");
 
     this.edgelabels
       .append("textPath")
-      .attr("xlink:href", (d: MyLink, i: number) => {
-        return "#edgepath" + i;
-      })
+      .attr("xlink:href", (d: MyLink, i: number) => "#edgepath" + i)
       .style("text-anchor", "middle")
       .style("pointer-events", "none")
       .attr("startOffset", "50%")
-      .text((d: MyLink) => {
-        return d.type;
-      });
+      .text((d: MyLink) => d.type);
 
     this.node = this.svg
       .selectAll(".node")
@@ -147,13 +138,9 @@ export class CompleteGraphTemplateComponent implements OnInit, AfterViewInit {
     this.node
       .append("circle")
       .attr("r", 5)
-      .style("fill", (d: MyNode, i: number) => {
-        return this.colors(i.toString());
-      });
+      .style("fill", (d: MyNode, i: number) => this.colors(i.toString()));
 
-    this.node.append("title").text((d: MyNode) => {
-      return d.id;
-    });
+    this.node.append("title").text((d: MyNode) => d.id);
 
     this.node
       .append("text")
@@ -175,40 +162,33 @@ export class CompleteGraphTemplateComponent implements OnInit, AfterViewInit {
 
   private ticked(): void {
     this.link
-      .attr("x1", (d: MyLink) => {
-        return d.source.x;
-      })
-      .attr("y1", (d: MyLink) => {
-        return d.source.y;
-      })
-      .attr("x2", (d: MyLink) => {
-        return d.target.x;
-      })
-      .attr("y2", (d: MyLink) => {
-        return d.target.y;
-      });
+      .attr("x1", (d: MyLink) => (d.source as MyNode).x)
+      .attr("y1", (d: MyLink) => (d.source as MyNode).y)
+      .attr("x2", (d: MyLink) => (d.source as MyNode).x)
+      .attr("y2", (d: MyLink) => (d.source as MyNode).y);
 
-    this.node.attr("transform", (d: MyNode) => {
-      return "translate(" + d.x + ", " + d.y + ")";
-    });
+    this.node.attr(
+      "transform",
+      (d: MyNode) => "translate(" + d.x + ", " + d.y + ")"
+    );
 
-    this.edgepaths.attr("d", (d: MyLink) => {
-      return (
+    this.edgepaths.attr(
+      "d",
+      (d: MyLink) =>
         "M " +
-        d.source.x +
+        (d.source as MyNode).x +
         " " +
-        d.source.y +
+        (d.source as MyNode).y +
         " L " +
-        d.target.x +
+        (d.source as MyNode).x +
         " " +
-        d.target.y
-      );
-    });
+        (d.source as MyNode).y
+    );
 
     this.edgelabels.attr(
       "transform",
       (d: MyLink, i: number, ele: SVGTextElement[] | any) => {
-        if (d.target.x < d.source.x) {
+        if ((d.source as MyNode).x < (d.source as MyNode).x) {
           const bbox = ele[i].getBBox();
 
           const rx = bbox.x + bbox.width / 2;

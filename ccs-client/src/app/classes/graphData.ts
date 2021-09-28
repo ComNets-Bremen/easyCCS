@@ -26,8 +26,8 @@ export class BaseNode {
 }
 
 export class MyLink {
-  public source!: MyNode;
-  public target!: MyNode;
+  public source!: MyNode | number;
+  public target!: MyNode | number;
   public type = "";
   public bundle!: MyNode;
   public xt = 0;

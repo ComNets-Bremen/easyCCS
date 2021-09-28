@@ -2,9 +2,12 @@ import {
   BaseGraphConfiguration,
   GraphConfiguration,
 } from "../classes/configuration";
+import { BaseNode, MyLink, MyNode, SkillGraphData } from "../classes/graphData";
 import { SkillTestData } from "./testdata";
 
 export class GraphDataDemo {
+  static demo: SkillGraphData = new SkillGraphData();
+
   // static demo = {
   //   nodes: [
   //     {
@@ -51,7 +54,7 @@ export class GraphDataDemo {
   //     },
   //   ],
   // };
-  static demo = {
+  static demoData = {
     nodes: [
       {
         id: 22,
@@ -232,10 +235,19 @@ export class GraphDataDemo {
       },
     ],
   };
+
+  static create(): void {
+    this.demo.nodes = [];
+    this.demo.links = [];
+    this.demo.nodes = this.demoData.nodes as MyNode[];
+    this.demo.links = this.demoData.links as MyLink[];
+  }
 }
 
 export class SkillGraphDataDemo {
-  static levels = [
+  static levels: Array<Array<BaseNode>> = [];
+
+  static levelsDemo = [
     [
       {
         id: 18,
@@ -265,6 +277,10 @@ export class SkillGraphDataDemo {
       },
     ],
   ];
+
+  public static create(): void {
+    this.levels = SkillGraphDataDemo.levels as Array<Array<BaseNode>>;
+  }
 
   //   [
   //     {

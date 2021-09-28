@@ -7,7 +7,21 @@ import { WikidataObject } from "../classes/wikiDataObj";
 export class ContentTestData {
   public static contents: Content[];
 
+  public static testFile: File;
+
+  public static fakeBlob(
+    name: string,
+    size: number,
+    type: string,
+    lastModified = new Date()
+  ) {
+    const blob = new Blob(["a".repeat(size)], { type });
+
+    return new File([blob], name);
+  }
+
   public static create(): void {
+    this.testFile = this.fakeBlob("file.txt", 50000, "plain/txt");
     const contents: Content[] = [];
     for (let i = 0; i < 20; i++) {
       const content = new Content();
@@ -101,11 +115,12 @@ export class ContentTestData {
       for (let con of this.contents) {
         if (con.id === content.id) {
           con = content;
-          return;
+          return true;
         }
       }
     }
     this.contents.push(content);
+    return true;
   }
 
   public static delete(id: number): any {
@@ -114,10 +129,11 @@ export class ContentTestData {
         const element = this.contents[i];
         if (element.id === id) {
           this.contents.splice(i, 1);
-          return;
+          return true;
         }
       }
     }
+    return false;
   }
 
   public static upload(uploadContent: UploadContent): any {
@@ -129,10 +145,11 @@ export class ContentTestData {
           const file = uploadContent.formData.get("file") as File;
           docFile.name = file.name;
           element.binary_content.push(docFile);
-          return;
+          return true;
         }
       }
     }
+    return false;
   }
 
   public static deleteBinaryContent(contentId: number, docFile: DocFile): any {
@@ -179,11 +196,12 @@ export class SkillTestData {
       for (let ski of this.skills) {
         if (ski.id === skill.id) {
           ski = skill;
-          return;
+          return true;
         }
       }
     }
     this.skills.push(skill);
+    return true;
   }
 
   public static delete(id: number): any {
@@ -192,10 +210,11 @@ export class SkillTestData {
         const element = this.skills[i];
         if (element.id === id) {
           this.skills.splice(i, 1);
-          return;
+          return true;
         }
       }
     }
+    return false;
   }
 }
 
@@ -235,11 +254,12 @@ export class ModuleTestData {
       for (let module of this.modules) {
         if (module.id === cMod.id) {
           module = cMod;
-          return;
+          return true;
         }
       }
     }
     this.modules.push(cMod);
+    return true;
   }
 
   public static delete(id: number): any {
@@ -248,10 +268,11 @@ export class ModuleTestData {
         const element = this.modules[i];
         if (element.id === id) {
           this.modules.splice(i, 1);
-          return;
+          return true;
         }
       }
     }
+    return false;
   }
 }
 

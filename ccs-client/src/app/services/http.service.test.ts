@@ -40,6 +40,8 @@ export class HttpService extends BaseHttpService {
     ModuleTestData.create();
     WikiDataTestData.create();
     GraphStoredConfiguration.create();
+    GraphDataDemo.create();
+    SkillGraphDataDemo.create();
   }
 
   // AUTHENTICATION AND USER STUFF

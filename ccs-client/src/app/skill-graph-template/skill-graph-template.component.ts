@@ -45,7 +45,7 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
         this.reqSkills.map((ele) => ele.id),
         this.newSkills.map((ele) => ele.id)
       )
-      .subscribe((levels: [][]) => {
+      .subscribe((levels: Array<Array<BaseNode>>) => {
         this.levels = levels;
         this.initGraph();
       });
@@ -250,23 +250,23 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
     });
 
     this.links.forEach((link: MyLink) => {
-      link.xt = link.target.x;
+      link.xt = (link.target as MyNode).x;
       let iCounter = 0;
       let index = 0;
-      link.target.bundles_index.forEach((nodes, key) => {
+      (link.target as MyNode).bundles_index.forEach((nodes, key) => {
         if (key === link.bundle.id) {
           index = iCounter;
         }
         iCounter++;
       });
       link.yt =
-        link.target.y +
+        (link.target as MyNode).y +
         index * metro_d -
-        (link.target.bundles.length * metro_d) / 2 +
+        ((link.target as MyNode).bundles.length * metro_d) / 2 +
         metro_d / 2;
       link.xb = link.bundle.x;
-      link.xs = link.source.x;
-      link.ys = link.source.y;
+      link.xs = (link.source as MyNode).x;
+      link.ys = (link.source as MyNode).y;
     });
 
     // compress vertical space
@@ -275,11 +275,9 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
       const bundles = this.level_bundles.get(index);
       if (bundles) {
         const min1 =
-          d3.min(bundles, (bundle: MyNode) => {
-            return d3.min(bundle.links, (link: MyLink) => {
-              return link.ys - c - (link.yt + c);
-            });
-          }) || "0";
+          d3.min(bundles, (bundle: MyNode) =>
+            d3.min(bundle.links, (link: MyLink) => link.ys - c - (link.yt + c))
+          ) || "0";
         const offset = parseInt(min1?.toString(), 10);
         y_negative_offset += -min_family_height + offset;
         nodes.forEach((n: BaseNode) => {
@@ -295,20 +293,22 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
     this.links.forEach((link: MyLink) => {
       let iCounter = 0;
       let index = 0;
-      link.target.bundles_index.forEach((nodes, key) => {
+      (link.target as MyNode).bundles_index.forEach((nodes, key) => {
         if (key === link.bundle.id) {
           index = iCounter;
         }
         iCounter++;
       });
       link.yt =
-        link.target.y +
+        (link.target as MyNode).y +
         index * metro_d -
-        (link.target.bundles.length * metro_d) / 2 +
+        ((link.target as MyNode).bundles.length * metro_d) / 2 +
         metro_d / 2;
-      link.ys = link.source.y;
+      link.ys = (link.source as MyNode).y;
       link.c1 =
-        link.source.level - link.target.level > 1 ? node_width / 2 + c : c;
+        (link.source as MyNode).level - (link.target as MyNode).level > 1
+          ? node_width / 2 + c
+          : c;
       link.c2 = c;
     });
 

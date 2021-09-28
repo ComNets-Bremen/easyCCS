@@ -80,6 +80,11 @@ Addtionally there is an CanActivateService which prevents not-logged-in users fr
 * [d3js import in Typscript](https://stackoverflow.com/questions/38335087/correct-way-to-import-d3-js-into-an-angular-2-application) 
   * see `d3jsimport.ts` file 
 
+## Testing
+Running `ng test` will automatically run the full test suite (all .spec.ts files). To run only specific files or configurations for testing we can use the `--include` command.  
+[See Angular Cli test options for more details](https://angular.io/cli/test#options).  
+To debug test files in VS Code there is an additional launch configuration "Jasmine Debugger" which will allow to attach the VS Code Debugger to the Jasmine Test Process, by selecting the configuration in **Run and Debug** menu and press F5 or the run button after starting testing with `ng test` (with optional options):
+
 ## TODOS
 url (material for content) validation necessary?  
 binary content => general or content bound?  
