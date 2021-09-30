@@ -85,6 +85,8 @@ Running `ng test` will automatically run the full test suite (all .spec.ts files
 [See Angular Cli test options for more details](https://angular.io/cli/test#options).  
 To debug test files in VS Code there is an additional launch configuration "Jasmine Debugger" which will allow to attach the VS Code Debugger to the Jasmine Test Process, by selecting the configuration in **Run and Debug** menu and press F5 or the run button after starting testing with `ng test` (with optional options):
 
+NOTE: Difference between Testing and Build/Serve can lead to error messages, but tests will still succeed. [See here for detail information about JIT/AOT compiler usage](https://github.com/angular/angular/issues/36430)
+
 ## TODOS
 url (material for content) validation necessary?  
 binary content => general or content bound?  

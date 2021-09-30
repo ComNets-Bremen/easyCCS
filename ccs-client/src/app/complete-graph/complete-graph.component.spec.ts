@@ -1,16 +1,21 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { HttpService } from "../services/http.service.test";
 
-import { CompleteGraphComponent } from './complete-graph.component';
+import { CompleteGraphComponent } from "./complete-graph.component";
 
-describe('CompleteGraphComponent', () => {
+describe("CompleteGraphComponent", () => {
   let component: CompleteGraphComponent;
   let fixture: ComponentFixture<CompleteGraphComponent>;
+  let service: HttpService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CompleteGraphComponent ]
-    })
-    .compileComponents();
+      declarations: [CompleteGraphComponent],
+      imports: [HttpClientTestingModule],
+    });
+    service = TestBed.inject(HttpService);
+    TestBed.compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +24,7 @@ describe('CompleteGraphComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

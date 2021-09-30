@@ -18,8 +18,9 @@ import { WikiDataObjService } from "../services/wiki-data-obj.service";
   styleUrls: ["./skill-detail.component.scss"],
 })
 export class SkillDetailComponent implements OnInit {
+  public skill: Skill = new Skill();
+
   private id = 0;
-  public skill!: Skill;
 
   constructor(
     private route: ActivatedRoute,

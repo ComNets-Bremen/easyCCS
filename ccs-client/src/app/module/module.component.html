@@ -1,4 +1,12 @@
-<h1 i18n>Manage Modules</h1>
+<h1 i18n class="add-header">Manage Modules</h1>
+<button
+  mat-fab
+  color="primary"
+  class="add-button"
+  [routerLink]="['/editmodule', -1]"
+>
+  +
+</button>
 <mat-form-field appearance="standard">
   <mat-label>Filter</mat-label>
   <input

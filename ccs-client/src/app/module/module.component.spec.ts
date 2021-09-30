@@ -1,16 +1,35 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { MatDialogModule } from "@angular/material/dialog";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatTableModule } from "@angular/material/table";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { RouterTestingModule } from "@angular/router/testing";
+import { HttpService } from "../services/http.service";
 
-import { ModuleComponent } from './module.component';
+import { ModuleComponent } from "./module.component";
 
-describe('ModuleComponent', () => {
+describe("ModuleComponent", () => {
   let component: ModuleComponent;
   let fixture: ComponentFixture<ModuleComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ModuleComponent ]
-    })
-    .compileComponents();
+      declarations: [ModuleComponent],
+      imports: [
+        HttpClientTestingModule,
+        MatSnackBarModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatTableModule,
+        BrowserAnimationsModule,
+        RouterTestingModule.withRoutes([]),
+      ],
+      providers: [HttpService],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +38,7 @@ describe('ModuleComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

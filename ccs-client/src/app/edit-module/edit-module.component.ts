@@ -13,7 +13,6 @@ import { Observable } from "rxjs";
 import { startWith, map } from "rxjs/operators";
 import { Content } from "../classes/content";
 import { ContentModule } from "../classes/contentModule";
-import { Skill } from "../classes/skill";
 import { ESnackbarTypes } from "../enums/snackbarTypes";
 import { ContentService } from "../services/content.service";
 import { HttpService } from "../services/http.service";
@@ -25,7 +24,6 @@ import { ToolService } from "../services/tool.service";
   styleUrls: ["./edit-module.component.scss"],
 })
 export class EditModuleComponent implements OnInit {
-  private id = 0;
   public module!: ContentModule;
   public editForm!: FormGroup;
   public selectable = true;
@@ -35,6 +33,7 @@ export class EditModuleComponent implements OnInit {
   public separatorKeysCodes: number[] = [ENTER, COMMA];
 
   private allContents: Content[];
+  private id = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -53,58 +52,55 @@ export class EditModuleComponent implements OnInit {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get("id");
     if (!id) {
-      this.toolService.openSnackBar(
-        $localize`:@@InvalidModuleId:Invalid id - can't find module to edit!`,
-        $localize`:@@Ok:Ok`,
-        ESnackbarTypes.Error
-      );
+      this.showInvalidIdError();
       return;
     }
     this.id = parseInt(id, 10);
     if (!this.id || isNaN(this.id)) {
-      this.toolService.openSnackBar(
-        $localize`:@@InvalidModuleId:Invalid id - can't find module to edit!`,
-        $localize`:@@Ok:Ok`,
-        ESnackbarTypes.Error
-      );
+      this.showInvalidIdError();
       return;
     }
-    this.httpService.getModule(this.id).subscribe((module: ContentModule) => {
-      if (module) {
-        this.module = module;
-      } else {
-        this.toolService.openSnackBar(
-          $localize`:@@InvalidModuleId:Invalid id - can't find module to edit!`,
-          $localize`:@@Ok:Ok`,
-          ESnackbarTypes.Error
-        );
-      }
-    });
-    this.editForm = this.fb.group({
-      name: new FormControl(this.module.module_name, Validators.required),
-      desc: new FormControl(
-        this.module.module_description,
-        Validators.required
-      ),
-      content: this.contentCtrl,
-    });
+    if (this.id === -1) {
+      this.module = new ContentModule();
+      this.createForm();
+    } else {
+      this.httpService.getModule(this.id).subscribe((module: ContentModule) => {
+        if (module) {
+          this.module = module;
+          this.createForm();
+        } else {
+          this.showInvalidIdError();
+        }
+      });
+    }
   }
 
   public goBack(): void {
-    this.router.navigate(["/skill"]);
+    this.router.navigate(["/module"]);
   }
 
   public editModule(): void {
     this.module.module_name = this.editForm.get("name")?.value;
     this.module.module_description = this.editForm.get("desc")?.value;
-    this.httpService.saveModule(this.module).subscribe(() => {
-      this.toolService.openSnackBar(
-        $localize`:@@Saved:Data saved successfully`,
-        $localize`:@@Ok:Ok`,
-        ESnackbarTypes.Info
-      );
-      this.initAll();
-    });
+    if (this.id === -1) {
+      this.httpService.createModule(this.module).subscribe(() => {
+        this.toolService.openSnackBar(
+          $localize`:@@Saved:Data saved successfully`,
+          $localize`:@@Ok:Ok`,
+          ESnackbarTypes.Info
+        );
+        this.goBack();
+      });
+    } else {
+      this.httpService.saveModule(this.module).subscribe(() => {
+        this.toolService.openSnackBar(
+          $localize`:@@Saved:Data saved successfully`,
+          $localize`:@@Ok:Ok`,
+          ESnackbarTypes.Info
+        );
+        this.initAll();
+      });
+    }
   }
 
   public selectedContent(event: MatAutocompleteSelectedEvent): void {
@@ -139,6 +135,18 @@ export class EditModuleComponent implements OnInit {
       this.module.module_content_modules.splice(index, 1);
     }
   }
+
+  private createForm() {
+    this.editForm = this.fb.group({
+      name: new FormControl(this.module.module_name, Validators.required),
+      desc: new FormControl(
+        this.module.module_description,
+        Validators.required
+      ),
+      content: this.contentCtrl,
+    });
+  }
+
   private filterContent(value: string): Content[] {
     return this.contentService.filterContent(value, this.allContents);
   }
@@ -156,6 +164,14 @@ export class EditModuleComponent implements OnInit {
       map((name) =>
         name ? this.filterContent(name) : this.allContents.slice()
       )
+    );
+  }
+
+  private showInvalidIdError(): void {
+    this.toolService.openSnackBar(
+      $localize`:@@InvalidModuleId:Invalid id - can't find module to edit!`,
+      $localize`:@@Ok:Ok`,
+      ESnackbarTypes.Error
     );
   }
 }

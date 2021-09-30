@@ -1,16 +1,18 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { MatDialogModule, MAT_DIALOG_DATA } from "@angular/material/dialog";
 
-import { BaseDialogComponent } from './base-dialog.component';
+import { BaseDialogComponent } from "./base-dialog.component";
 
-describe('BaseDialogComponent', () => {
+describe("BaseDialogComponent", () => {
   let component: BaseDialogComponent;
   let fixture: ComponentFixture<BaseDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BaseDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [BaseDialogComponent],
+      imports: [MatDialogModule],
+      providers: [{ provide: MAT_DIALOG_DATA, useValue: {} }],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +21,7 @@ describe('BaseDialogComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

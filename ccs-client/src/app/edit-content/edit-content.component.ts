@@ -17,10 +17,8 @@ import { MatChipInputEvent } from "@angular/material/chips";
 import { COMMA, ENTER } from "@angular/cdk/keycodes";
 import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
 import { WikidataObject } from "../classes/wikiDataObj";
-import { ContentService } from "../services/content.service";
 import { WikiDataObjService } from "../services/wiki-data-obj.service";
 import { SkillService } from "../skill.service";
-import { flushMicrotasks } from "@angular/core/testing";
 import { DocFile } from "../classes/docFile";
 
 @Component({
@@ -29,7 +27,6 @@ import { DocFile } from "../classes/docFile";
   styleUrls: ["./edit-content.component.scss"],
 })
 export class EditContentComponent implements OnInit {
-  private id = 0;
   public content!: Content;
   public editForm!: FormGroup;
   public selectable = true;
@@ -44,6 +41,7 @@ export class EditContentComponent implements OnInit {
 
   private allSkills: Skill[];
   private allWikiObj: WikidataObject[];
+  private id = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -66,46 +64,27 @@ export class EditContentComponent implements OnInit {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get("id");
     if (!id) {
-      this.toolService.openSnackBar(
-        $localize`:@@InvalidContentId:Invalid id - can't find content to edit!`,
-        $localize`:@@Ok:Ok`,
-        ESnackbarTypes.Error
-      );
+      this.showInvalidIdError();
       return;
     }
     this.id = parseInt(id, 10);
     if (!this.id || isNaN(this.id)) {
-      this.toolService.openSnackBar(
-        $localize`:@@InvalidContentId:Invalid id - can't find content to edit!`,
-        $localize`:@@Ok:Ok`,
-        ESnackbarTypes.Error
-      );
+      this.showInvalidIdError();
       return;
     }
-    this.httpService.getContent(this.id).subscribe((content: Content) => {
-      if (content) {
-        this.content = content;
-      } else {
-        this.toolService.openSnackBar(
-          $localize`:@@InvalidContentId:Invalid id - can't find content to edit!`,
-          $localize`:@@Ok:Ok`,
-          ESnackbarTypes.Error
-        );
-      }
-    });
-    this.editForm = this.fb.group({
-      name: new FormControl(this.content.content_name, Validators.required),
-      desc: new FormControl(
-        this.content.content_description,
-        Validators.required
-      ),
-      reqSkills: this.reqSkillCtrl,
-      newSkills: this.newSkillCtrl,
-      wikidata: this.wikiDataObjCtrl,
-      workload: new FormControl(0),
-      binaryContent: new FormControl(""),
-      urlContent: new FormControl(""),
-    });
+    if (this.id === -1) {
+      this.content = new Content();
+      this.createForm();
+    } else {
+      this.httpService.getContent(this.id).subscribe((content: Content) => {
+        if (content) {
+          this.content = content;
+          this.createForm();
+        } else {
+          this.showInvalidIdError();
+        }
+      });
+    }
   }
 
   public goBack(): void {
@@ -116,14 +95,25 @@ export class EditContentComponent implements OnInit {
     this.content.content_name = this.editForm.get("name")?.value;
     this.content.content_description = this.editForm.get("desc")?.value;
     this.content.content_workload = this.editForm.get("workload")?.value;
-    this.httpService.saveContent(this.content).subscribe(() => {
-      this.toolService.openSnackBar(
-        $localize`:@@Saved:Data saved successfully`,
-        $localize`:@@Ok:Ok`,
-        ESnackbarTypes.Info
-      );
-      this.initAll();
-    });
+    if (this.id === -1) {
+      this.httpService.createContent(this.content).subscribe(() => {
+        this.toolService.openSnackBar(
+          $localize`:@@Saved:Data saved successfully`,
+          $localize`:@@Ok:Ok`,
+          ESnackbarTypes.Info
+        );
+        this.goBack();
+      });
+    } else {
+      this.httpService.saveContent(this.content).subscribe(() => {
+        this.toolService.openSnackBar(
+          $localize`:@@Saved:Data saved successfully`,
+          $localize`:@@Ok:Ok`,
+          ESnackbarTypes.Info
+        );
+        this.initAll();
+      });
+    }
   }
 
   public selectedReqSkill(event: MatAutocompleteSelectedEvent): void {
@@ -190,10 +180,6 @@ export class EditContentComponent implements OnInit {
     if (index >= 0) {
       this.content.new_skills.splice(index, 1);
     }
-  }
-
-  private filterSkills(value: string): Skill[] {
-    return this.skillService.filterSkills(value, this.allSkills);
   }
 
   public selectedWikiDataObj(event: MatAutocompleteSelectedEvent): void {
@@ -291,6 +277,34 @@ export class EditContentComponent implements OnInit {
       // TODO handle multiple uploads and then refresh!!
       this.initAll();
     }
+  }
+
+  private showInvalidIdError(): void {
+    this.toolService.openSnackBar(
+      $localize`:@@InvalidContentId:Invalid id - can't find content to edit!`,
+      $localize`:@@Ok:Ok`,
+      ESnackbarTypes.Error
+    );
+  }
+
+  private createForm() {
+    this.editForm = this.fb.group({
+      name: new FormControl(this.content.content_name, Validators.required),
+      desc: new FormControl(
+        this.content.content_description,
+        Validators.required
+      ),
+      reqSkills: this.reqSkillCtrl,
+      newSkills: this.newSkillCtrl,
+      wikidata: this.wikiDataObjCtrl,
+      workload: new FormControl(0),
+      binaryContent: new FormControl(""),
+      urlContent: new FormControl(""),
+    });
+  }
+
+  private filterSkills(value: string): Skill[] {
+    return this.skillService.filterSkills(value, this.allSkills);
   }
 
   private filterWikiDataObjs(value: string): WikidataObject[] {

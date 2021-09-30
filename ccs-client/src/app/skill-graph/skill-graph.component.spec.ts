@@ -1,16 +1,37 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ReactiveFormsModule } from "@angular/forms";
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { MatChipsModule } from "@angular/material/chips";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatSelectModule } from "@angular/material/select";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { HttpService } from "../services/http.service";
 
-import { SkillGraphComponent } from './skill-graph.component';
+import { SkillGraphComponent } from "./skill-graph.component";
 
-describe('SkillGraphComponent', () => {
+describe("SkillGraphComponent", () => {
   let component: SkillGraphComponent;
   let fixture: ComponentFixture<SkillGraphComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SkillGraphComponent ]
-    })
-    .compileComponents();
+      declarations: [SkillGraphComponent],
+      imports: [
+        MatSnackBarModule,
+        HttpClientTestingModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatAutocompleteModule,
+        MatSelectModule,
+        BrowserAnimationsModule,
+        MatChipsModule,
+      ],
+      providers: [HttpService],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +40,7 @@ describe('SkillGraphComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

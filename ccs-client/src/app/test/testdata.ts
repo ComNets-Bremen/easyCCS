@@ -119,6 +119,9 @@ export class ContentTestData {
         }
       }
     }
+    if (content.id === -1) {
+      content.id = this.contents[this.contents.length - 1].id + 1;
+    }
     this.contents.push(content);
     return true;
   }
@@ -200,6 +203,9 @@ export class SkillTestData {
         }
       }
     }
+    if (skill.id === -1) {
+      skill.id = this.skills[this.skills.length - 1].id + 1;
+    }
     this.skills.push(skill);
     return true;
   }
@@ -257,6 +263,9 @@ export class ModuleTestData {
           return true;
         }
       }
+    }
+    if (cMod.id === -1) {
+      cMod.id = this.modules[this.modules.length - 1].id + 1;
     }
     this.modules.push(cMod);
     return true;

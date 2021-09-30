@@ -25,7 +25,6 @@ import { SkillService } from "../skill.service";
   styleUrls: ["./edit-skill.component.scss"],
 })
 export class EditSkillComponent implements OnInit {
-  private id = 0;
   public skill!: Skill;
   public editForm!: FormGroup;
   public selectable = true;
@@ -35,6 +34,7 @@ export class EditSkillComponent implements OnInit {
   public separatorKeysCodes: number[] = [ENTER, COMMA];
 
   private allWikiObj: WikidataObject[];
+  private id = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -62,18 +62,19 @@ export class EditSkillComponent implements OnInit {
       this.showInvalidIdError();
       return;
     }
-    this.httpService.getSkill(this.id).subscribe((skill: Skill) => {
-      if (skill) {
-        this.skill = skill;
-      } else {
-        this.showInvalidIdError();
-      }
-    });
-    this.editForm = this.fb.group({
-      name: new FormControl(this.skill.skill_name, Validators.required),
-      desc: new FormControl(this.skill.description, Validators.required),
-      wikidata: this.wikiDataObjCtrl,
-    });
+    if (this.id === -1) {
+      this.skill = new Skill();
+      this.createForm();
+    } else {
+      this.httpService.getSkill(this.id).subscribe((skill: Skill) => {
+        if (skill) {
+          this.skill = skill;
+          this.createForm();
+        } else {
+          this.showInvalidIdError();
+        }
+      });
+    }
   }
 
   public goBack(): void {
@@ -83,14 +84,25 @@ export class EditSkillComponent implements OnInit {
   public editSkill(): void {
     this.skill.skill_name = this.editForm.get("name")?.value;
     this.skill.description = this.editForm.get("desc")?.value;
-    this.httpService.saveSkill(this.skill).subscribe(() => {
-      this.toolService.openSnackBar(
-        $localize`:@@Saved:Data saved successfully`,
-        $localize`:@@Ok:Ok`,
-        ESnackbarTypes.Info
-      );
-      this.initAll();
-    });
+    if (this.id === -1) {
+      this.httpService.createSkill(this.skill).subscribe(() => {
+        this.toolService.openSnackBar(
+          $localize`:@@Saved:Data saved successfully`,
+          $localize`:@@Ok:Ok`,
+          ESnackbarTypes.Info
+        );
+        this.goBack();
+      });
+    } else {
+      this.httpService.saveSkill(this.skill).subscribe(() => {
+        this.toolService.openSnackBar(
+          $localize`:@@Saved:Data saved successfully`,
+          $localize`:@@Ok:Ok`,
+          ESnackbarTypes.Info
+        );
+        this.initAll();
+      });
+    }
   }
 
   public selectedWikiDataObj(event: MatAutocompleteSelectedEvent): void {
@@ -153,5 +165,13 @@ export class EditSkillComponent implements OnInit {
         name ? this.filterWikiDataObjs(name) : this.allWikiObj.slice()
       )
     );
+  }
+
+  private createForm(): void {
+    this.editForm = this.fb.group({
+      name: new FormControl(this.skill.skill_name, Validators.required),
+      desc: new FormControl(this.skill.description, Validators.required),
+      wikidata: this.wikiDataObjCtrl,
+    });
   }
 }

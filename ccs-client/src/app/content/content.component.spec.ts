@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatFormFieldModule } from "@angular/material/form-field";
@@ -24,6 +25,7 @@ describe("ContentComponent", () => {
         MatDialogModule,
         MatFormFieldModule,
         MatTableModule,
+        HttpClientTestingModule,
         MatInputModule,
         BrowserAnimationsModule,
       ],

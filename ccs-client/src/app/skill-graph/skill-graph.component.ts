@@ -4,7 +4,6 @@ import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
 import { MatChipInputEvent } from "@angular/material/chips";
 import { MatTableDataSource } from "@angular/material/table";
-import { ActivatedRoute, Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { startWith, map } from "rxjs/operators";
 import {
@@ -17,7 +16,6 @@ import { WikidataObject } from "../classes/wikiDataObj";
 import { ESnackbarTypes } from "../enums/snackbarTypes";
 import { HttpService } from "../services/http.service";
 import { ToolService } from "../services/tool.service";
-import { WikiDataObjService } from "../services/wiki-data-obj.service";
 import { SkillService } from "../skill.service";
 
 @Component({
@@ -57,7 +55,6 @@ export class SkillGraphComponent implements OnInit {
     private toolService: ToolService,
     private httpService: HttpService,
     private fb: FormBuilder,
-    private router: Router,
     private skillService: SkillService
   ) {
     this.reqSkillCtrl = new FormControl("");

@@ -63,6 +63,16 @@ body {
   clear: both;
 }
 
+.add-button {
+  font-size: 32px;
+  float: right;
+}
+
+h1.add-header {
+  width: 50%;
+  float: left;
+}
+
 /** OVERRIDES **/
 .mat-form-field {
   min-width: 100%;
