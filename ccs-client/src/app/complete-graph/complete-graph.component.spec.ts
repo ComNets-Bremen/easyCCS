@@ -1,5 +1,6 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { CompleteGraphTemplateComponent } from "../complete-graph-template/complete-graph-template.component";
 import { HttpService } from "../services/http.service.test";
 
 import { CompleteGraphComponent } from "./complete-graph.component";
@@ -11,8 +12,9 @@ describe("CompleteGraphComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CompleteGraphComponent],
+      declarations: [CompleteGraphComponent, CompleteGraphTemplateComponent],
       imports: [HttpClientTestingModule],
+      providers: [],
     });
     service = TestBed.inject(HttpService);
     TestBed.compileComponents();

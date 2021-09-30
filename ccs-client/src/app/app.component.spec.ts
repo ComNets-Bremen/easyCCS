@@ -1,6 +1,8 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
+import { MatIconModule } from "@angular/material/icon";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatToolbarModule } from "@angular/material/toolbar";
 import { RouterTestingModule } from "@angular/router/testing";
 import { AppComponent } from "./app.component";
 import { UserService } from "./services/user.service";
@@ -12,6 +14,8 @@ describe("AppComponent", () => {
         RouterTestingModule,
         HttpClientTestingModule,
         MatSnackBarModule,
+        MatToolbarModule,
+        MatIconModule,
       ],
       declarations: [AppComponent],
       providers: [UserService],

@@ -29,7 +29,7 @@ describe("ContentComponent", () => {
         MatInputModule,
         BrowserAnimationsModule,
       ],
-      providers: [HttpService, ContentTestData, SkillTestData],
+      providers: [HttpService],
     });
     TestBed.compileComponents();
   });

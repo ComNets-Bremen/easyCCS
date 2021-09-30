@@ -14,6 +14,7 @@ declare const require: {
     filter?: RegExp
   ): {
     keys(): string[];
+    // eslint-disable-next-line @typescript-eslint/member-ordering
     <T>(id: string): T;
   };
 };
@@ -27,3 +28,21 @@ getTestBed().initTestEnvironment(
 const context = require.context("./", true, /\.spec\.ts$/);
 // And load the modules.
 context.keys().map(context);
+
+beforeEach(() => patchConsoleToFailOnError());
+
+const orgConsoleError = window.console.error;
+
+export const patchConsoleToFailOnError = () => {
+  window.console.error = (...args: any[]) => {
+    orgConsoleError.apply(this, args);
+
+    try {
+      throw new Error("console.error");
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.info("console.error", args, err);
+    }
+    fail("console.error was called, this is not allowed in a unit test run");
+  };
+};
