@@ -119,6 +119,7 @@ describe("HttpService", () => {
     content.content_description = "Test description";
     content.content_workload = 90;
     content.new_skills = [];
+    content.required_skills = [];
     const skill = SkillTestData.getbyId(1);
     if (skill) {
       content.new_skills.push(skill);
@@ -145,8 +146,8 @@ describe("HttpService", () => {
     const docFile = new DocFile();
     docFile.id = 10;
     docFile.name = "test";
-    service.removeBinaryContent(10, docFile).subscribe(() => {
-      // TODO no error check in real httpservice
+    service.removeBinaryContent(10, docFile).subscribe((result: boolean) => {
+      expect(result).toBe(true);
     });
   });
 

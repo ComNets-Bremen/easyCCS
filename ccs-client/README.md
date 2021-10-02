@@ -46,7 +46,7 @@ In `src` folder there is the according proxy file, where we can define the API r
 
 ## Development
 This project was created with [Visual Studio Code](https://code.visualstudio.com/);  
-There are several VS Code extensions which support Angular development, as well as formatter (Prettier, Beautify) and a helper like ESLint. On first run VS Code will ask you to install recommended extensions.  
+There are several VS Code extensions which support Angular development, as well as formatter (Prettier, Beautify) and a helper like ESLint. On first run VS Code will ask you to install recommended extensions. ESLint can be run automtically with `ng lint`, `ng lint --fix` will fix all automatically fixable issues.
 This project can also be run in other IDEs like WebStorm or any other solution you like.
 
 ## packages
@@ -86,6 +86,9 @@ Running `ng test` will automatically run the full test suite (all .spec.ts files
 To debug test files in VS Code there is an additional launch configuration "Jasmine Debugger" which will allow to attach the VS Code Debugger to the Jasmine Test Process, by selecting the configuration in **Run and Debug** menu and press F5 or the run button after starting testing with `ng test` (with optional options):
 
 NOTE: Difference between Testing and Build/Serve can lead to error messages, but tests will still succeed. [See here for detail information about JIT/AOT compiler usage](https://github.com/angular/angular/issues/36430). [Workaround here](https://github.com/angular/angular/issues/36430#issuecomment-742360228)
+
+To succeed full test it is mandatory that the backend server where the API is located is running. 
+To test routing within the angular app you can toggle the userservice.loggedIn property to check if routes which are blocked for not-logged-in users are working correctly. Routing test is defined in `app-routing.spec.ts` file 
 
 ## TODOS
 url (material for content) validation necessary?  

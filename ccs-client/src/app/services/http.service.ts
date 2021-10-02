@@ -24,6 +24,7 @@ export class HttpService extends BaseHttpService {
     protected cookieService: CookieService
   ) {
     super(http, cookieService);
+    this.baseApi = "http://localhost:8000/" + this.baseApi;
   }
 
   // AUTHENTICATION AND USER STUFF
@@ -243,14 +244,14 @@ export class HttpService extends BaseHttpService {
 
   // default http requests
   protected postRequest(nodeUrl: string, body: any): Observable<any> {
-    const headers = new HttpHeaders(); // .set("django_language", cookie);
+    const headers = new HttpHeaders();
     return this.http.post(nodeUrl, body, {
       headers,
     });
   }
 
   protected getRequest(nodeUrl: string): Observable<any> {
-    const headers = new HttpHeaders(); // .set("django_language", cookie);
+    const headers = new HttpHeaders();
     return this.http.get(nodeUrl, { headers });
   }
 

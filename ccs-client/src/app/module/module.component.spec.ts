@@ -7,7 +7,6 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatTableModule } from "@angular/material/table";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
-import { HttpService } from "../services/http.service";
 
 import { ModuleComponent } from "./module.component";
 
@@ -28,7 +27,6 @@ describe("ModuleComponent", () => {
         BrowserAnimationsModule,
         RouterTestingModule.withRoutes([]),
       ],
-      providers: [HttpService],
     }).compileComponents();
   });
 

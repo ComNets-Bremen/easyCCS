@@ -38,6 +38,8 @@ export class UserService {
         );
         this.httpService.token = token;
         this.router.navigate(["/start"]);
+        const expireDate = new Date();
+        expireDate.setDate(expireDate.getDate() + 7);
         this.cookieService.set(
           this.httpService.tokenName,
           this.httpService.token
@@ -63,6 +65,7 @@ export class UserService {
       this.loggedIn = false;
       this.httpService.token = "";
       this.cookieService.set(this.httpService.tokenName, "");
+      this.router.navigate(["/"]);
     });
   }
 }

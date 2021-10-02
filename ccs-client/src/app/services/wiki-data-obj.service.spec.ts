@@ -1,8 +1,8 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { WikiDataObjService } from './wiki-data-obj.service';
+import { WikiDataObjService } from "./wiki-data-obj.service";
 
-describe('WikiDataObjService', () => {
+describe("WikiDataObjService", () => {
   let service: WikiDataObjService;
 
   beforeEach(() => {
@@ -10,7 +10,7 @@ describe('WikiDataObjService', () => {
     service = TestBed.inject(WikiDataObjService);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 });

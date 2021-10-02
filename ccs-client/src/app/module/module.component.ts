@@ -36,19 +36,6 @@ export class ModuleComponent implements OnInit {
     this.getModules();
   }
 
-  private getModules(): void {
-    this.httpService.getModuleAll().subscribe((modules: ContentModule[]) => {
-      this.modules = modules;
-      for (const module of this.modules) {
-        module.calcWorkload();
-      }
-      this.modules.sort((a, b) =>
-        this.toolService.compare(a.module_name, b.module_name, true)
-      );
-      this.dataSource = new MatTableDataSource(modules);
-    });
-  }
-
   public applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -101,5 +88,18 @@ export class ModuleComponent implements OnInit {
       }
     });
     this.dataSource.connect().next(this.modules);
+  }
+
+  private getModules(): void {
+    this.httpService.getModuleAll().subscribe((modules: ContentModule[]) => {
+      this.modules = modules;
+      for (const module of this.modules) {
+        module.calcWorkload();
+      }
+      this.modules.sort((a, b) =>
+        this.toolService.compare(a.module_name, b.module_name, true)
+      );
+      this.dataSource = new MatTableDataSource(modules);
+    });
   }
 }

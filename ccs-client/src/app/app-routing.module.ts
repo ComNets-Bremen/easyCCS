@@ -17,7 +17,7 @@ import { SkillGraphComponent } from "./skill-graph/skill-graph.component";
 import { SkillComponent } from "./skill/skill.component";
 import { StartComponent } from "./start/start.component";
 
-const routes: Routes = [
+export const routes: Routes = [
   { path: "start", component: StartComponent },
   { path: "login", component: LoginComponent },
   {

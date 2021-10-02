@@ -7,8 +7,6 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatTableModule } from "@angular/material/table";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
-import { HttpService } from "../services/http.service.test";
-import { ContentTestData, SkillTestData } from "../test/testdata";
 
 import { ContentComponent } from "./content.component";
 
@@ -29,7 +27,7 @@ describe("ContentComponent", () => {
         MatInputModule,
         BrowserAnimationsModule,
       ],
-      providers: [HttpService],
+      providers: [],
     });
     TestBed.compileComponents();
   });

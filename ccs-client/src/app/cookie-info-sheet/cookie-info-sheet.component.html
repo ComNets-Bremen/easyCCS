@@ -1,0 +1,49 @@
+<h2 i18n>Cookie Information</h2>
+<p>
+  Diese Internetseite verwendet so genannte Cookies. Cookies richten auf Ihrem
+  Rechner keinen Schaden an und enthalten keine Viren. Cookies dienen dazu,
+  unser Applikation nutzerfreundlicher, effektiver und sicherer zu machen.
+  Cookies sind kleine Textdateien, die auf Ihrem Rechner abgelegt werden und die
+  Ihr Browser speichert.
+</p>
+<p>
+  Alle der von uns verwendeten Cookies sind so genannte „Session-Cookies“, die
+  zur technischen Nutzung dieser Webseite zwingend notwendig sind. Die Cookies
+  bleiben auf Ihrem Endgerät gespeichert, bis Sie diese löschen oder werden nach
+  1 Woche automatisch gelöscht. Diese Cookies ermöglichen es uns, Ihren Browser
+  beim nächsten Besuch wiederzuerkennen.
+</p>
+<p>
+  Sie können Ihren Browser so einstellen, dass Sie über das Setzen von Cookies
+  informiert werden und Cookies nur im Einzelfall erlauben, die Annahme von
+  Cookies für bestimmte Fälle oder generell ausschließen sowie das automatische
+  Löschen der Cookies beim Schließen des Browser aktivieren. Bei der
+  Deaktivierung von Cookies kann diese Webseite nicht genutzt werden.
+</p>
+<p i18n *ngIf="showSecondText" class="warning">
+  Sie haben sich dazu entschieden keine Cookies zu akzeptieren, deshalb können
+  sie diese Webseite leider nicht nutzen
+</p>
+<p class="button-row">
+  <button
+    mat-raised-button
+    type="button"
+    (click)="accept()"
+    color="primary"
+    class="pull-right"
+    i18n
+  >
+    Accept
+  </button>
+  <button
+    type="button"
+    mat-raised-button
+    (click)="decline()"
+    color="accent"
+    class="pull-right right-margin"
+    i18n
+  >
+    Decline
+  </button>
+</p>
+<div class="clear-all"></div>

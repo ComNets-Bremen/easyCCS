@@ -14,7 +14,7 @@ import { Skill } from "../classes/skill";
 export abstract class BaseHttpService {
   public token = "";
   public readonly tokenName = "ccsSession";
-  protected readonly baseApi = "rest/";
+  protected baseApi = "rest/";
   protected readonly end = "/";
 
   constructor(

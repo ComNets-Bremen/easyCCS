@@ -22,6 +22,7 @@ import { MatChipsModule } from "@angular/material/chips";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatSelectModule } from "@angular/material/select";
+import { MatBottomSheetModule } from "@angular/material/bottom-sheet";
 
 // general packages
 import { CookieService } from "ngx-cookie-service";
@@ -48,8 +49,9 @@ import { EditSkillComponent } from "./edit-skill/edit-skill.component";
 import { EditModuleComponent } from "./edit-module/edit-module.component";
 import { SkillGraphTemplateComponent } from "./skill-graph-template/skill-graph-template.component";
 import { SkillDetailComponent } from "./skill-detail/skill-detail.component";
-import { CompleteGraphTemplateComponent } from './complete-graph-template/complete-graph-template.component';
-import { ContactComponent } from './contact/contact.component';
+import { CompleteGraphTemplateComponent } from "./complete-graph-template/complete-graph-template.component";
+import { ContactComponent } from "./contact/contact.component";
+import { CookieInfoSheetComponent } from "./cookie-info-sheet/cookie-info-sheet.component";
 
 @NgModule({
   declarations: [
@@ -72,6 +74,7 @@ import { ContactComponent } from './contact/contact.component';
     SkillDetailComponent,
     CompleteGraphTemplateComponent,
     ContactComponent,
+    CookieInfoSheetComponent,
   ],
   imports: [
     BrowserModule,
@@ -96,6 +99,7 @@ import { ContactComponent } from './contact/contact.component';
     MatAutocompleteModule,
     MatDialogModule,
     MatSelectModule,
+    MatBottomSheetModule,
   ],
   providers: [
     UserService,

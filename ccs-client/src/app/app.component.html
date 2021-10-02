@@ -5,6 +5,7 @@
       mat-icon-button
       aria-label="menu button"
       (click)="openMainMenu($event)"
+      *ngIf="userService.loggedIn"
     >
       <mat-icon>menu</mat-icon>
     </button>
@@ -105,7 +106,7 @@
 <mat-toolbar class="main-footer" color="primary">
   <mat-toolbar-row>
     <div i18n [routerLink]="['/imprint']">Imprint</div>
-    <div i18n [routerLink]="['/privacy']">Privacy</div>
+    <div i18n (click)="openExtLink(4)">Privacy</div>
     <div i18n (click)="openExtLink(3)">ComNets Bremen</div>
     <div>
       <button

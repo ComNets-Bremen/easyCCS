@@ -9,7 +9,6 @@ import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { HttpService } from "../services/http.service";
 
 import { SkillGraphComponent } from "./skill-graph.component";
 
@@ -32,7 +31,6 @@ describe("SkillGraphComponent", () => {
         BrowserAnimationsModule,
         MatChipsModule,
       ],
-      providers: [HttpService],
     }).compileComponents();
   });
 
