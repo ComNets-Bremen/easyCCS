@@ -2,6 +2,7 @@
   <mat-toolbar-row>
     <!-- *ngIf="userService.loggedIn" -->
     <button
+      class="isLink"
       mat-icon-button
       aria-label="menu button"
       (click)="openMainMenu($event)"
@@ -12,6 +13,15 @@
     <span>Easy CCS</span>
     <span class="spacer"></span>
     <button
+      class="isLink"
+      mat-icon-button
+      aria-label="language button"
+      (click)="showLang = !showLang"
+    >
+      <mat-icon>language</mat-icon>
+    </button>
+    <button
+      class="isLink"
       mat-icon-button
       aria-label="contact button"
       [routerLink]="['/contact']"
@@ -20,6 +30,7 @@
       <mat-icon>email</mat-icon>
     </button>
     <button
+      class="isLink"
       *ngIf="userService.loggedIn"
       mat-icon-button
       aria-label="settings button"
@@ -28,6 +39,7 @@
       <mat-icon>settings</mat-icon>
     </button>
     <button
+      class="isLink"
       *ngIf="!userService.loggedIn"
       mat-icon-button
       aria-label="login button"
@@ -37,6 +49,7 @@
       <mat-icon>login</mat-icon>
     </button>
     <button
+      class="isLink"
       *ngIf="userService.loggedIn"
       mat-icon-button
       aria-label="logout button"
@@ -46,11 +59,23 @@
     </button>
   </mat-toolbar-row>
 
-  <!-- Settings menu -->
-  <mat-toolbar-row [routerLink]="['/usersetting']" *ngIf="showSettings">
-    <span i18n>User settings</span>
+  <!-- Language menu -->
+  <mat-toolbar-row *ngIf="showLang" class="isLink" (click)="changeLang('de')">
+    <span>Deutsch</span>
   </mat-toolbar-row>
-  <mat-toolbar-row *ngIf="showSettings">
+  <mat-toolbar-row *ngIf="showLang" class="isLink" (click)="changeLang('en')">
+    <span>English</span>
+  </mat-toolbar-row>
+
+  <!-- Settings menu -->
+  <mat-toolbar-row
+    [routerLink]="['/usersetting']"
+    *ngIf="showSettings"
+    class="isLink"
+  >
+    <span i18n class="isLink">User settings</span>
+  </mat-toolbar-row>
+  <mat-toolbar-row *ngIf="showSettings" class="isLink">
     <span i18n>Admin settings</span>
   </mat-toolbar-row>
 
@@ -105,25 +130,27 @@
 </div>
 <mat-toolbar class="main-footer" color="primary">
   <mat-toolbar-row>
-    <div i18n [routerLink]="['/imprint']">Imprint</div>
-    <div i18n (click)="openExtLink(4)">Privacy</div>
-    <div i18n (click)="openExtLink(3)">ComNets Bremen</div>
+    <div i18n [routerLink]="['/imprint']" class="isLink">Imprint</div>
+    <div i18n (click)="openExtLink(4)" class="isLink">Privacy</div>
+    <div i18n (click)="openExtLink(3)" class="isLink">ComNets Bremen</div>
     <div>
       <button
+        class="isLink"
         mat-icon-button
         aria-label="contact button"
         (click)="openExtLink(1)"
       >
-        <img src="/assets/images/twitter_blue.png" />
+        <img src="assets/images/twitter_blue.png" />
       </button>
     </div>
     <div>
       <button
+        class="isLink"
         mat-icon-button
         aria-label="contact button"
         (click)="openExtLink(2)"
       >
-        <img src="/assets/images/yt_logo_mono_light.png" />
+        <img src="assets/images/yt_logo_mono_light.png" />
       </button>
     </div>
   </mat-toolbar-row>

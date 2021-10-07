@@ -15,6 +15,7 @@ import { UserService } from "./services/user.service";
 export class AppComponent implements OnInit {
   public showSettings = false;
   public showMainMenu = false;
+  public showLang = false;
 
   constructor(
     public userService: UserService,
@@ -46,6 +47,10 @@ export class AppComponent implements OnInit {
     event.stopPropagation();
     this.showMainMenu = !this.showMainMenu;
     this.showSettings = false;
+  }
+
+  public changeLang(langCode: string): void {
+    window.location.href = `/${langCode}`;
   }
 
   public openExtLink(type: number): void {

@@ -72,6 +72,12 @@ NOTE: to translate HTML attributes like `placeholder` just prefix them with i18n
 [We use the package ngx-i18nsupport to keep our language files updated](https://github.com/martinroob/ngx-i18nsupport/wiki/Tutorial-for-using-xliffmerge-with-angular-cli).  
 By running the task `npm extract-i18n` all untranslated strings will be marked with `state="new"`. After translation set state to `final`.
 
+### i18n deploy
+By running `npm build-prod` you will create one folder per language in `dist` output folder. Languages and output must be defined in `angular.json` file.  
+This means, that there is one build per language, as the whole site will be pre-generated for each language.
+Keep in mind that the webserver must be configured to handle multiple language support and switching language will reload whole page. Best practice is to let the server check the `Accept-Language` HTTP header to detect preferred language and add a fallback language. 
+[Example configurations can be found here](https://angular.io/guide/i18n-common-deploy)
+
 ## additional info
 For HTTP error handling we use a [HttpInterceptor](https://angular.io/api/common/http/HttpInterceptor) called `ErrorInterCeptorService`. 
 This service will check all HTTP calls and their responses. This allows to handle all HTTP errors and check outgoing calls for correct token using.  
