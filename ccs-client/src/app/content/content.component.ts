@@ -9,6 +9,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { ConfirmDialogData } from "../classes/confirmDialogData";
 import { BaseDialogComponent } from "../base-dialog/base-dialog.component";
 import { ESnackbarTypes } from "../enums/snackbarTypes";
+import { ContentService } from "../services/content.service";
 
 @Component({
   selector: "app-content",
@@ -30,10 +31,12 @@ export class ContentComponent implements OnInit {
     private httpService: HttpService,
     private toolService: ToolService,
     private router: Router,
+    private contentService: ContentService,
     public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
+    this.contentService.fromRoute = "content";
     this.getContent();
   }
 

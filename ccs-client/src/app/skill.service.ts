@@ -8,6 +8,7 @@ export class SkillService {
   public requiredSkills: Skill[] = [];
   public newSkills: Skill[] = [];
   public title = "";
+  public fromRoute = "";
 
   constructor() {}
 

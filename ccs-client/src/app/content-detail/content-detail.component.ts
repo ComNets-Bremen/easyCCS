@@ -1,18 +1,20 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { Content } from "../classes/content";
 import { Skill } from "../classes/skill";
 import { ESnackbarTypes } from "../enums/snackbarTypes";
+import { ContentService } from "../services/content.service";
 import { HttpService } from "../services/http.service";
 import { ToolService } from "../services/tool.service";
 import { SkillService } from "../skill.service";
 
 @Component({
-  selector: "app-skill-detail",
-  templateUrl: "./skill-detail.component.html",
-  styleUrls: ["./skill-detail.component.scss"],
+  selector: "app-content-detail",
+  templateUrl: "./content-detail.component.html",
+  styleUrls: ["./content-detail.component.scss"],
 })
-export class SkillDetailComponent implements OnInit {
-  public skill: Skill = new Skill();
+export class ContentDetailComponent implements OnInit {
+  public content: Content = new Content();
 
   private id = 0;
 
@@ -21,7 +23,8 @@ export class SkillDetailComponent implements OnInit {
     private router: Router,
     private toolService: ToolService,
     private httpService: HttpService,
-    private skillService: SkillService
+    private skillService: SkillService,
+    private contentService: ContentService
   ) {
     this.initAll();
   }
@@ -37,9 +40,10 @@ export class SkillDetailComponent implements OnInit {
       this.showInvalidIdError();
       return;
     }
-    this.httpService.getSkill(this.id).subscribe((skill: Skill) => {
-      if (skill) {
-        this.skill = skill;
+    this.httpService.getContent(this.id).subscribe((content: Content) => {
+      if (content) {
+        this.content = content;
+        this.skillService.fromRoute = `content/${this.id}`;
       } else {
         this.showInvalidIdError();
       }
@@ -47,10 +51,10 @@ export class SkillDetailComponent implements OnInit {
   }
 
   public goBack(): void {
-    if (this.skillService.fromRoute.indexOf("/") === -1) {
-      this.router.navigate([`/${this.skillService.fromRoute}`]);
+    if (this.contentService.fromRoute.indexOf("/") === -1) {
+      this.router.navigate([`/${this.contentService.fromRoute}`]);
     } else {
-      const tokens = this.skillService.fromRoute.split("/");
+      const tokens = this.contentService.fromRoute.split("/");
       this.router.navigate([`/${tokens[0]}`, tokens[1]]);
     }
   }
@@ -67,7 +71,7 @@ export class SkillDetailComponent implements OnInit {
 
   private showInvalidIdError(): void {
     this.toolService.openSnackBar(
-      $localize`:@@InvalidSkillIdDetail:Invalid id - can't find skill!`,
+      $localize`:@@InvalidContentDetail:Invalid id - can't find content!`,
       $localize`:@@Ok:Ok`,
       ESnackbarTypes.Error
     );

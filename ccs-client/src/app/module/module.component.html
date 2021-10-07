@@ -34,7 +34,9 @@
     <th mat-header-cell *matHeaderCellDef i18n mat-sort-header="module_name">
       Module Title
     </th>
-    <td mat-cell *matCellDef="let element">{{ element.module_name }}</td>
+    <td mat-cell *matCellDef="let element">
+      <a [routerLink]="['/module', element.id]">{{ element.module_name }}</a>
+    </td>
   </ng-container>
 
   <!-- Workload Column -->

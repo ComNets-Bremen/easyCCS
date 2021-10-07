@@ -5,6 +5,8 @@ import { Content } from "../classes/content";
   providedIn: "root",
 })
 export class ContentService {
+  public fromRoute = "";
+
   constructor() {}
 
   public filterContent(value: string, allContents: Content[]): Content[] {

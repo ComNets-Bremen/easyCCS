@@ -9,6 +9,7 @@ import { Skill } from "../classes/skill";
 import { ESnackbarTypes } from "../enums/snackbarTypes";
 import { HttpService } from "../services/http.service";
 import { ToolService } from "../services/tool.service";
+import { SkillService } from "../skill.service";
 
 @Component({
   selector: "app-skill",
@@ -25,10 +26,12 @@ export class SkillComponent implements OnInit {
     private httpService: HttpService,
     private toolService: ToolService,
     private router: Router,
+    private skillService: SkillService,
     public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
+    this.skillService.fromRoute = "skill";
     this.getSkills();
   }
 

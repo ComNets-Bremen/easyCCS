@@ -2,12 +2,14 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { CompleteGraphComponent } from "./complete-graph/complete-graph.component";
 import { ContactComponent } from "./contact/contact.component";
+import { ContentDetailComponent } from "./content-detail/content-detail.component";
 import { ContentComponent } from "./content/content.component";
 import { EditContentComponent } from "./edit-content/edit-content.component";
 import { EditModuleComponent } from "./edit-module/edit-module.component";
 import { EditSkillComponent } from "./edit-skill/edit-skill.component";
 import { ImprintComponent } from "./imprint/imprint.component";
 import { LoginComponent } from "./login/login.component";
+import { ModuleDetailComponent } from "./module-detail/module-detail.component";
 import { ModuleComponent } from "./module/module.component";
 import { PrivacyComponent } from "./privacy/privacy.component";
 import { CanActivateService } from "./services/can-activate.service";
@@ -41,6 +43,11 @@ export const routes: Routes = [
     canActivate: [CanActivateService],
   },
   {
+    path: "content/:id",
+    component: ContentDetailComponent,
+    canActivate: [CanActivateService],
+  },
+  {
     path: "editcontent/:id",
     component: EditContentComponent,
     canActivate: [CanActivateService],
@@ -68,6 +75,11 @@ export const routes: Routes = [
   {
     path: "module",
     component: ModuleComponent,
+    canActivate: [CanActivateService],
+  },
+  {
+    path: "module/:id",
+    component: ModuleDetailComponent,
     canActivate: [CanActivateService],
   },
   { path: "imprint", component: ImprintComponent },

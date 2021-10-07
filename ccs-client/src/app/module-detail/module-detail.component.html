@@ -1,0 +1,43 @@
+<mat-card>
+  <mat-card-title i18n>Module detail view</mat-card-title>
+  <div>
+    <p i18n>Module name: {{ module.module_name }}</p>
+    <p i18n>Module id: {{ module.id }}</p>
+    <p i18n>Module description: {{ module.module_description }}</p>
+  </div>
+  <div>
+    <h2 i18n>Content objects inclduded in this module</h2>
+    <ul>
+      <li *ngFor="let content of module.module_content_modules">
+        <a [routerLink]="['/content', content.id]">
+          {{ content.content_name }}</a
+        >
+      </li>
+    </ul>
+    <h2 i18n>Required (input) Skills</h2>
+    <ul>
+      <li *ngFor="let skill of requiredSkills">
+        <a [routerLink]="['/skill', skill.id]">{{ skill.skill_name }}</a>
+      </li>
+    </ul>
+    <h2 i18n>New (output) Skills</h2>
+    <ul>
+      <li *ngFor="let skill of newSkills">
+        <a [routerLink]="['/skill', skill.id]">{{ skill.skill_name }}</a>
+      </li>
+    </ul>
+  </div>
+  <p class="button-row">
+    <button
+      type="button"
+      mat-raised-button
+      (click)="goBack()"
+      color="accent"
+      class="pull-right right-margin"
+      i18n
+    >
+      Back
+    </button>
+  </p>
+  <div class="clear-all"></div>
+</mat-card>

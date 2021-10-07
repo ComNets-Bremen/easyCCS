@@ -64,6 +64,7 @@ export class SkillGraphComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.skillService.fromRoute = "skillgraph";
     if (this.checkServiceValues()) {
       this.initGraph();
       this.initLoadGraph();

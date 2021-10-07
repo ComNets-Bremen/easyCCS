@@ -52,6 +52,8 @@ import { SkillDetailComponent } from "./skill-detail/skill-detail.component";
 import { CompleteGraphTemplateComponent } from "./complete-graph-template/complete-graph-template.component";
 import { ContactComponent } from "./contact/contact.component";
 import { CookieInfoSheetComponent } from "./cookie-info-sheet/cookie-info-sheet.component";
+import { ContentDetailComponent } from "./content-detail/content-detail.component";
+import { ModuleDetailComponent } from "./module-detail/module-detail.component";
 
 @NgModule({
   declarations: [
@@ -75,6 +77,8 @@ import { CookieInfoSheetComponent } from "./cookie-info-sheet/cookie-info-sheet.
     CompleteGraphTemplateComponent,
     ContactComponent,
     CookieInfoSheetComponent,
+    ContentDetailComponent,
+    ModuleDetailComponent,
   ],
   imports: [
     BrowserModule,
