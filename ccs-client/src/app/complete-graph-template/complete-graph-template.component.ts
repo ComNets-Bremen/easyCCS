@@ -36,6 +36,15 @@ export class CompleteGraphTemplateComponent implements OnInit, AfterViewInit {
   }
 
   private initGraph(): void {
+    this.httpService
+      .getCompleteGraphData()
+      .subscribe((completeGraphData: SkillGraphData) => {
+        this.createSvg();
+        this.update(completeGraphData.links, completeGraphData.nodes);
+      });
+  }
+
+  private createSvg(): void {
     this.svg = d3.select("#svg");
     this.width = +this.svg.attr("width");
     this.height = +this.svg.attr("height");
@@ -72,12 +81,6 @@ export class CompleteGraphTemplateComponent implements OnInit, AfterViewInit {
       )
       .force("charge", d3.forceManyBody())
       .force("center", d3.forceCenter(this.width / 2, this.height / 2));
-
-    this.httpService
-      .getCompleteGraphData()
-      .subscribe((completeGraphData: SkillGraphData) => {
-        this.update(completeGraphData.links, completeGraphData.nodes);
-      });
   }
 
   private update(links: MyLink[], nodes: MyNode[]): void {
@@ -115,7 +118,7 @@ export class CompleteGraphTemplateComponent implements OnInit, AfterViewInit {
 
     this.edgelabels
       .append("textPath")
-      .attr("xlink:href", (d: MyLink, i: number) => "#edgepath" + i)
+      .attr("href", (d: MyLink, i: number) => `#edgepath${i}`)
       .style("text-anchor", "middle")
       .style("pointer-events", "none")
       .attr("startOffset", "50%")
@@ -180,9 +183,9 @@ export class CompleteGraphTemplateComponent implements OnInit, AfterViewInit {
         " " +
         (d.source as MyNode).y +
         " L " +
-        (d.source as MyNode).x +
+        (d.target as MyNode).x +
         " " +
-        (d.source as MyNode).y
+        (d.target as MyNode).y
     );
 
     this.edgelabels.attr(
