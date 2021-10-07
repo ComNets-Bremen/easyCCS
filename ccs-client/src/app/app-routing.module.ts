@@ -73,7 +73,7 @@ export const routes: Routes = [
   { path: "imprint", component: ImprintComponent },
   { path: "privacy", component: PrivacyComponent },
   { path: "contact", component: ContactComponent },
-  { path: "**", component: StartComponent },
+  { path: "**", redirectTo: "/start" },
 ];
 
 @NgModule({

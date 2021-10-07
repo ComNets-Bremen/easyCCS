@@ -35,6 +35,20 @@ describe("HttpService", () => {
     expect(service).toBeTruthy();
   });
 
+  // not existing route
+  it("not existing route", async (done: DoneFn) => {
+    service.logout().subscribe(
+      (result: boolean) => {
+        fail("not existing route failed: no error was thrown");
+        done();
+      },
+      (err) => {
+        expect(err).toBeDefined();
+        done();
+      }
+    );
+  });
+
   // AUTHENTICATION AND USER STUFF
 
   it("login", async (done: DoneFn) => {
@@ -51,14 +65,6 @@ describe("HttpService", () => {
       }
     );
   });
-
-  // it("logoff", async (done: DoneFn) => {
-  //   service.logout().subscribe((result: boolean) => {
-  //     expect(result).toBe(true);
-  //   }, (err) => {
-  //     fail(`logout failed: ${err.status} - ${err.statusText}`);
-  //   });
-  // });
 
   it("contact", async (done: DoneFn) => {
     const formData = new ContactFormData();

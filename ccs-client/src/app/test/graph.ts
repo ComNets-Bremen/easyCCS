@@ -279,7 +279,7 @@ export class SkillGraphDataDemo {
   ];
 
   public static create(): void {
-    this.levels = SkillGraphDataDemo.levels as Array<Array<BaseNode>>;
+    this.levels = SkillGraphDataDemo.levelsDemo as Array<Array<BaseNode>>;
   }
 
   //   [

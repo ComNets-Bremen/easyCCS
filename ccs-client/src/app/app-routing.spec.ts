@@ -71,10 +71,17 @@ describe("Router: App", () => {
     router.initialNavigation();
   });
 
+  it("not defined route redirects you to /start", fakeAsync(() => {
+    router.navigate(["/notexisting"]);
+    tick();
+    expect(location.path()).toBe("/start");
+    flush();
+  }));
+
   it("navigate to '' redirects you to /start", fakeAsync(() => {
     router.navigate([""]);
     tick();
-    expect(location.path()).toBe("/");
+    expect(location.path()).toBe("/start");
     flush();
   }));
 

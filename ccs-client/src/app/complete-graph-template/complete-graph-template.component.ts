@@ -164,8 +164,8 @@ export class CompleteGraphTemplateComponent implements OnInit, AfterViewInit {
     this.link
       .attr("x1", (d: MyLink) => (d.source as MyNode).x)
       .attr("y1", (d: MyLink) => (d.source as MyNode).y)
-      .attr("x2", (d: MyLink) => (d.source as MyNode).x)
-      .attr("y2", (d: MyLink) => (d.source as MyNode).y);
+      .attr("x2", (d: MyLink) => (d.target as MyNode).x)
+      .attr("y2", (d: MyLink) => (d.target as MyNode).y);
 
     this.node.attr(
       "transform",
