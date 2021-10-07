@@ -290,8 +290,12 @@
           <context context-type="linenumber">55</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/content-detail/content-detail.component.ts</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/content/content.component.ts</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="linenumber">64</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/edit-content/edit-content.component.ts</context>
@@ -366,6 +370,10 @@
           <context context-type="linenumber">18</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/module-detail/module-detail.component.ts</context>
+          <context context-type="linenumber">85</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/module/module.component.ts</context>
           <context context-type="linenumber">60</context>
         </context-group>
@@ -387,19 +395,19 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/skill-graph/skill-graph.component.ts</context>
-          <context context-type="linenumber">83</context>
+          <context context-type="linenumber">84</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/skill-graph/skill-graph.component.ts</context>
-          <context context-type="linenumber">103</context>
+          <context context-type="linenumber">104</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/skill-graph/skill-graph.component.ts</context>
-          <context context-type="linenumber">157</context>
+          <context context-type="linenumber">158</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/skill/skill.component.ts</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ContactMsgSentFailed" datatype="html">
@@ -407,6 +415,86 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/contact/contact.component.ts</context>
           <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2527744099804075780" datatype="html">
+        <source>Content detail view</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/content-detail/content-detail.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5844840754725897249" datatype="html">
+        <source>Content name: <x id="INTERPOLATION" equiv-text="{{ content.content_name }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/content-detail/content-detail.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7081149357812303044" datatype="html">
+        <source>Content id: <x id="INTERPOLATION" equiv-text="{{ content.id }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/content-detail/content-detail.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6965313372452373430" datatype="html">
+        <source>Content description: <x id="INTERPOLATION" equiv-text="{{ content.content_description }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/content-detail/content-detail.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4069046660205625366" datatype="html">
+        <source>Required (input) Skills</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/content-detail/content-detail.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/module-detail/module-detail.component.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2640258946165711418" datatype="html">
+        <source>New (output) Skills</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/content-detail/content-detail.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/module-detail/module-detail.component.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8132424293432274889" datatype="html">
+        <source> Back </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/content-detail/content-detail.component.html</context>
+          <context context-type="linenumber">31,32</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/module-detail/module-detail.component.html</context>
+          <context context-type="linenumber">39,40</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-dependency/skill-dependency.component.html</context>
+          <context context-type="linenumber">13,14</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-detail/skill-detail.component.html</context>
+          <context context-type="linenumber">25,26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/skill-graph/skill-graph.component.html</context>
+          <context context-type="linenumber">13,14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="InvalidContentDetail" datatype="html">
+        <source>Invalid id - can&apos;t find content!</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/content-detail/content-detail.component.ts</context>
+          <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8829497237648100098" datatype="html">
@@ -439,44 +527,44 @@
         <source>Material</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/content/content.component.html</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1679327805204432827" datatype="html">
         <source> Workload </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/content/content.component.html</context>
-          <context context-type="linenumber">63,64</context>
+          <context context-type="linenumber">65,66</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/module/module.component.html</context>
-          <context context-type="linenumber">43,44</context>
+          <context context-type="linenumber">45,46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="9216117865911519658" datatype="html">
         <source>Action</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/content/content.component.html</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="linenumber">72</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/module/module.component.html</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">52</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/skill/skill.component.html</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3678587636556283620" datatype="html">
         <source> No data matching the filter &quot;<x id="INTERPOLATION" equiv-text="{{ input.value }}"/>&quot; </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/content/content.component.html</context>
-          <context context-type="linenumber">97,99</context>
+          <context context-type="linenumber">99,101</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/module/module.component.html</context>
-          <context context-type="linenumber">76,78</context>
+          <context context-type="linenumber">78,80</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/skill-dependency/skill-dependency.component.html</context>
@@ -484,21 +572,21 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/skill/skill.component.html</context>
-          <context context-type="linenumber">68,70</context>
+          <context context-type="linenumber">70,72</context>
         </context-group>
       </trans-unit>
       <trans-unit id="DeleteContent" datatype="html">
         <source>Delete Content?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/content/content.component.ts</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="AreYouSure" datatype="html">
         <source>Are your sure to delete selected data?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/content/content.component.ts</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">51</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/module/module.component.ts</context>
@@ -506,14 +594,14 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/skill/skill.component.ts</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="Cancel" datatype="html">
         <source>Cancel</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/content/content.component.ts</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">52</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/module/module.component.ts</context>
@@ -521,14 +609,14 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/skill/skill.component.ts</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="Delete" datatype="html">
         <source>Delete</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/content/content.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">53</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/module/module.component.ts</context>
@@ -536,14 +624,14 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/skill/skill.component.ts</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="Saved" datatype="html">
         <source>Data saved successfully</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/content/content.component.ts</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="linenumber">63</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/edit-content/edit-content.component.ts</context>
@@ -583,11 +671,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/skill-graph/skill-graph.component.ts</context>
-          <context context-type="linenumber">156</context>
+          <context context-type="linenumber">157</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/skill/skill.component.ts</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6934906882097994588" datatype="html">
@@ -859,11 +947,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/skill-graph/skill-graph.component.ts</context>
-          <context context-type="linenumber">82</context>
+          <context context-type="linenumber">83</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/skill-graph/skill-graph.component.ts</context>
-          <context context-type="linenumber">102</context>
+          <context context-type="linenumber">103</context>
         </context-group>
       </trans-unit>
       <trans-unit id="WikidataObjAlreadyExist" datatype="html">
@@ -1112,6 +1200,48 @@
           <context context-type="linenumber">49,50</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="739516883042783251" datatype="html">
+        <source>Module detail view</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/module-detail/module-detail.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2869230882772575128" datatype="html">
+        <source>Module name: <x id="INTERPOLATION" equiv-text="{{ module.module_name }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/module-detail/module-detail.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5156106364586483810" datatype="html">
+        <source>Module id: <x id="INTERPOLATION" equiv-text="{{ module.id }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/module-detail/module-detail.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4035096676707588" datatype="html">
+        <source>Module description: <x id="INTERPOLATION" equiv-text="{{ module.module_description }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/module-detail/module-detail.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4888582124301790600" datatype="html">
+        <source>Content objects inclduded in this module</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/module-detail/module-detail.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="InvalidModuleIdDetail" datatype="html">
+        <source>Invalid id - can&apos;t find module!</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/module-detail/module-detail.component.ts</context>
+          <context context-type="linenumber">84</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="4927938713147933476" datatype="html">
         <source> Module Title </source>
         <context-group purpose="location">
@@ -1152,21 +1282,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/skill-dependency/skill-dependency.component.html</context>
           <context context-type="linenumber">2</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="8132424293432274889" datatype="html">
-        <source> Back </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/skill-dependency/skill-dependency.component.html</context>
-          <context context-type="linenumber">13,14</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/skill-detail/skill-detail.component.html</context>
-          <context context-type="linenumber">25,26</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/skill-graph/skill-graph.component.html</context>
-          <context context-type="linenumber">13,14</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4660757315780738840" datatype="html">
@@ -1372,7 +1487,7 @@
         <source>Delete Skill?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/skill/skill.component.ts</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1683855292922978449" datatype="html">
