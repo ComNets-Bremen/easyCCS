@@ -238,6 +238,7 @@
           type="submit"
           color="primary"
           class="pull-right"
+          [disabled]="!loadGraphForm.get('loadConfig')?.value"
           i18n
         >
           Load

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { MatCardModule } from "@angular/material/card";
 
 import { ImprintComponent } from "./imprint.component";
 
@@ -9,6 +10,7 @@ describe("ImprintComponent", () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ImprintComponent],
+      imports: [MatCardModule],
     }).compileComponents();
   });
 

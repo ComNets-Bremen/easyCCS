@@ -48,6 +48,7 @@ export class SkillDetailComponent implements OnInit {
 
   public goBack(): void {
     if (this.skillService.fromRoute.indexOf("/") === -1) {
+      this.skillService.keepTempVals = true;
       this.router.navigate([`/${this.skillService.fromRoute}`]);
     } else {
       const tokens = this.skillService.fromRoute.split("/");

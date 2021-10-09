@@ -1,1 +1,1 @@
-<svg width="1000" height="1000" id="svg"></svg>
+<svg [attr.width]="graphWidth" [attr.height]="graphHeight" id="svg"></svg>

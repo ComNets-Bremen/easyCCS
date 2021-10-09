@@ -33,6 +33,9 @@ export class AppComponent implements OnInit {
     if (this.showMainMenu) {
       this.showMainMenu = false;
     }
+    if (this.showLang) {
+      this.showLang = false;
+    }
   }
 
   public ngOnInit(): void {}
@@ -41,11 +44,20 @@ export class AppComponent implements OnInit {
     event.stopPropagation();
     this.showSettings = !this.showSettings;
     this.showMainMenu = false;
+    this.showLang = false;
   }
 
   public openMainMenu(event: MouseEvent): void {
     event.stopPropagation();
     this.showMainMenu = !this.showMainMenu;
+    this.showSettings = false;
+    this.showLang = false;
+  }
+
+  public openLangMenu(event: MouseEvent): void {
+    event.stopPropagation();
+    this.showLang = !this.showLang;
+    this.showMainMenu = false;
     this.showSettings = false;
   }
 

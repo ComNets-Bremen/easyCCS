@@ -1,5 +1,6 @@
 <mat-card>
-  <mat-card-title i18n>Edit skill</mat-card-title>
+  <mat-card-title i18n *ngIf="!newSkill">Edit skill</mat-card-title>
+  <mat-card-title i18n *ngIf="newSkill">New skill</mat-card-title>
   <div class="base-form">
     <form [formGroup]="editForm" (ngSubmit)="editSkill()">
       <p>

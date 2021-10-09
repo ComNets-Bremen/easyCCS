@@ -31,6 +31,7 @@ export class EditContentComponent implements OnInit {
   public editForm!: FormGroup;
   public selectable = true;
   public removable = true;
+  public newContent = false;
   public reqSkillCtrl!: FormControl;
   public newSkillCtrl!: FormControl;
   public wikiDataObjCtrl!: FormControl;
@@ -74,6 +75,7 @@ export class EditContentComponent implements OnInit {
     }
     if (this.id === -1) {
       this.content = new Content();
+      this.newContent = true;
       this.createForm();
     } else {
       this.httpService.getContent(this.id).subscribe((content: Content) => {

@@ -16,7 +16,8 @@ import { HttpService } from "../services/http.service";
   styleUrls: ["./complete-graph-template.component.scss"],
 })
 export class CompleteGraphTemplateComponent implements OnInit, AfterViewInit {
-  //  @ViewChild("svg", { read: ElementRef }) svg!: ElementRef;
+  public graphWidth = 1000;
+  public graphHeight = 800;
   private svg!: d3.Selection<SVGElement, any, any, any>;
   private width = 0;
   private height = 0;
@@ -32,7 +33,21 @@ export class CompleteGraphTemplateComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {}
 
   ngAfterViewInit(): void {
+    this.checkWindowSize();
     this.initGraph();
+  }
+
+  private checkWindowSize() {
+    const ele = document.getElementById("svg");
+    const height = window.screen.height;
+    setTimeout(() => {
+      this.graphHeight = ele?.parentElement?.parentElement?.clientHeight
+        ? ele?.parentElement?.parentElement?.clientHeight
+        : 800;
+      this.graphWidth = ele?.parentElement?.parentElement?.clientWidth
+        ? ele?.parentElement?.parentElement?.clientWidth
+        : 800;
+    }, 1);
   }
 
   private initGraph(): void {

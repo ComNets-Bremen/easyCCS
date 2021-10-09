@@ -1,5 +1,6 @@
 <mat-card>
-  <mat-card-title i18n>Edit content</mat-card-title>
+  <mat-card-title i18n *ngIf="!newContent">Edit content</mat-card-title>
+  <mat-card-title i18n *ngIf="newContent">New content</mat-card-title>
   <div class="base-form">
     <form [formGroup]="editForm" (ngSubmit)="editContent()">
       <p>

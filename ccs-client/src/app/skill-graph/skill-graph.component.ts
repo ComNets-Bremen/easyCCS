@@ -177,6 +177,9 @@ export class SkillGraphComponent implements OnInit {
 
   public loadConfig(): void {
     const loadConfig = this.loadGraphForm.get("loadConfig")?.value;
+    if (!loadConfig) {
+      return;
+    }
     this.httpService
       .loadConfig(loadConfig)
       .subscribe((config: GraphConfiguration) => {
@@ -255,6 +258,9 @@ export class SkillGraphComponent implements OnInit {
   }
 
   private checkServiceValues(): boolean {
+    if (!this.skillService.keepTempVals) {
+      this.skillService.clearTempValues();
+    }
     if (
       this.skillService.requiredSkills.length > 0 ||
       this.skillService.newSkills.length > 0 ||
@@ -267,9 +273,10 @@ export class SkillGraphComponent implements OnInit {
       this.graphForm.get("title")?.setValue(this.skillService.title);
       this.showGraph = true;
       this.getGraphContent(this.requiredSkills, this.newSkills);
-      this.skillService.clearTempValues();
+      this.skillService.keepTempVals = false;
       return false;
     }
+    this.skillService.keepTempVals = false;
     return true;
   }
 }

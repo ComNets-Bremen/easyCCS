@@ -7,7 +7,7 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { AppComponent } from "./app.component";
-import { UserService } from "./services/user.service";
+import { CookieInfoSheetComponent } from "./cookie-info-sheet/cookie-info-sheet.component";
 
 describe("AppComponent", () => {
   beforeEach(async () => {
@@ -21,8 +21,7 @@ describe("AppComponent", () => {
         MatBottomSheetModule,
         BrowserAnimationsModule,
       ],
-      declarations: [AppComponent],
-      providers: [UserService],
+      declarations: [AppComponent, CookieInfoSheetComponent],
     }).compileComponents();
   });
 

@@ -128,6 +128,17 @@ describe("Router: App", () => {
     flush();
   }));
 
+  it("navigate to 'contentDetail' with id", fakeAsync(() => {
+    router.navigate(["content", 1]);
+    tick();
+    if (userService.loggedIn) {
+      expect(location.path()).toBe("/content/1");
+    } else {
+      expect(location.path()).toBe("/");
+    }
+    flush();
+  }));
+
   it("navigate to 'skill'", fakeAsync(() => {
     router.navigate(["skill"]);
     tick();
@@ -150,6 +161,17 @@ describe("Router: App", () => {
     flush();
   }));
 
+  it("navigate to 'skillDetail' with id", fakeAsync(() => {
+    router.navigate(["skill", 1]);
+    tick();
+    if (userService.loggedIn) {
+      expect(location.path()).toBe("/skill/1");
+    } else {
+      expect(location.path()).toBe("/");
+    }
+    flush();
+  }));
+
   it("navigate to 'module'", fakeAsync(() => {
     router.navigate(["module"]);
     tick();
@@ -166,6 +188,17 @@ describe("Router: App", () => {
     tick();
     if (userService.loggedIn) {
       expect(location.path()).toBe("/editmodule/1");
+    } else {
+      expect(location.path()).toBe("/");
+    }
+    flush();
+  }));
+
+  it("navigate to 'moduleDetail' with id", fakeAsync(() => {
+    router.navigate(["module", 1]);
+    tick();
+    if (userService.loggedIn) {
+      expect(location.path()).toBe("/module/1");
     } else {
       expect(location.path()).toBe("/");
     }

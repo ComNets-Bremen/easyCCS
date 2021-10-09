@@ -344,13 +344,13 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
         .join("");
 
       const path_1 = document.createElementNS(this.svgNS, "path");
-      path_1.setAttributeNS(null, "class", "link");
+      path_1.setAttributeNS(null, "class", "link-ex");
       path_1.setAttributeNS(null, "stroke", "white");
       path_1.setAttributeNS(null, "stroke-width", "5");
       path_1.setAttributeNS(null, "d", d);
 
       const path_2 = document.createElementNS(this.svgNS, "path");
-      path_2.setAttributeNS(null, "class", "link");
+      path_2.setAttributeNS(null, "class", "link-ex");
       path_2.setAttributeNS(null, "stroke", this.color(node.id.toString()));
       path_2.setAttributeNS(null, "stroke-width", "2");
       path_2.setAttributeNS(null, "d", d);

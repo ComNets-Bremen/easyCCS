@@ -107,6 +107,7 @@
               "extractLicenses": false,
               "buildOptimizer": false,
               "sourceMap": true,
+              "localize": false,
               "optimization": false,
               "namedChunks": true
             },

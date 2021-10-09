@@ -9,6 +9,7 @@ export class SkillService {
   public newSkills: Skill[] = [];
   public title = "";
   public fromRoute = "";
+  public keepTempVals = false;
 
   constructor() {}
 

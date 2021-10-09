@@ -29,6 +29,7 @@ export class EditSkillComponent implements OnInit {
   public editForm!: FormGroup;
   public selectable = true;
   public removable = true;
+  public newSkill = false;
   public wikiDataObjCtrl!: FormControl;
   public filteredWikiData!: Observable<WikidataObject[]>;
   public separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -64,6 +65,7 @@ export class EditSkillComponent implements OnInit {
     }
     if (this.id === -1) {
       this.skill = new Skill();
+      this.newSkill = true;
       this.createForm();
     } else {
       this.httpService.getSkill(this.id).subscribe((skill: Skill) => {

@@ -28,6 +28,7 @@ export class EditModuleComponent implements OnInit {
   public editForm!: FormGroup;
   public selectable = true;
   public removable = true;
+  public newModule = false;
   public contentCtrl!: FormControl;
   public filteredContent!: Observable<Content[]>;
   public separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -62,6 +63,7 @@ export class EditModuleComponent implements OnInit {
     }
     if (this.id === -1) {
       this.module = new ContentModule();
+      this.newModule = true;
       this.createForm();
     } else {
       this.httpService.getModule(this.id).subscribe((module: ContentModule) => {
