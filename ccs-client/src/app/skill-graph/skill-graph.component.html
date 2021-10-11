@@ -14,7 +14,7 @@
   </button>
 </div>
 <div class="clear-all"></div>
-<mat-card *ngIf="showGraph">
+<mat-card *ngIf="showGraph" class="graph-card">
   <mat-card-title
     ><span i18n>Resulting graph for target skills</span
     ><i *ngFor="let rSkill of requiredSkills; let i = index"
@@ -32,7 +32,9 @@
     <!-- Workload Column -->
     <ng-container matColumnDef="content_workload">
       <th mat-header-cell *matHeaderCellDef i18n>Workload</th>
-      <td mat-cell *matCellDef="let element">{{ element.content_workload }}</td>
+      <td mat-cell *matCellDef="let element" class="workload">
+        {{ element.content_workload }}
+      </td>
     </ng-container>
 
     <!-- Req Skills Column -->

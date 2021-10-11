@@ -1,3 +1,4 @@
+import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { Component, HostListener, OnInit } from "@angular/core";
 import {
   MatBottomSheet,
@@ -16,11 +17,14 @@ export class AppComponent implements OnInit {
   public showSettings = false;
   public showMainMenu = false;
   public showLang = false;
+  public showMobileFooter = false;
+  public mobileFooter = false;
 
   constructor(
     public userService: UserService,
     private cookieService: CookieService,
-    private bottomSheet: MatBottomSheet
+    private bottomSheet: MatBottomSheet,
+    private breakpointObserver: BreakpointObserver
   ) {
     this.checkCookieSettings();
   }
@@ -36,15 +40,32 @@ export class AppComponent implements OnInit {
     if (this.showLang) {
       this.showLang = false;
     }
+    if (this.showMobileFooter) {
+      this.showMobileFooter = false;
+    }
   }
 
-  public ngOnInit(): void {}
+  public ngOnInit(): void {
+    const layoutChanges = this.breakpointObserver.observe([
+      Breakpoints.Small,
+      Breakpoints.XSmall,
+    ]);
+
+    layoutChanges.subscribe((result) => {
+      if (result.matches) {
+        this.mobileFooter = true;
+      } else {
+        this.mobileFooter = false;
+      }
+    });
+  }
 
   public openSettings(event: MouseEvent): void {
     event.stopPropagation();
     this.showSettings = !this.showSettings;
     this.showMainMenu = false;
     this.showLang = false;
+    this.showMobileFooter = false;
   }
 
   public openMainMenu(event: MouseEvent): void {
@@ -52,11 +73,21 @@ export class AppComponent implements OnInit {
     this.showMainMenu = !this.showMainMenu;
     this.showSettings = false;
     this.showLang = false;
+    this.showMobileFooter = false;
   }
 
   public openLangMenu(event: MouseEvent): void {
     event.stopPropagation();
     this.showLang = !this.showLang;
+    this.showMainMenu = false;
+    this.showSettings = false;
+    this.showMobileFooter = false;
+  }
+
+  public showFooterMenu(event: MouseEvent): void {
+    event.stopPropagation();
+    this.showMobileFooter = !this.showMobileFooter;
+    this.showLang = false;
     this.showMainMenu = false;
     this.showSettings = false;
   }

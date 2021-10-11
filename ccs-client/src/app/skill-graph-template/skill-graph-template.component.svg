@@ -1,1 +1,1 @@
-<svg #svg width="100%" [attr.height]="layout.height" class="svgMain"></svg>
+<svg #svg [attr.width]="layout.width" [attr.height]="layout.height" class="svgMain"></svg>

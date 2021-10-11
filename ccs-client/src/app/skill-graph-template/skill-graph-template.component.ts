@@ -313,8 +313,10 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
     });
 
     let max = d3.max(this.nodes, (node: MyNode) => node.y);
+    let maxWidth = d3.max(this.nodes, (node: MyNode) => node.x);
     // check possible null
     max = max ? max : 0;
+    maxWidth = maxWidth ? maxWidth : 0;
     this.layout = {
       height: max + node_height / 2 + 2 * padding,
       node_height,
@@ -322,6 +324,7 @@ export class SkillGraphTemplateComponent implements OnInit, AfterViewInit {
       bundle_width,
       level_y_padding,
       metro_d,
+      width: maxWidth + node_width,
     };
   }
 

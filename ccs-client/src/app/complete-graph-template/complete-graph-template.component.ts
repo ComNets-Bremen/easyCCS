@@ -19,8 +19,6 @@ export class CompleteGraphTemplateComponent implements OnInit, AfterViewInit {
   public graphWidth = 1000;
   public graphHeight = 800;
   private svg!: d3.Selection<SVGElement, any, any, any>;
-  private width = 0;
-  private height = 0;
   private node!: d3.Selection<SVGGElement, any, SVGElement, any>;
   private link!: d3.Selection<SVGLineElement, any, SVGElement, any>;
   private simulation!: Simulation<NodeDatum, LinkDatum>;
@@ -34,7 +32,6 @@ export class CompleteGraphTemplateComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.checkWindowSize();
-    this.initGraph();
   }
 
   private checkWindowSize() {
@@ -47,6 +44,7 @@ export class CompleteGraphTemplateComponent implements OnInit, AfterViewInit {
       this.graphWidth = ele?.parentElement?.parentElement?.clientWidth
         ? ele?.parentElement?.parentElement?.clientWidth
         : 800;
+      this.initGraph();
     }, 1);
   }
 
@@ -61,8 +59,6 @@ export class CompleteGraphTemplateComponent implements OnInit, AfterViewInit {
 
   private createSvg(): void {
     this.svg = d3.select("#svg");
-    this.width = +this.svg.attr("width");
-    this.height = +this.svg.attr("height");
 
     this.svg
       .append("defs")
@@ -95,7 +91,10 @@ export class CompleteGraphTemplateComponent implements OnInit, AfterViewInit {
           .strength(1)
       )
       .force("charge", d3.forceManyBody())
-      .force("center", d3.forceCenter(this.width / 2, this.height / 2));
+      .force(
+        "center",
+        d3.forceCenter(this.graphWidth / 2, this.graphHeight / 2)
+      );
   }
 
   private update(links: MyLink[], nodes: MyNode[]): void {

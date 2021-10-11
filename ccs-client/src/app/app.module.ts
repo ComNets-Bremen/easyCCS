@@ -23,6 +23,7 @@ import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatSelectModule } from "@angular/material/select";
 import { MatBottomSheetModule } from "@angular/material/bottom-sheet";
+import { LayoutModule } from "@angular/cdk/layout";
 
 // general packages
 import { CookieService } from "ngx-cookie-service";
@@ -104,6 +105,7 @@ import { ModuleDetailComponent } from "./module-detail/module-detail.component";
     MatDialogModule,
     MatSelectModule,
     MatBottomSheetModule,
+    LayoutModule,
   ],
   providers: [
     UserService,
