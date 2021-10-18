@@ -8,6 +8,7 @@ import { EditContentComponent } from "./edit-content/edit-content.component";
 import { EditModuleComponent } from "./edit-module/edit-module.component";
 import { EditSkillComponent } from "./edit-skill/edit-skill.component";
 import { ImprintComponent } from "./imprint/imprint.component";
+import { LicenseRequestComponent } from "./license-request/license-request.component";
 import { LoginComponent } from "./login/login.component";
 import { ModuleDetailComponent } from "./module-detail/module-detail.component";
 import { ModuleComponent } from "./module/module.component";
@@ -81,6 +82,10 @@ export const routes: Routes = [
     path: "module/:id",
     component: ModuleDetailComponent,
     canActivate: [CanActivateService],
+  },
+  {
+    path: "register",
+    component: LicenseRequestComponent,
   },
   { path: "imprint", component: ImprintComponent },
   { path: "privacy", component: PrivacyComponent },

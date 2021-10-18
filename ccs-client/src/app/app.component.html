@@ -15,6 +15,16 @@
     <button
       class="isLink"
       mat-icon-button
+      aria-label="register button"
+      [routerLink]="['/register']"
+      routerLinkActive="active"
+      *ngIf="!userService.loggedIn"
+    >
+      <mat-icon>app_registration</mat-icon>
+    </button>
+    <button
+      class="isLink"
+      mat-icon-button
       aria-label="language button"
       (click)="openLangMenu($event)"
     >
@@ -159,30 +169,37 @@
 </mat-toolbar>
 <mat-toolbar class="main-footer" color="primary">
   <mat-toolbar-row>
-    <div i18n [routerLink]="['/imprint']" class="isLink">Imprint</div>
-    <div i18n (click)="openExtLink(4)" class="isLink">Privacy</div>
-    <div *ngIf="!mobileFooter">
-      <div i18n (click)="openExtLink(3)" class="isLink">ComNets Bremen</div>
-      <div>
-        <button
-          class="isLink"
-          mat-icon-button
-          aria-label="twitter button"
-          (click)="openExtLink(1)"
-        >
-          <img src="assets/images/twitter_blue.png" />
-        </button>
-      </div>
-      <div>
-        <button
-          class="isLink"
-          mat-icon-button
-          aria-label="youtube button"
-          (click)="openExtLink(2)"
-        >
-          <img src="assets/images/yt_logo_mono_light.png" />
-        </button>
-      </div>
+    <div i18n [routerLink]="['/imprint']" class="isLink footer-div">
+      Imprint
+    </div>
+    <div i18n (click)="openExtLink(4)" class="isLink footer-div">Privacy</div>
+    <div
+      i18n
+      (click)="openExtLink(3)"
+      class="isLink footer-div"
+      *ngIf="!mobileFooter"
+    >
+      ComNets Bremen
+    </div>
+    <div class="footer-div" *ngIf="!mobileFooter">
+      <button
+        class="isLink"
+        mat-icon-button
+        aria-label="twitter button"
+        (click)="openExtLink(1)"
+      >
+        <img src="assets/images/twitter_blue.png" />
+      </button>
+    </div>
+    <div class="footer-div" *ngIf="!mobileFooter">
+      <button
+        class="isLink"
+        mat-icon-button
+        aria-label="youtube button"
+        (click)="openExtLink(2)"
+      >
+        <img src="assets/images/yt_logo_mono_light.png" />
+      </button>
     </div>
     <div *ngIf="mobileFooter" class="mobile-footer-icon">
       <button

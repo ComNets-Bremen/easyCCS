@@ -26,7 +26,7 @@
   background-color: adjust-color(mat.get-color-from-palette(variables.$accent-palette, $opacity: 1));
 }
 
-.main-footer div {
+.footer-div {
   padding: 5px;
   cursor: pointer;
   float: left;

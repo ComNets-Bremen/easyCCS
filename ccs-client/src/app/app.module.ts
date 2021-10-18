@@ -55,6 +55,7 @@ import { ContactComponent } from "./contact/contact.component";
 import { CookieInfoSheetComponent } from "./cookie-info-sheet/cookie-info-sheet.component";
 import { ContentDetailComponent } from "./content-detail/content-detail.component";
 import { ModuleDetailComponent } from "./module-detail/module-detail.component";
+import { LicenseRequestComponent } from './license-request/license-request.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { ModuleDetailComponent } from "./module-detail/module-detail.component";
     CookieInfoSheetComponent,
     ContentDetailComponent,
     ModuleDetailComponent,
+    LicenseRequestComponent,
   ],
   imports: [
     BrowserModule,

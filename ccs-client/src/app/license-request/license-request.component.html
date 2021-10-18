@@ -1,5 +1,5 @@
 <mat-card>
-  <mat-card-title i18n>Send us a message</mat-card-title>
+  <mat-card-title i18n>easyCCS Account Request</mat-card-title>
   <div class="base-form">
     <form [formGroup]="contactForm" (ngSubmit)="sendMsg($event)">
       <p>
@@ -46,19 +46,19 @@
       </p>
       <p>
         <mat-form-field appearance="standard">
-          <mat-label i18n>Subject</mat-label>
+          <mat-label i18n>Your affiliation</mat-label>
           <input
             matInput
-            placeholder="Subject"
-            i18n-placeholder="Subject"
-            formControlName="subject"
+            placeholder="Enter affiliation"
+            i18n-placeholder="Enter affiliation"
+            formControlName="affiliation"
           />
-          <mat-icon matSuffix>subject</mat-icon>
-          <mat-hint i18n>Enter message subject</mat-hint>
+          <mat-icon matSuffix>business</mat-icon>
+          <mat-hint i18n>For whom you are working</mat-hint>
           <mat-error
             *ngIf="
-              !contactForm.controls['subject'].valid &&
-              contactForm.controls['subject'].dirty
+              !contactForm.controls['affiliation'].valid &&
+              contactForm.controls['affiliation'].dirty
             "
             i18n
             >Subject must not be empty
@@ -67,21 +67,24 @@
       </p>
       <p>
         <mat-form-field appearance="standard">
-          <mat-label i18n>Your message</mat-label>
+          <mat-label i18n>Interest</mat-label>
           <textarea
             matInput
-            placeholder="Message"
-            i18n-placeholder="Message"
-            formControlName="message"
+            placeholder="Interest"
+            i18n-placeholder="Interest"
+            formControlName="interest"
             cdkTextareaAutosize
             cdkAutosizeMinRows="5"
           ></textarea>
           <mat-icon matSuffix>message</mat-icon>
-          <mat-hint i18n>Enter message</mat-hint>
+          <mat-hint i18n
+            >A brief description why this project is interesting for you and for
+            what you would like to use it</mat-hint
+          >
           <mat-error
             *ngIf="
-              !contactForm.controls['message'].valid &&
-              contactForm.controls['message'].dirty
+              !contactForm.controls['interest'].valid &&
+              contactForm.controls['interest'].dirty
             "
             i18n
             >Message must not be empty

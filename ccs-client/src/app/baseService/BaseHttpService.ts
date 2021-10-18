@@ -5,12 +5,11 @@ import {
   BaseGraphConfiguration as BaseGraphConfiguration,
   GraphConfiguration,
 } from "../classes/configuration";
-import { ContactFormData } from "../classes/contactFormData";
+import { ContactFormData, LicenseFormData } from "../classes/contactFormData";
 import { Content, UploadContent } from "../classes/content";
 import { ContentModule } from "../classes/contentModule";
 import { DocFile } from "../classes/docFile";
 import { Skill } from "../classes/skill";
-
 export abstract class BaseHttpService {
   public token = "";
   public readonly tokenName = "ccsSession";
@@ -29,6 +28,8 @@ export abstract class BaseHttpService {
   public abstract logout(): Observable<any>;
 
   public abstract contact(formData: ContactFormData): Observable<any>;
+
+  public abstract licenseRequest(formData: LicenseFormData): Observable<any>;
 
   // CONTENT
 

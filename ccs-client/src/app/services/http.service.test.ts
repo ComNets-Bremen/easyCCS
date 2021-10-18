@@ -22,7 +22,7 @@ import {
   BaseGraphConfiguration,
   GraphConfiguration,
 } from "../classes/configuration";
-import { ContactFormData } from "../classes/contactFormData";
+import { ContactFormData, LicenseFormData } from "../classes/contactFormData";
 
 @Injectable({
   providedIn: "root",
@@ -53,6 +53,10 @@ export class HttpService extends BaseHttpService {
     return of(true);
   }
   public contact(formData: ContactFormData): Observable<any> {
+    return of(true);
+  }
+
+  public licenseRequest(formData: LicenseFormData): Observable<any> {
     return of(true);
   }
 

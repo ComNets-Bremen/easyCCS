@@ -4,7 +4,7 @@ import {
   BaseGraphConfiguration,
   GraphConfiguration,
 } from "../classes/configuration";
-import { ContactFormData } from "../classes/contactFormData";
+import { ContactFormData, LicenseFormData } from "../classes/contactFormData";
 import { Content, SkillContent, UploadContent } from "../classes/content";
 import { ContentModule } from "../classes/contentModule";
 import { DocFile } from "../classes/docFile";
@@ -64,6 +64,17 @@ describe("HttpService", () => {
     formData.email = "test@test.de";
     formData.message = "test message";
     service.contact(formData).subscribe((result: boolean) => {
+      expect(result).toBe(true);
+    });
+  });
+
+  it("register", async () => {
+    const formData = new LicenseFormData();
+    formData.name = "test";
+    formData.affiliation = "my company";
+    formData.email = "test@test.de";
+    formData.interest = "test interest message";
+    service.licenseRequest(formData).subscribe((result: boolean) => {
       expect(result).toBe(true);
     });
   });

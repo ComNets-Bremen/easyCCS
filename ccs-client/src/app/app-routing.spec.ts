@@ -13,7 +13,6 @@ import { ImprintComponent } from "./imprint/imprint.component";
 import { LoginComponent } from "./login/login.component";
 import { ModuleComponent } from "./module/module.component";
 import { PrivacyComponent } from "./privacy/privacy.component";
-import { CanActivateService } from "./services/can-activate.service";
 import { SkillDependencyComponent } from "./skill-dependency/skill-dependency.component";
 import { SkillDetailComponent } from "./skill-detail/skill-detail.component";
 import { SkillGraphComponent } from "./skill-graph/skill-graph.component";
@@ -26,6 +25,7 @@ import { UserService } from "./services/user.service";
 import { MatBottomSheetModule } from "@angular/material/bottom-sheet";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CookieInfoSheetComponent } from "./cookie-info-sheet/cookie-info-sheet.component";
+import { LicenseRequestComponent } from "./license-request/license-request.component";
 
 describe("Router: App", () => {
   let location: Location;
@@ -51,6 +51,7 @@ describe("Router: App", () => {
         SkillGraphComponent,
         SkillComponent,
         StartComponent,
+        LicenseRequestComponent,
         CookieInfoSheetComponent,
       ],
       imports: [
@@ -89,6 +90,13 @@ describe("Router: App", () => {
     router.navigate(["contact"]);
     tick();
     expect(location.path()).toBe("/contact");
+    flush();
+  }));
+
+  it("navigate to 'register'", fakeAsync(() => {
+    router.navigate(["register"]);
+    tick();
+    expect(location.path()).toBe("/register");
     flush();
   }));
 

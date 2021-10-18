@@ -5,7 +5,7 @@ import {
   BaseGraphConfiguration,
   GraphConfiguration,
 } from "../classes/configuration";
-import { ContactFormData } from "../classes/contactFormData";
+import { ContactFormData, LicenseFormData } from "../classes/contactFormData";
 import { Content, SkillContent, UploadContent } from "../classes/content";
 import { ContentModule } from "../classes/contentModule";
 import { DocFile } from "../classes/docFile";
@@ -79,6 +79,26 @@ describe("HttpService", () => {
       },
       (err) => {
         fail(`send contact message failed: ${err.status} - ${err.statusText}`);
+        done();
+      }
+    );
+  });
+
+  it("contact", async (done: DoneFn) => {
+    const formData = new LicenseFormData();
+    formData.name = "test";
+    formData.affiliation = "my company";
+    formData.email = "test@test.de";
+    formData.interest = "test interest message";
+    service.licenseRequest(formData).subscribe(
+      (result: boolean) => {
+        expect(result).toBe(true);
+        done();
+      },
+      (err) => {
+        fail(
+          `send license request message failed: ${err.status} - ${err.statusText}`
+        );
         done();
       }
     );

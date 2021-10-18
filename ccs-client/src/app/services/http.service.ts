@@ -7,7 +7,7 @@ import {
   BaseGraphConfiguration,
   GraphConfiguration,
 } from "../classes/configuration";
-import { ContactFormData } from "../classes/contactFormData";
+import { ContactFormData, LicenseFormData } from "../classes/contactFormData";
 import { Content, UploadContent } from "../classes/content";
 import { ContentModule } from "../classes/contentModule";
 import { DocFile } from "../classes/docFile";
@@ -41,6 +41,12 @@ export class HttpService extends BaseHttpService {
 
   public contact(formData: ContactFormData): Observable<any> {
     const url = this.baseApi + "contact" + this.end;
+    const body = formData;
+    return this.postAuthRequest(url, body);
+  }
+
+  public licenseRequest(formData: LicenseFormData): Observable<any> {
+    const url = this.baseApi + "license" + this.end;
     const body = formData;
     return this.postAuthRequest(url, body);
   }
