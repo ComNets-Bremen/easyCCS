@@ -4,7 +4,7 @@ import { Simulation, ForceLink, SimulationNodeDatum } from "d3";
 import {
   NodeDatum,
   LinkDatum,
-  SkillGraphData,
+  SkillGraphData as CompleteGraphData,
   MyNode,
   MyLink,
 } from "../classes/graphData";
@@ -51,7 +51,7 @@ export class CompleteGraphTemplateComponent implements OnInit, AfterViewInit {
   private initGraph(): void {
     this.httpService
       .getCompleteGraphData()
-      .subscribe((completeGraphData: SkillGraphData) => {
+      .subscribe((completeGraphData: CompleteGraphData) => {
         this.createSvg();
         this.update(completeGraphData.links, completeGraphData.nodes);
       });

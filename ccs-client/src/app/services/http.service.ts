@@ -228,23 +228,23 @@ export class HttpService extends BaseHttpService {
   }
 
   public getAllConfigurations(): Observable<any> {
-    const url = this.baseApi + "skillgraph" + this.end;
+    const url = this.baseApi + "graphConfig" + this.end;
     return this.getAuthRequest(url);
   }
 
   public loadConfig(loadConfig: BaseGraphConfiguration): Observable<any> {
-    const url = this.baseApi + `skillgraph/${loadConfig.id}` + this.end;
+    const url = this.baseApi + `graphConfig/${loadConfig.id}` + this.end;
     return this.getAuthRequest(url);
   }
 
   public saveConfiguration(config: GraphConfiguration): Observable<any> {
-    const url = this.baseApi + "skillgraph" + this.end;
+    const url = this.baseApi + "graphConfig" + this.end;
     const body = config;
     return this.postAuthRequest(url, body);
   }
 
   public deleteConfiguration(configId: number): Observable<any> {
-    const url = this.baseApi + `skillgraph/${configId}` + this.end;
+    const url = this.baseApi + `graphConfig/${configId}` + this.end;
     return this.deleteAuthRequest(url);
   }
 
