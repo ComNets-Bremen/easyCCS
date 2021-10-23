@@ -52,9 +52,12 @@ describe("HttpService", () => {
   });
 
   it("logoff", async () => {
-    service.logout().subscribe((result: boolean) => {
-      expect(result).toBe(true);
-    });
+    service.logout().subscribe(
+      () => {
+        expect(true).toBe(true);
+      },
+      (err) => fail(err)
+    );
   });
 
   it("contact", async () => {
@@ -63,9 +66,12 @@ describe("HttpService", () => {
     formData.subject = "test subject";
     formData.email = "test@test.de";
     formData.message = "test message";
-    service.contact(formData).subscribe((result: boolean) => {
-      expect(result).toBe(true);
-    });
+    service.contact(formData).subscribe(
+      () => {
+        expect(true).toBe(true);
+      },
+      (err) => fail(err)
+    );
   });
 
   it("register", async () => {
@@ -74,9 +80,12 @@ describe("HttpService", () => {
     formData.affiliation = "my company";
     formData.email = "test@test.de";
     formData.interest = "test interest message";
-    service.licenseRequest(formData).subscribe((result: boolean) => {
-      expect(result).toBe(true);
-    });
+    service.licenseRequest(formData).subscribe(
+      () => {
+        expect(true).toBe(true);
+      },
+      (err) => fail(err)
+    );
   });
 
   // CONTENTS
@@ -100,9 +109,12 @@ describe("HttpService", () => {
 
   it("delete content", async () => {
     const id = 1;
-    service.deleteContent(id).subscribe((result: boolean) => {
-      expect(result).toBe(true);
-    });
+    service.deleteContent(id).subscribe(
+      () => {
+        expect(true).toBe(true);
+      },
+      (err) => fail(err)
+    );
   });
 
   it("create content", async () => {
@@ -119,9 +131,12 @@ describe("HttpService", () => {
     if (skill2) {
       content.required_skills.push(skill2);
     }
-    service.createContent(content).subscribe((result: boolean) => {
-      expect(result).toBe(true);
-    });
+    service.createContent(content).subscribe(
+      () => {
+        expect(true).toBe(true);
+      },
+      (err) => fail(err)
+    );
   });
 
   it("update content", async () => {
@@ -139,27 +154,36 @@ describe("HttpService", () => {
     if (skill2) {
       content.required_skills.push(skill2);
     }
-    service.saveContent(content).subscribe((result: boolean) => {
-      expect(result).toBe(true);
-    });
+    service.saveContent(content).subscribe(
+      () => {
+        expect(true).toBe(true);
+      },
+      (err) => fail(err)
+    );
   });
 
   it("upload content", async () => {
     const formData = new FormData();
     formData.append("file", ContentTestData.testFile, "fileTestData.doc");
     const content = new UploadContent(10, formData);
-    service.uploadContent(content).subscribe((result: boolean) => {
-      expect(result).toBe(true);
-    });
+    service.uploadContent(content).subscribe(
+      () => {
+        expect(true).toBe(true);
+      },
+      (err) => fail(err)
+    );
   });
 
   it("remove binary content", async () => {
     const docFile = new DocFile();
     docFile.id = 10;
     docFile.name = "test";
-    service.removeBinaryContent(10, docFile).subscribe((result: boolean) => {
-      expect(result).toBe(true);
-    });
+    service.removeBinaryContent(10, docFile).subscribe(
+      () => {
+        expect(true).toBe(true);
+      },
+      (err) => fail(err)
+    );
   });
 
   // SKILLS
@@ -181,27 +205,36 @@ describe("HttpService", () => {
 
   it("delete skill", async () => {
     const id = 1;
-    service.deleteSkill(id).subscribe((result: boolean) => {
-      expect(result).toBe(true);
-    });
+    service.deleteSkill(id).subscribe(
+      () => {
+        expect(true).toBe(true);
+      },
+      (err) => fail(err)
+    );
   });
 
   it("create skill", async () => {
     const skill = new Skill();
     skill.skill_name = "test";
     skill.description = "Test description";
-    service.createSkill(skill).subscribe((result: boolean) => {
-      expect(result).toBe(true);
-    });
+    service.createSkill(skill).subscribe(
+      () => {
+        expect(true).toBe(true);
+      },
+      (err) => fail(err)
+    );
   });
 
   it("save skill", async () => {
     const skill = new Skill();
     skill.skill_name = "test";
     skill.description = "Test description";
-    service.saveSkill(skill).subscribe((result: boolean) => {
-      expect(result).toBe(true);
-    });
+    service.saveSkill(skill).subscribe(
+      () => {
+        expect(true).toBe(true);
+      },
+      (err) => fail(err)
+    );
   });
 
   it("get skill tree", async () => {
@@ -229,9 +262,12 @@ describe("HttpService", () => {
 
   it("delete module", async () => {
     const id = 1;
-    service.deleteModule(id).subscribe((result: boolean) => {
-      expect(result).toBe(true);
-    });
+    service.deleteModule(id).subscribe(
+      () => {
+        expect(true).toBe(true);
+      },
+      (err) => fail(err)
+    );
   });
 
   it("create module", async () => {
@@ -243,9 +279,12 @@ describe("HttpService", () => {
     if (content) {
       module.module_content_modules.push(content);
     }
-    service.createModule(module).subscribe((result: boolean) => {
-      expect(result).toBe(true);
-    });
+    service.createModule(module).subscribe(
+      () => {
+        expect(true).toBe(true);
+      },
+      (err) => fail(err)
+    );
   });
 
   it("save module", async () => {
@@ -257,9 +296,12 @@ describe("HttpService", () => {
     if (content) {
       module.module_content_modules.push(content);
     }
-    service.saveModule(module).subscribe((result: boolean) => {
-      expect(result).toBe(true);
-    });
+    service.saveModule(module).subscribe(
+      () => {
+        expect(true).toBe(true);
+      },
+      (err) => fail(err)
+    );
   });
 
   // WIKI DATA OBJECTS
@@ -333,16 +375,22 @@ describe("HttpService", () => {
 
   it("delete config", async () => {
     const id = 1;
-    service.deleteConfiguration(id).subscribe((result: boolean) => {
-      expect(result).toBe(true);
-    });
+    service.deleteConfiguration(id).subscribe(
+      () => {
+        expect(true).toBe(true);
+      },
+      (err) => fail(err)
+    );
   });
 
   it("save config", async () => {
     const config = new GraphConfiguration();
     config.title = "test";
-    service.saveConfiguration(config).subscribe((result: boolean) => {
-      expect(result).toBe(true);
-    });
+    service.saveConfiguration(config).subscribe(
+      () => {
+        expect(true).toBe(true);
+      },
+      (err) => fail(err)
+    );
   });
 });

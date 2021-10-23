@@ -96,11 +96,10 @@ NOTE: Difference between Testing and Build/Serve can lead to error messages, but
 To succeed full test it is mandatory that the backend server where the API is located is running. 
 To test routing within the angular app you can toggle the userservice.loggedIn property to check if routes which are blocked for not-logged-in users are working correctly. Routing test is defined in `app-routing.spec.ts` file 
 
-## TODOS
-url (material for content) validation necessary?  
-binary content => general or content bound?  
-download material/Url => zip?  
-add uploadcontent => api  
+## OPEN POINTS
+* Define upload and download scenario for interface
+* Clarifiy security restrictions for upload (restrict file type, check file content (scripts?) etc.)
+
 
 
 
