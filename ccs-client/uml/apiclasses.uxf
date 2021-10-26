@@ -19,7 +19,7 @@ name: string;
 email: string
 subject: string
 message: string
-}
+
 </panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>242</x><y>0</y><w>210</w><h>270</h></coordinates><panel_attributes>Content
 --
 id: int
@@ -43,7 +43,7 @@ module_name: string
 module_description: string
 module_workload: int
 module_content_modules: Content[]
-}
+
 </panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>12</x><y>560</y><w>210</w><h>80</h></coordinates><panel_attributes>DocFile
 --
 id: int
@@ -95,21 +95,21 @@ id: int;
 skill_name: string
 description: string
 skill_keywords: WikidataObject[]
-}
+
 </panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>702</x><y>150</y><w>210</w><h>190</h></coordinates><panel_attributes>WikidataObject
 --
 wikidata_id: int;
 wikidata_name: string
 wikidata_related_fields: string[]
 wikidata_related_fields_raw: string[]
-}
+
 </panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>12</x><y>140</y><w>210</w><h>190</h></coordinates><panel_attributes>LicenseFormData 
 --
 name: string;
 email: string
 affiliation: string
 interest: string
-}
+
 </panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>242</x><y>290</y><w>210</w><h>100</h></coordinates><panel_attributes>SkillContent
 --
 contents: Content[]

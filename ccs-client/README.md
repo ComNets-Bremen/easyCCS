@@ -96,6 +96,9 @@ NOTE: Difference between Testing and Build/Serve can lead to error messages, but
 To succeed full test it is mandatory that the backend server where the API is located is running. 
 To test routing within the angular app you can toggle the userservice.loggedIn property to check if routes which are blocked for not-logged-in users are working correctly. Routing test is defined in `app-routing.spec.ts` file 
 
+## API class info - UML
+There is an UML folder in this project which contains the used and expected classes for server interface. This was created with the Visual Studio extension [UMLet](https://marketplace.visualstudio.com/items?itemName=TheUMLetTeam.umlet). The UMl diagrams can be directly edited in VS Code or exported as image file (see api.png for latest class diagram)
+
 ## OPEN POINTS
 * Define upload and download scenario for interface
 * Clarifiy security restrictions for upload (restrict file type, check file content (scripts?) etc.)
