@@ -1,0 +1,294 @@
+<mat-card>
+  <mat-card-title i18n *ngIf="!newContent">Edit content</mat-card-title>
+  <mat-card-title i18n *ngIf="newContent">New content</mat-card-title>
+  <div class="base-form">
+    <form [formGroup]="editForm" (ngSubmit)="editContent()">
+      <p>
+        <mat-form-field appearance="standard">
+          <mat-label i18n>Name</mat-label>
+          <input
+            matInput
+            placeholder="Name"
+            i18n-placeholder="Name"
+            formControlName="name"
+          />
+          <mat-icon matSuffix>title</mat-icon>
+          <mat-hint i18n>Enter name</mat-hint>
+          <mat-error
+            *ngIf="
+              !editForm.controls['name'].valid &&
+              editForm.controls['name'].dirty
+            "
+            i18n
+            >Name must not be empty
+          </mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="standard">
+          <mat-label i18n>Description</mat-label>
+          <textarea
+            matInput
+            placeholder="Description"
+            i18n-placeholder="Description"
+            formControlName="desc"
+            cdkTextareaAutosize
+            cdkAutosizeMinRows="5"
+          ></textarea>
+          <mat-icon matSuffix>description</mat-icon>
+          <mat-hint i18n>Enter description</mat-hint>
+          <mat-error
+            *ngIf="
+              !editForm.controls['desc'].valid &&
+              editForm.controls['desc'].dirty
+            "
+            i18n
+            >Description must not be empty</mat-error
+          >
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="fill">
+          <mat-label i18n>Required skills</mat-label>
+          <mat-chip-list #chipListReq aria-label="Required skills">
+            <mat-chip
+              *ngFor="let reqSkill of content.required_skills"
+              [selectable]="selectable"
+              [removable]="removable"
+              (removed)="removeReqSkill(reqSkill)"
+            >
+              {{ reqSkill.skill_name }}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input
+              placeholder="Add skill..."
+              i18n-placeholder="Add skill..."
+              #reqSkillInput
+              formControlName="reqSkills"
+              [matAutocomplete]="autoReq"
+              [matChipInputFor]="chipListReq"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="addReqSkill($event)"
+            />
+          </mat-chip-list>
+          <mat-autocomplete
+            #autoReq="matAutocomplete"
+            (optionSelected)="selectedReqSkill($event)"
+          >
+            <mat-option
+              *ngFor="let reqSkill of filteredReqSkills | async"
+              [value]="reqSkill"
+            >
+              {{ reqSkill.skill_name }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="fill">
+          <mat-label i18n>New skills</mat-label>
+          <mat-chip-list #chipListNew aria-label="New skills">
+            <mat-chip
+              *ngFor="let newSkill of content.new_skills"
+              [selectable]="selectable"
+              [removable]="removable"
+              (removed)="removeNewSkill(newSkill)"
+            >
+              {{ newSkill.skill_name }}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input
+              placeholder="Add skill..."
+              i18n-placeholder="Add skill..."
+              #newSkillInput
+              formControlName="newSkills"
+              [matAutocomplete]="autoNew"
+              [matChipInputFor]="chipListNew"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="addNewSkill($event)"
+            />
+          </mat-chip-list>
+          <mat-autocomplete
+            #autoNew="matAutocomplete"
+            (optionSelected)="selectedNewSkill($event)"
+          >
+            <mat-option
+              *ngFor="let newSkill of filteredNewSkills | async"
+              [value]="newSkill"
+            >
+              {{ newSkill.skill_name }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="fill">
+          <mat-label i18n>Wikidata Objects</mat-label>
+          <mat-chip-list #chipListWikiData aria-label="Wikidata Objects">
+            <mat-chip
+              *ngFor="let keyword of content.content_keywords"
+              [selectable]="selectable"
+              [removable]="removable"
+              (removed)="removeWikiDataObj(keyword)"
+            >
+              {{ keyword.wikidata_name }}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input
+              placeholder="Add Wikidata Object..."
+              i18n-placeholder="Add Wikidata Object..."
+              #newSkillInput
+              formControlName="wikidata"
+              [matAutocomplete]="autoWiki"
+              [matChipInputFor]="chipListWikiData"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="addWikidataObj($event)"
+            />
+          </mat-chip-list>
+          <mat-autocomplete
+            #autoWiki="matAutocomplete"
+            (optionSelected)="selectedWikiDataObj($event)"
+          >
+            <mat-option
+              *ngFor="let newWikiObj of filteredWikiData | async"
+              [value]="newWikiObj"
+            >
+              {{ newWikiObj.wikidata_name }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="standard">
+          <mat-label i18n>Content workload</mat-label>
+          <input
+            matInput
+            placeholder="Workload"
+            i18n-placeholder="Workload"
+            formControlName="workload"
+            type="number"
+          />
+          <mat-icon matSuffix>hourglass_empty</mat-icon>
+          <mat-hint i18n>Minutes</mat-hint>
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-accordion>
+          <mat-expansion-panel hideToggle [expanded]="true">
+            <mat-expansion-panel-header>
+              <mat-panel-title i18n> Binary Content </mat-panel-title>
+              <mat-panel-description i18n>
+                Click to collapse
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div>
+              <button
+                mat-raised-button
+                color="primary"
+                type="button"
+                (click)="uploadFile.click()"
+              >
+                Choose File
+              </button>
+              <input
+                #uploadFile
+                (change)="upload($event)"
+                type="file"
+                style="display: none"
+              />
+            </div>
+            <mat-list role="list">
+              <mat-list-item
+                role="listitem"
+                *ngFor="let con of content.binary_content"
+                >{{ con.name }}
+                <mat-icon
+                  matSuffix
+                  (click)="removeBinaryContent(con)"
+                  class="trash-icon isLink"
+                  >delete</mat-icon
+                ></mat-list-item
+              >
+            </mat-list>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </p>
+
+      <p>
+        <mat-accordion>
+          <mat-expansion-panel hideToggle [expanded]="true">
+            <mat-expansion-panel-header>
+              <mat-panel-title i18n> URL Content </mat-panel-title>
+              <mat-panel-description i18n>
+                Click to collapse
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div>
+              <mat-form-field appearance="fill">
+                <mat-label i18n>URL</mat-label>
+                <input matInput formControlName="urlContent" type="url" />
+                <button
+                  matSuffix
+                  mat-icon-button
+                  type="button"
+                  aria-label="Clear"
+                  (click)="editForm.controls['urlContent'].reset()"
+                >
+                  <mat-icon>close</mat-icon>
+                </button>
+              </mat-form-field>
+              <button
+                [disabled]="!editForm.controls['urlContent'].value"
+                type="button"
+                mat-raised-button
+                color="primary"
+                i18n
+                class="pull-right"
+                (click)="addUrl()"
+              >
+                Add url
+              </button>
+            </div>
+            <mat-list role="list">
+              <mat-list-item
+                role="listitem"
+                *ngFor="let url of content.url_content"
+                >{{ url }}
+                <mat-icon
+                  matSuffix
+                  (click)="removeUrl(url)"
+                  class="trash-icon isLink"
+                  >delete</mat-icon
+                ></mat-list-item
+              >
+            </mat-list>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </p>
+      <p class="button-row">
+        <button
+          mat-raised-button
+          type="submit"
+          [disabled]="!editForm.valid"
+          color="primary"
+          class="pull-right"
+          i18n
+        >
+          Save
+        </button>
+        <button
+          type="button"
+          mat-raised-button
+          (click)="goBack()"
+          color="accent"
+          class="pull-right right-margin"
+          i18n
+        >
+          Back to list
+        </button>
+      </p>
+      <div class="clear-all"></div>
+    </form>
+  </div>
+</mat-card>

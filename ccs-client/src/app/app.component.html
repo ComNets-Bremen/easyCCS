@@ -1,0 +1,215 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <!-- *ngIf="userService.loggedIn" -->
+    <button
+      class="isLink"
+      mat-icon-button
+      aria-label="menu button"
+      (click)="openMainMenu($event)"
+      *ngIf="userService.loggedIn"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>Easy CCS</span>
+    <span class="spacer"></span>
+    <button
+      class="isLink"
+      mat-icon-button
+      aria-label="register button"
+      [routerLink]="['/register']"
+      routerLinkActive="active"
+      *ngIf="!userService.loggedIn"
+    >
+      <mat-icon>app_registration</mat-icon>
+    </button>
+    <button
+      class="isLink"
+      mat-icon-button
+      aria-label="language button"
+      (click)="openLangMenu($event)"
+    >
+      <mat-icon>language</mat-icon>
+    </button>
+    <button
+      class="isLink"
+      mat-icon-button
+      aria-label="contact button"
+      [routerLink]="['/contact']"
+      routerLinkActive="active"
+    >
+      <mat-icon>email</mat-icon>
+    </button>
+    <button
+      class="isLink"
+      *ngIf="userService.loggedIn"
+      mat-icon-button
+      aria-label="settings button"
+      (click)="openSettings($event)"
+    >
+      <mat-icon>settings</mat-icon>
+    </button>
+    <button
+      class="isLink"
+      *ngIf="!userService.loggedIn"
+      mat-icon-button
+      aria-label="login button"
+      [routerLink]="['/login']"
+      routerLinkActive="active"
+    >
+      <mat-icon>login</mat-icon>
+    </button>
+    <button
+      class="isLink"
+      *ngIf="userService.loggedIn"
+      mat-icon-button
+      aria-label="logout button"
+      (click)="userService.logout()"
+    >
+      <mat-icon>logout</mat-icon>
+    </button>
+  </mat-toolbar-row>
+
+  <!-- Language menu -->
+  <mat-toolbar-row *ngIf="showLang" class="isLink" (click)="changeLang('de')">
+    <span>Deutsch</span>
+  </mat-toolbar-row>
+  <mat-toolbar-row *ngIf="showLang" class="isLink" (click)="changeLang('en')">
+    <span>English</span>
+  </mat-toolbar-row>
+
+  <!-- Settings menu -->
+  <mat-toolbar-row
+    [routerLink]="['/usersetting']"
+    *ngIf="showSettings"
+    class="isLink"
+  >
+    <span i18n class="isLink">User settings</span>
+  </mat-toolbar-row>
+  <mat-toolbar-row *ngIf="showSettings" class="isLink">
+    <span i18n>Admin settings</span>
+  </mat-toolbar-row>
+
+  <!-- main menu data mmanagement-->
+  <mat-toolbar-row
+    [routerLink]="['/content']"
+    *ngIf="showMainMenu"
+    class="isLink"
+  >
+    <span i18n>Manage Content</span>
+  </mat-toolbar-row>
+  <mat-toolbar-row
+    [routerLink]="['/skill']"
+    *ngIf="showMainMenu"
+    class="isLink"
+  >
+    <span i18n>Manage Skills</span>
+  </mat-toolbar-row>
+  <mat-toolbar-row
+    [routerLink]="['/module']"
+    *ngIf="showMainMenu"
+    class="isLink"
+  >
+    <span i18n>Manage Modules</span>
+  </mat-toolbar-row>
+
+  <!-- main menu data representation-->
+  <mat-toolbar-row
+    [routerLink]="['/completegraph']"
+    *ngIf="showMainMenu"
+    class="isLink"
+  >
+    <span i18n>Complete Graph</span>
+  </mat-toolbar-row>
+  <mat-toolbar-row
+    [routerLink]="['/skillgraph']"
+    *ngIf="showMainMenu"
+    class="isLink"
+  >
+    <span i18n>Selectable Skill Graph</span>
+  </mat-toolbar-row>
+  <mat-toolbar-row
+    [routerLink]="['/skilldependency']"
+    *ngIf="showMainMenu"
+    class="isLink"
+  >
+    <span i18n>Get Skill Dependencies</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+<div class="mat-body">
+  <router-outlet></router-outlet>
+</div>
+<mat-toolbar
+  class="main-footer-mobile"
+  color="primary"
+  *ngIf="showMobileFooter"
+>
+  <mat-toolbar-row>
+    <div i18n (click)="openExtLink(3)" class="isLink">ComNets Bremen</div>
+    <div>
+      <button
+        class="isLink"
+        mat-icon-button
+        aria-label="twitter button"
+        (click)="openExtLink(1)"
+      >
+        <img src="assets/images/twitter_blue.png" />
+      </button>
+    </div>
+    <div>
+      <button
+        class="isLink"
+        mat-icon-button
+        aria-label="youtube button"
+        (click)="openExtLink(2)"
+      >
+        <img src="assets/images/yt_logo_mono_light.png" />
+      </button>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-toolbar class="main-footer" color="primary">
+  <mat-toolbar-row>
+    <div i18n [routerLink]="['/imprint']" class="isLink footer-div">
+      Imprint
+    </div>
+    <div i18n (click)="openExtLink(4)" class="isLink footer-div">Privacy</div>
+    <div
+      i18n
+      (click)="openExtLink(3)"
+      class="isLink footer-div"
+      *ngIf="!mobileFooter"
+    >
+      ComNets Bremen
+    </div>
+    <div class="footer-div" *ngIf="!mobileFooter">
+      <button
+        class="isLink"
+        mat-icon-button
+        aria-label="twitter button"
+        (click)="openExtLink(1)"
+      >
+        <img src="assets/images/twitter_blue.png" />
+      </button>
+    </div>
+    <div class="footer-div" *ngIf="!mobileFooter">
+      <button
+        class="isLink"
+        mat-icon-button
+        aria-label="youtube button"
+        (click)="openExtLink(2)"
+      >
+        <img src="assets/images/yt_logo_mono_light.png" />
+      </button>
+    </div>
+    <div *ngIf="mobileFooter" class="mobile-footer-icon">
+      <button
+        class="isLink"
+        mat-icon-button
+        aria-label="footer button"
+        (click)="showFooterMenu($event)"
+      >
+        <mat-icon>link</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>

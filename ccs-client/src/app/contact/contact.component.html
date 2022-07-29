@@ -1,0 +1,106 @@
+<mat-card>
+  <mat-card-title i18n>Send us a message</mat-card-title>
+  <div class="base-form">
+    <form [formGroup]="contactForm" (ngSubmit)="sendMsg($event)">
+      <p>
+        <mat-form-field appearance="standard">
+          <mat-label i18n>Name</mat-label>
+          <input
+            matInput
+            placeholder="Name"
+            i18n-placeholder="Name"
+            formControlName="name"
+          />
+          <mat-icon matSuffix>title</mat-icon>
+          <mat-hint i18n>Enter name</mat-hint>
+          <mat-error
+            *ngIf="
+              !contactForm.controls['name'].valid &&
+              contactForm.controls['name'].dirty
+            "
+            i18n
+            >Name must not be empty
+          </mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="standard">
+          <mat-label i18n>Email</mat-label>
+          <input
+            matInput
+            placeholder="Email"
+            i18n-placeholder="Email"
+            formControlName="email"
+          />
+          <mat-icon matSuffix>mail</mat-icon>
+          <mat-hint i18n>Enter valid email address</mat-hint>
+          <mat-error
+            *ngIf="
+              !contactForm.controls['email'].valid &&
+              contactForm.controls['email'].dirty
+            "
+            i18n
+            >Email must not be empty and be a valid address
+          </mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="standard">
+          <mat-label i18n>Subject</mat-label>
+          <input
+            matInput
+            placeholder="Subject"
+            i18n-placeholder="Subject"
+            formControlName="subject"
+          />
+          <mat-icon matSuffix>subject</mat-icon>
+          <mat-hint i18n>Enter message subject</mat-hint>
+          <mat-error
+            *ngIf="
+              !contactForm.controls['subject'].valid &&
+              contactForm.controls['subject'].dirty
+            "
+            i18n
+            >Subject must not be empty
+          </mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="standard">
+          <mat-label i18n>Your message</mat-label>
+          <textarea
+            matInput
+            placeholder="Message"
+            i18n-placeholder="Message"
+            formControlName="message"
+            cdkTextareaAutosize
+            cdkAutosizeMinRows="5"
+          ></textarea>
+          <mat-icon matSuffix>message</mat-icon>
+          <mat-hint i18n>Enter message</mat-hint>
+          <mat-error
+            *ngIf="
+              !contactForm.controls['message'].valid &&
+              contactForm.controls['message'].dirty
+            "
+            i18n
+            >Message must not be empty
+          </mat-error>
+        </mat-form-field>
+      </p>
+      <p class="button-row">
+        <button
+          mat-raised-button
+          type="submit"
+          [disabled]="!contactForm.valid"
+          color="primary"
+          class="pull-right"
+          i18n
+        >
+          Send
+        </button>
+      </p>
+      <div class="clear-all"></div>
+    </form>
+  </div>
+</mat-card>

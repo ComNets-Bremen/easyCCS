@@ -1,0 +1,79 @@
+/* You can add global styles to this file, and also import other style files */
+
+/** Overwrite default typography of Angular Material theme **/
+@use '~@angular/material'as mat;
+
+$app-typography: mat.define-typography-config($body-1: mat.define-typography-level(16px, 20px, 400),
+  $input: mat.define-typography-level(16px, 1.25, 400));
+
+@include mat.core($app-typography);
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/** GENERAL **/
+.mat-body {
+  margin: 15px;
+  padding-bottom: 72px;
+}
+
+.basic-form {
+  margin: 0 auto;
+  min-width: 300px;
+  width: 60%;
+}
+
+.basic-form-footer {
+  text-align: right;
+}
+
+.basic-form .mat-form-field-infix {
+  min-width: 300px;
+}
+
+.isLink {
+  cursor: pointer;
+  cursor: hand;
+}
+
+.errorSnack,
+.errorSnack .mat-button {
+  background: #f44336;
+  color: white;
+}
+
+.warnSnack,
+.warnSnack .mat-button {
+  background: #f44336;
+  color: white;
+}
+
+.button-row button {
+  margin-right: 15px;
+}
+
+.clear-all {
+  clear: both;
+}
+
+.add-button {
+  font-size: 32px;
+  float: right;
+}
+
+h1.add-header {
+  width: 50%;
+  float: left;
+}
+
+/** OVERRIDES **/
+.mat-form-field {
+  min-width: 100%;
+}

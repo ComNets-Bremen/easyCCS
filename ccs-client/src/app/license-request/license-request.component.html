@@ -1,0 +1,109 @@
+<mat-card>
+  <mat-card-title i18n>easyCCS Account Request</mat-card-title>
+  <div class="base-form">
+    <form [formGroup]="contactForm" (ngSubmit)="sendMsg($event)">
+      <p>
+        <mat-form-field appearance="standard">
+          <mat-label i18n>Name</mat-label>
+          <input
+            matInput
+            placeholder="Name"
+            i18n-placeholder="Name"
+            formControlName="name"
+          />
+          <mat-icon matSuffix>title</mat-icon>
+          <mat-hint i18n>Enter name</mat-hint>
+          <mat-error
+            *ngIf="
+              !contactForm.controls['name'].valid &&
+              contactForm.controls['name'].dirty
+            "
+            i18n
+            >Name must not be empty
+          </mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="standard">
+          <mat-label i18n>Email</mat-label>
+          <input
+            matInput
+            placeholder="Email"
+            i18n-placeholder="Email"
+            formControlName="email"
+          />
+          <mat-icon matSuffix>mail</mat-icon>
+          <mat-hint i18n>Enter valid email address</mat-hint>
+          <mat-error
+            *ngIf="
+              !contactForm.controls['email'].valid &&
+              contactForm.controls['email'].dirty
+            "
+            i18n
+            >Email must not be empty and be a valid address
+          </mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="standard">
+          <mat-label i18n>Your affiliation</mat-label>
+          <input
+            matInput
+            placeholder="Enter affiliation"
+            i18n-placeholder="Enter affiliation"
+            formControlName="affiliation"
+          />
+          <mat-icon matSuffix>business</mat-icon>
+          <mat-hint i18n>For whom you are working</mat-hint>
+          <mat-error
+            *ngIf="
+              !contactForm.controls['affiliation'].valid &&
+              contactForm.controls['affiliation'].dirty
+            "
+            i18n
+            >Subject must not be empty
+          </mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="standard">
+          <mat-label i18n>Interest</mat-label>
+          <textarea
+            matInput
+            placeholder="Interest"
+            i18n-placeholder="Interest"
+            formControlName="interest"
+            cdkTextareaAutosize
+            cdkAutosizeMinRows="5"
+          ></textarea>
+          <mat-icon matSuffix>message</mat-icon>
+          <mat-hint i18n
+            >A brief description why this project is interesting for you and for
+            what you would like to use it</mat-hint
+          >
+          <mat-error
+            *ngIf="
+              !contactForm.controls['interest'].valid &&
+              contactForm.controls['interest'].dirty
+            "
+            i18n
+            >Message must not be empty
+          </mat-error>
+        </mat-form-field>
+      </p>
+      <p class="button-row">
+        <button
+          mat-raised-button
+          type="submit"
+          [disabled]="!contactForm.valid"
+          color="primary"
+          class="pull-right"
+          i18n
+        >
+          Send
+        </button>
+      </p>
+      <div class="clear-all"></div>
+    </form>
+  </div>
+</mat-card>

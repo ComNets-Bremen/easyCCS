@@ -1,0 +1,29 @@
+<mat-card>
+  <mat-card-title i18n>Skill detail view</mat-card-title>
+  <div>
+    <p i18n>Skill name: {{ skill.skill_name }}</p>
+    <p i18n>Skill id: {{ skill.id }}</p>
+    <p i18n>Skill description: {{ skill.description }}</p>
+  </div>
+  <div>
+    <h2 i18n>WikiData Objects</h2>
+    <ul>
+      <li *ngFor="let wiki of skill.skill_keywords">
+        {{ wiki.wikidata_name }}
+      </li>
+    </ul>
+  </div>
+  <p class="button-row">
+    <button
+      type="button"
+      mat-raised-button
+      (click)="goBack()"
+      color="accent"
+      class="pull-right right-margin"
+      i18n
+    >
+      Back
+    </button>
+  </p>
+  <div class="clear-all"></div>
+</mat-card>

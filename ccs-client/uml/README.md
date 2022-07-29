@@ -1,0 +1,2 @@
+## API class info - UML
+This UML diagram was created with the Visual Studio extension [UMLet](https://marketplace.visualstudio.com/items?itemName=TheUMLetTeam.umlet). The UMl diagrams (.uxf files) can be directly edited in VS Code or exported as image file (see api.png for latest class diagram). For details about this extension visit the extension website or the [UMLet Team Homepage](https://www.umlet.com/)
