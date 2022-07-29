@@ -129,6 +129,23 @@ The open issues can be found on
 [github](https://github.com/ComNets-Bremen/easyCCS/issues)
 
 
+Security
+========
+
+Before using this code on a public server, you should make yourself familiar
+with some potential security considerations:
+
+- The `settings.py` contains a secret key. You should not use the one in the
+  repository. For each installation, a separate key should be used. You can
+  keep it local by adding it to the `settings_local.py`.
+- Similar holds for the mail address in the settings: If you want to get usable
+  feedback: Please use your own address
+- The code is not really checked for security. Maybe you should walk through it
+  and check if it is save to run it on your server.
+- Maybe it is a good idea to run the system on an isolated server?
+- Anyhow, we will not take any responsibility for the code and the project.
+
+
 Publications
 ============
 

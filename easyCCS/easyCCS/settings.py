@@ -16,6 +16,9 @@ can be overwritten with by a local file named "settings_local.py"
 """
 
 import os
+import logging
+
+logger = logging.getLogger(__name__)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -131,7 +134,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-DEFAULT_SENDER_MAIL_ADDRESS = "cn_server@comnets.uni-bremen.de"
+DEFAULT_SENDER_MAIL_ADDRESS = "no@mail.com"
 DEFAULT_RECEIVER_MAIL_ADDRESS = DEFAULT_SENDER_MAIL_ADDRESS
 
 # Static files (CSS, JavaScript, Images)
@@ -149,9 +152,23 @@ MAIN_TITLE = "easyCCS"
 
 WORKLOAD_UNIT = "minutes"
 
+# Check if those values got changed by the user in the settings_local.py. If
+# not: output a warning
+critical_values = {
+        "SECRET_KEY" : SECRET_KEY,
+        "DEFAULT_SENDER_MAIL_ADDRESS" : DEFAULT_SENDER_MAIL_ADDRESS
+        }
+
 # Overwrite settings by local ones (if available)
 try:
     from .settings_local import *
 except ImportError as e:
     pass
 
+# Check if the critical values got changed. If not: Print a warning.
+for cv in critical_values:
+    if globals()[cv] == critical_values[cv]:
+        logger.warning("WARNING: You are using the default value for the variable \"" \
+                + cv + "\". This might be a security issue - especially for" \
+                + " servers which are public. Please consider changing this" \
+                + " value in \"settings_local.py\".")
