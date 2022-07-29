@@ -1,9 +1,13 @@
-easyCCS -- an easy content curation tool
-========================================
+easyCCS - An Easy Content Curation Tool
+=======================================
 
 This is the repository for the easyCCS project. This project is developed by
 the department of sustainable communication networks, University of Bremen,
 Germany.
+
+- [comnets.uni-bremen.de](https://comnets.uni-bremen.de/)
+- [ComNets @Twitter](https://twitter.com/ComNetsBremen)
+- [ComNets @Youtube](https://www.youtube.com/comnetsbremen)
 
 General Idea
 ------------
