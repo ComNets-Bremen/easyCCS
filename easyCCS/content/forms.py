@@ -138,7 +138,10 @@ class SelectMultipleTokens(forms.SelectMultiple):
         # Collect the id of the skills from the widget
         for og in context["widget"]["optgroups"]:
             if len(og[1]) > 0:
-                ids.append(og[1][0]["value"])
+                value = og[1][0]["value"]
+                if hasattr(value, "value"):
+                    value=value.value
+                ids.append(value)
 
         # One query: Get all descriptions / keywords from the db
         skill_desc = self.keyword_model.objects.filter(id__in=ids).values_list("id", self.keyword_field)
@@ -150,6 +153,8 @@ class SelectMultipleTokens(forms.SelectMultiple):
         for og in context["widget"]["optgroups"]:
             if len(og[1]) > 0:
                 value = og[1][0]["value"]
+                if hasattr(value, "value"):
+                    value = value.value
                 if value in desc_dict and len(desc_dict[value]) > 0:
                     og[1][0]["attrs"]["data-tokens"] = desc_dict[value]
 
