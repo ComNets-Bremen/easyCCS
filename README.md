@@ -30,6 +30,8 @@ The software in this repository tries to offer a solution for at least
 
 ![Example graph: How does the content depend on each other.](img/example-selected-graph.png)
 
+![A quick walk-through](https://img.youtube.com/vi/CggBL-c45Ok/0.jpg)](https://youtu.be/CggBL-c45Ok)
+
 Current status
 --------------
 
