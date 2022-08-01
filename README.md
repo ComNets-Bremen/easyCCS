@@ -105,7 +105,7 @@ found in the [client](client) subdirectory of this work. The setup is described
 in a separate [README](client/README.md).
 
 The status of the Angular PWA is "demo": It does not have a connection to the
-main part.
+main part. For that, a REST API has to be implemented on the server side.
 
 Getting everything running (a quick walk-through)
 =================================================
