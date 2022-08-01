@@ -1,7 +1,7 @@
 import { Injectable, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
-import { BaseUser } from "../classes/baseUser";
+import { BaseUser } from "../classes/BaseUser";
 import { ESnackbarTypes } from "../enums/snackbarTypes";
 import { HttpService } from "./http.service";
 import { ToolService } from "./tool.service";

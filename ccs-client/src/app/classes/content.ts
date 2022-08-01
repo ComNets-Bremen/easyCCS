@@ -1,4 +1,4 @@
-import { BaseUser } from "./baseUser";
+import { BaseUser } from "./BaseUser";
 import { DocFile } from "./docFile";
 import { Skill } from "./skill";
 import { WikidataObject } from "./wikiDataObj";
