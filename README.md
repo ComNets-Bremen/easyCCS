@@ -12,9 +12,9 @@ Germany.
 General Idea
 ------------
 
-Preparing lectures and dealing withe the teaching content can be a hassle.
+Preparing lectures and dealing with the teaching content can be a hassle.
 "*Where is this presentation?*", "*I already created this kind of lecture...*",
-"*There was a good video / website for this content. But where?*" are typical
+"*There was a good video/website for this content. But where?*" are typical
 problems. Here, we are trying to offer a solution.
 
 The software in this repository tries to offer a solution for at least
@@ -24,7 +24,7 @@ The software in this repository tries to offer a solution for at least
 - Be exchangeable: Share the content with collogues, friends, the community or
   anybody else. Therefore, the keywords and descriptions should be uniquely
   understandable.
-- Show an manage dependencies: Show what a user should know before starting
+- Show and manage dependencies: Show what a user should know before starting
   with the new content.
 - ...
 
@@ -38,8 +38,8 @@ Current status
 --------------
 
 Even though there is a vast interest in this project, we do not have sufficient
-capacities to develop all ideas we have for this project. Hence, we decided to
-make this project open source hoping to find interested people and build up a
+capacity to develop all ideas we have for this project. Hence, we decided to
+make this project open source, hoping to find interested people and build a
 community around it.
 
 **If you have ideas and would like to contribute: Feel free to contribute and
@@ -49,7 +49,7 @@ contact us, start an issue, create a pull request etc.!**
 Demo webpage
 ------------
 
-A demo webpage can be found here:
+You can find a demo webpage here:
 [easyccs.comnets.uni-bremmen.de](https://easyccs.comnets.uni-bremen.de/content/).
 You can request a demo account there.
 
@@ -66,21 +66,21 @@ terms:
   module should always offer at least one new skill, i.e., the user should
   learn something from the content. Content can require one or multiple skills
   as a prerequisite.
-- **Content** is the learning material itself. It can be a set of slides, a
-  video, link to a webpage, pdf document etc. It can require an "input skill",
-  i.e. a skill the user has to know to successfully work on this content. A
+- **content** is the learning material itself. It can be a set of slides, a
+  video, a link to a webpage, a pdf document etc. It can require an "input skill",
+  i.e. a skill the user has to know to work on this content successfully. A
   content module should offer at least one new skill to the user. Otherwise,
   the user would not have learned anything new.
-- In contrast to content modules, **Exercises** are deepening and training the
+- In contrast to content modules, **Exercises** deepen and train the
   understanding of the given modules. They have input skills but do not offer
   new skills.
 
 To achieve interoperability between different users and instances of easyCCS,
 we are planning to use [Wikidata](https://www.wikidata.org/) for the keywords
-describing the skills. This will have the following advantages
+describing the skills. Using Wikidata will have the following advantages
 
 - The Wikidata database contains descriptions for the majority of events,
-  concepts or basically things in the world.
+  concepts or things in the world.
 - Everything has a unique identifier
 - The description is available in different languages
 - The items are connected using relationships
@@ -93,8 +93,8 @@ working on the implementation.
 Client #1: Web UI
 -----------------
 
-Right now, we are working on two user interfaces for accessing the system. The
-first one is the django generated web-UI. It can be accessed directly and does
+We are currently working on two user interfaces for accessing the system. The
+first one is the Django generated web UI. It can be accessed directly and does
 not require additional setup. Anyhow, the flexibility is missing.
 
 ![Screenshot from web UI](img/screenshot_web_client.png)
@@ -103,14 +103,12 @@ not require additional setup. Anyhow, the flexibility is missing.
 Client #2: Angular PWA
 ----------------------
 
-A demo of an Angular PWA was developed by Benedikt Caspari. It offers more
-flexibility and options compared to the standard web UI. The new UI can be
-found in the [client](client) subdirectory of this work. The setup is described
-in a separate [README](client/README.md).
+Benedikt Caspari developed a demo of an Angular PWA. It offers more
+flexibility and options compared to the standard web UI. You can find the new UI in this work's [client](client) subdirectory. The separate [README](client/README.md) describes the setup.
 
 The status of the Angular PWA is "demo": It does not have a connection to the
-main part. For that, a REST API has to be implemented on the server side.
-Therefore, it can be seen as an UI mockup
+central part. For that, a REST API has to be implemented on the server side.
+Therefore, it can be seen as a UI mockup
 
 ![Screenshot from PWA](img/screenshot_angular_client.png)
 
@@ -123,23 +121,22 @@ The recommended operating system is linux. The following packages are required:
 - Django
 - Numpy
 
-This repository can be cloned via github `git clone https://github.com/ComNets-Bremen/easyCCS.git`
+You can clone this repository via GitHub `git clone https://github.com/ComNets-Bremen/easyCCS.git`
 
-Afterwards, the following steps have to be performed in the subdirectory
+Afterwards, you have to perform the following steps in the subdirectory
 `easyCCS`:
 
 - `./manage.py migrate` : Create database
 - `./manage.py createsuperuser`: Create the first user
 
-Afterwards, the test server can be started: `./manage.py runserver`. The user
-interface can now be accessed on the local machine:
+Afterwards, you can start the test server: `./manage.py runserver`. You can now access the user interface on the local machine:
 [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 
 TODO
 ====
 
-The open issues can be found on
+You can find on the open issues on
 [github](https://github.com/ComNets-Bremen/easyCCS/issues)
 
 
@@ -154,9 +151,9 @@ with some potential security considerations:
   keep it local by adding it to the `settings_local.py`.
 - Similar holds for the mail address in the settings: If you want to get usable
   feedback: Please use your own address
-- The code is not really checked for security. Maybe you should walk through it
-  and check if it is save to run it on your server.
-- Maybe it is a good idea to run the system on an isolated server?
+- The code is not checked for security. Maybe you should walk through it
+  and check if running it on your server is safe.
+- Maybe running the system on an isolated server is a good idea?
 - Anyhow, we will not take any responsibility for the code and the project.
 
 
