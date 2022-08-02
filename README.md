@@ -30,6 +30,8 @@ The software in this repository tries to offer a solution for at least
 
 ![Example graph: How does the content depend on each other.](img/example-selected-graph.png)
 
+A quick walk-through: What can be done with easyCCS is available on youtube:
+
 [![A quick walk-through](https://img.youtube.com/vi/CggBL-c45Ok/0.jpg)](https://youtu.be/CggBL-c45Ok)
 
 Current status
@@ -105,7 +107,8 @@ found in the [client](client) subdirectory of this work. The setup is described
 in a separate [README](client/README.md).
 
 The status of the Angular PWA is "demo": It does not have a connection to the
-main part.
+main part. For that, a REST API has to be implemented on the server side.
+Therefore, it can be seen as an UI mockup
 
 Getting everything running (a quick walk-through)
 =================================================
