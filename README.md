@@ -93,10 +93,12 @@ working on the implementation.
 Client #1: Web UI
 -----------------
 
-
 Right now, we are working on two user interfaces for accessing the system. The
 first one is the django generated web-UI. It can be accessed directly and does
 not require additional setup. Anyhow, the flexibility is missing.
+
+![Screenshot from web UI](img/screenshot_web_client.png)
+
 
 Client #2: Angular PWA
 ----------------------
@@ -109,6 +111,9 @@ in a separate [README](client/README.md).
 The status of the Angular PWA is "demo": It does not have a connection to the
 main part. For that, a REST API has to be implemented on the server side.
 Therefore, it can be seen as an UI mockup
+
+![Screenshot from PWA](img/screenshot_angular_client.png)
+
 
 Getting everything running (a quick walk-through)
 =================================================
